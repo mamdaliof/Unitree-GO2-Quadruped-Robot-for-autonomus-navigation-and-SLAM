@@ -17,11 +17,17 @@ Each requirement must be verified by a corresponding test or validation method:
 * **REQ-SYS-005 (LLM SDK Directory):** Intermediate documents must provide an indexed representation of Go2 SDK commands, topics, and parameters. *Validation:* LLM utility query script test (retrieving command syntax successfully).
 
 ## 3. Modular Architecture (Proposed Modules)
-* **`go2_control_node` (C++):** Wraps low-level Go2 SDK commands, publishing `sensor_msgs/JointState` and subscribing to `geometry_msgs/Twist`.
+* **`go2_control_node` (C++):** Wraps high-level Go2 SDK commands (`SportClient`), publishing odometer states and subscribing to `geometry_msgs/Twist`. It inherits from/extends standard ROS 2 SDK wrapper classes to maintain API compatibility.
 * **`go2_slam_node` (C++):** Tightly-coupled LiDAR SLAM. Swappable backend (candidate: FAST-LIO2 or LIO-SAM).
 * **`go2_perception_node` (C++):** Filters point clouds (e.g., glass filtering, ground extraction) and produces costmaps.
 * **`go2_navigation_node` (Python/C++):** Interfaces with Nav2, managing path planning, obstacle avoidance, and stair traversal.
 * **`go2_state_orchestrator` (Python):** Executes the state machine, coordinating navigation tasks and diagnostic reports.
+
+> [!IMPORTANT]
+> **Out-of-Scope Components:**
+> 1. Low-level joint/actuator control (FOC parameter tuning, direct motor torque/angle commands) is out of scope; control relies entirely on high-level SDK locomotion commands.
+> 2. Environmental manipulation (D1 manipulator arm joint/cartesian trajectory planning) is out of scope.
+> 3. Active person following (UWB companion tracking) is out of scope.
 
 ## 4. Literature Analysis Scope
 Analyze:
