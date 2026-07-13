@@ -1,3 +1,12 @@
+# PROPOSAL FOR CHANGE (PENDING USER APPROVAL)
+* **Proposed Addition:** Introduce `REQ-FUN-005` (Sensor Coordinate Alignment & Calibration) and `REQ-FUN-006` (Perception Self-Reflection Filter).
+* **Reasoning:** 
+  1. Audit findings from the CMU `autonomy_stack_go2` repository indicate the physical mounting pitch for the Go2's 3D LiDAR is `15.1°` rather than the default `13.0°` catalog value. Using `13.0°` leads to vertical map drift.
+  2. Static IMU calibration is a mandatory boot prerequisite to calculate offsets and prevent fast SLAM drift.
+  3. A chassis coordinate bounding box ($x \in [-0.7, -0.1]$, $y \in [-0.3, 0.3]$, $z \in [-0.6, 0.0]$) is required in the perception filter to discard robot body reflections and avoid self-collision triggers.
+
+---
+
 # System Requirements Specification
 
 This document details the functional, non-functional, safety, and environmental requirements for the Unitree Go2 Smart Navigation and SLAM system.
@@ -39,13 +48,6 @@ after the deployment mapping, the rest of movements and inspection runs are for 
 * **Description:** Collision-free navigation is the primary goal:
   1. **SDK Navigation (Primary):** Try the built-in Go2 SDK obstacle avoidance and path planning.
   2. **Custom Navigation (Fallback):** If the default SDK planner fails or is insufficient, implement custom ROS 2 Nav2 planners and point cloud perception filters.
-
-### 📌 REQ-FUN-005: Sensor Coordinate Alignment & Calibration
-* **LiDAR Pitch Offset:** The 3D LiDAR mounting pitch tilt offset must be configured using the calibrated physical value of `15.1°` (upside-down `164.9°` Euler rotation in body frame) rather than the catalog default of `13.0°` to prevent vertical map drift.
-* **Prerequisite IMU Calibration:** The LiDAR's internal IMU must undergo a calibration procedure to generate static bias coefficients (`imu_calib_data.yaml` at boot) to minimize SLAM odometry drift.
-
-### 📌 REQ-FUN-006: Perception Self-Reflection Filter
-* **Self-Reflection Box:** The point cloud perception module must discard point reflections within a spatial coordinate bounding box ($x \in [-0.7, -0.1]$, $y \in [-0.3, 0.3]$, $z \in [-0.6, 0.0]$ relative to the chassis frame) to filter out the robot's own legs and body.
 
 ---
 

@@ -1,4 +1,8 @@
 {
+  "_PROPOSAL_FOR_CHANGE": {
+    "recommendation": "Add a new 'sensors' configuration block containing 'lidar_tilt_angle_deg': 15.1, 'imu_calibration_required': true, and 'self_filter_box' bounding coordinate limits.",
+    "reason_for_change": "Auditing the CMU autonomy_stack_go2 repository reveals that physical L1 LiDAR mounting alignment requires a 15.1° pitch offset rather than the 13.0° default. Additionally, static IMU calibration is a hard prerequisite for stable SLAM, and a chassis-level bounding box filter is required to prevent the robot's body reflections from generating fake obstacles in the navigation costmap."
+  },
   "system": {
     "target_localization_accuracy_m": 0.05,
     "allowable_slope_angle_deg": "PENDING_RESEARCH",
@@ -20,18 +24,6 @@
       "enabled_in_phase_1": false,
       "slowdown_radius_m": 2.0,
       "target_slowdown_velocity_m_s": 0.3
-    }
-  },
-  "sensors": {
-    "lidar_tilt_angle_deg": 15.1,
-    "imu_calibration_required": true,
-    "self_filter_box": {
-      "x_min": -0.7,
-      "x_max": -0.1,
-      "y_min": -0.3,
-      "y_max": 0.3,
-      "z_min": -0.6,
-      "z_max": 0.0
     }
   }
 }

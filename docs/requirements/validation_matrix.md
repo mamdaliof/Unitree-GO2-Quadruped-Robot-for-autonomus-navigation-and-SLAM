@@ -1,3 +1,10 @@
+# PROPOSAL FOR CHANGE (PENDING USER APPROVAL)
+* **Proposed Addition:** Map new requirements `REQ-FUN-005` (Sensor Calibration) and `REQ-FUN-006` (Self-Filter Box) to verification methods:
+  * **REQ-FUN-005:** Verify via `VM-02` (Offline Rosbag Replay) by validating calibrated Euler transformation mapping. Audit script via `VM-04`.
+  * **REQ-FUN-006:** Verify via `VM-01` (Simulation Testing) and `VM-04` by validating that points inside the chassis bounding box are filtered.
+
+---
+
 # System Validation & Verification Matrix
 
 This document defines the validation methods used to verify each requirement from the `[[docs/requirements/system_requirements|System Requirements Specification]]`.
@@ -34,7 +41,4 @@ We define four primary verification methods to validate software and hardware be
 | **[[docs/requirements/system_requirements#📌 REQ-FUN-004: Safe Navigation & Avoidance\|REQ-FUN-004]]** | Safe Avoidance | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Place dynamic obstacles in front of the robot. Verify the robot either halts or plans a path around the obstacle without collision. First test built-in SDK; fall back to Nav2. Run planner API checks. |
 | **[[docs/requirements/system_requirements#📌 REQ-SFT-001: Operational Constraints\|REQ-SFT-001]]** | Operational Constraints | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Command velocity $> 1.0\text{ m/s}$ and verify output is capped at $1.0\text{ m/s}$. Mock battery state at $14\%$ and verify the state machine triggers a return-to-dock sequence. Run state parameter checks. |
 | **[[docs/requirements/system_requirements#📌 REQ-SFT-002: Safety Fallback Actions\|REQ-SFT-002]]** | Safety Fallbacks | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Disconnect the LiDAR feed node. Confirm the state machine immediately stops the robot's movement and sets state to `STAND_STILL`. Run safety flag code checks. |
-| **[[docs/requirements/system_requirements#📌 REQ-FUN-005: Sensor Coordinate Alignment & Calibration\|REQ-FUN-005]]** | Sensor Calibration | [[#VM-02: Offline Rosbag Replay (Conditional)\|VM-02]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Replay a dataset using calibrated YAML offsets. Verify that vertical drift is eliminated and the LiDAR pitch angles align. Audit IMU calibration script code. |
-| **[[docs/requirements/system_requirements#📌 REQ-FUN-006: Perception Self-Reflection Filter\|REQ-FUN-006]]** | Self-Filter Box | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Verify point clouds in simulation. Check that points within the chassis bounding box coordinate limits are discarded and do not pollute the costmap. |
 | **[[docs/requirements/system_requirements#📌 REQ-ENV-002: Localization Accuracy Goal\|REQ-ENV-002]]** | Localization Accuracy | [[#VM-02: Offline Rosbag Replay (Conditional)\|VM-02]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Walk the robot past pre-surveyed physical landmarks (retroreflective markers). Compare the SLAM calculated position against the physical landmark ground truth. Target error $< 5\text{ cm}$. Verify SLAM node ROS 2 message conformity. |
-
