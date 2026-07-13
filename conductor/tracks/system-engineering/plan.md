@@ -27,26 +27,32 @@
   * Write `docs/requirements/system_requirements.md` mapping out functional, performance, and safety requirements.
   * Map requirements to verification methods (simulation, bag playbacks, physical robot).
 
-* [ ] **Step 4: State Machine & Module Interfaces Definition**
+* [ ] **Step 4: Design Diagrams & Key Questions (Iterative & Pending)**
+  * Create `docs/architecture/key_questions.md` listing open research fields and engineering questions.
+  * Create `docs/architecture/morphological_diagram.md` compiling subsystem alternative components.
+  * Create `docs/architecture/tradeoff_analysis.md` outlining the weights, parameters, and decision criteria.
+  * Keep these files active/pending for user citations and literature integrations.
+
+* [ ] **Step 5: State Machine & Module Interfaces Definition**
   * Design the system state machine (Idle, Mapping, Navigation, Safe-Mode, Error-Recovery).
   * Write `docs/state_machines/system_state_machine.md` with a Mermaid state diagram, state descriptions, and transition criteria.
   * Define the ROS 2 APIs (topics, services, actions) and class APIs for each package inside `docs/architecture/module_interfaces.md`.
 
 ## Phase 3: LLM-Friendly SDK Documentation
-* [ ] **Step 5: Process Go2 Developer Documentation**
+* [ ] **Step 6: Process Go2 Developer Documentation**
   * Analyze `Go2_Documentation/All_Go2_Developer_Docs.md` and related files.
   * Extract Go2 SDK API command endpoints, ROS 2 topics, and arguments.
   * Generate `docs/llm_references/go2_sdk_api_reference.json` (machine-readable) and `docs/llm_references/go2_commands_cheat_sheet.md` (optimized for LLM retrieval and human quick-reference).
 
 ## Phase 4: Verification, Test Skeletons & Final Review
-* [ ] **Step 6: Secondary Repository Audit**
+* [ ] **Step 7: Secondary Repository Audit**
   * Scan relevant public ROS 2 repositories/custom Go2 implementations (using literature and internet search if needed) to validate our proposed interface structures, topic names, and state machines.
   * Update spec/docs to correct any flaws or API mismatches.
 
-* [ ] **Step 7: Unit Test Skeletons & Verification**
+* [ ] **Step 8: Unit Test Skeletons & Verification**
   * Create gtest skeletons in `src/go2_perception/test/` to check class method expectations.
   * Create pytest skeletons in `src/go2_state_orchestrator/test/` using `launch_testing` to verify state transitions under mock conditions.
   * Verify tests build and pass with a mock build.
 
-* [ ] **Step 8: Generate Technical Report**
+* [ ] **Step 9: Generate Technical Report**
   * Write `docs/technical_report.md` outlining the overall design choices, limitations, advantages, and progress summary for the system engineering phase.
