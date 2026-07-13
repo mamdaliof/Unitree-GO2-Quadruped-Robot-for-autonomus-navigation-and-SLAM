@@ -6,7 +6,7 @@ This document covers the specifications, networking, interface repairs, OS backu
 
 ## 1. Reference Links to Archive Sources
 If this documentation lacks detail or you need to download specific firmware versions, refer to the original files:
-* [Raw Expansion Dock Configuration Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/Expansion_Dock_Configuration.md)
+* [[Go2_Documentation/archive/Application_Development/Expansion_Dock_Configuration|Raw Expansion Dock Configuration Guide]]
 
 ---
 

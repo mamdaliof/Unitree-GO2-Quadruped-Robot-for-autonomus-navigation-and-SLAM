@@ -6,9 +6,9 @@ This document covers the C++ high-level locomotion APIs (`SportClient`), posture
 
 ## 1. Reference Links to Archive Sources
 For original method signatures, error tables, and older version profiles, refer to the archived guides:
-* [Raw Sports Services Guide (V1.0)](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Sports_Services_Interface.md)
-* [Raw Motion Services Guide (V2.0)](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Motion_Services_Interface_V2.0.md)
-* [Raw Motion Switcher Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Motion_Switcher_Service_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/Sports_Services_Interface|Raw Sports Services Guide (V1.0)]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Motion_Services_Interface_V2.0|Raw Motion Services Guide (V2.0)]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Motion_Switcher_Service_Interface|Raw Motion Switcher Guide]]
 
 ---
 

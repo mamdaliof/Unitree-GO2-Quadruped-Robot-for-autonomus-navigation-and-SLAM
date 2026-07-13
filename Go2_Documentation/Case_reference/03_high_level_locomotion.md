@@ -6,7 +6,7 @@ This document details the C++ implementation of high-level stance control, veloc
 
 ## 1. Reference Links to Archive Sources
 For original code examples and raw method prototypes, refer to the archived guides:
-* [Raw High Motion Control Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/High_Motion_Control.md)
+* [[Go2_Documentation/archive/Case_reference/High_Motion_Control|Raw High Motion Control Guide]]
 
 ---
 

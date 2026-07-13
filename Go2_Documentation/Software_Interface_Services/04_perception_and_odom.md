@@ -6,9 +6,9 @@ This document covers point cloud publisher structures (`utlidar`), odometer feed
 
 ## 1. Reference Links to Archive Sources
 For original method signatures, error tables, and older version profiles, refer to the archived guides:
-* [Raw LiDAR Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/LiDAR_Services_Interface.md)
-* [Raw Odometer Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Odometer_Services_Interface.md)
-* [Raw Avoidance Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Avoidance_Services_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/LiDAR_Services_Interface|Raw LiDAR Services Interface Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Odometer_Services_Interface|Raw Odometer Services Interface Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Avoidance_Services_Interface|Raw Avoidance Services Interface Guide]]
 
 ---
 

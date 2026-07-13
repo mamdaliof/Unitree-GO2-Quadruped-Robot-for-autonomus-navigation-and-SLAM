@@ -6,8 +6,8 @@ This document describes how to configure your developer computer's network inter
 
 ## 1. Reference Links to Archive Sources
 If this documentation lacks detail or you need to inspect raw installation scripts, refer to the original files:
-* [Raw Obtain SDK Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/Obtain_SDK.md)
-* [Raw Quick Start Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/Quick_Start.md)
+* [[Go2_Documentation/archive/Application_Development/Obtain_SDK|Raw Obtain SDK Guide]]
+* [[Go2_Documentation/archive/Application_Development/Quick_Start|Raw Quick Start Guide]]
 
 ---
 

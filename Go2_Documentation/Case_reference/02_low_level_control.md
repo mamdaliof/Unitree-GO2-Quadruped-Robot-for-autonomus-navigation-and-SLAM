@@ -6,8 +6,8 @@ This document details direct motor command configurations, Joint Linear Interpol
 
 ## 1. Reference Links to Archive Sources
 For original code examples and diagrams, refer to the archived guides:
-* [Raw Basic Motion Control Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Basic_Motion_Control.md)
-* [Raw Motor Errors Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Exapmle_of_motor_errors.md)
+* [[Go2_Documentation/archive/Case_reference/Basic_Motion_Control|Raw Basic Motion Control Guide]]
+* [[Go2_Documentation/archive/Case_reference/Exapmle_of_motor_errors|Raw Motor Errors Guide]]
 
 ---
 

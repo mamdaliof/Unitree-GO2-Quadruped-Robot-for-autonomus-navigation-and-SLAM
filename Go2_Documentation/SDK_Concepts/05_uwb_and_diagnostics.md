@@ -6,8 +6,8 @@ This document details the hardware design of the UWB companion module, controlle
 
 ## 1. Reference Links to Archive Sources
 For raw specifications and code mappings, refer to the archived guides:
-* [Raw UWB Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/UWB_Application.md)
-* [Raw Faults Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/FAULTS.md)
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/UWB_Application|Raw UWB Application Guide]]
+* [[Go2_Documentation/archive/SDK_Concepts/FAULTS|Raw Faults Guide]]
 
 ---
 

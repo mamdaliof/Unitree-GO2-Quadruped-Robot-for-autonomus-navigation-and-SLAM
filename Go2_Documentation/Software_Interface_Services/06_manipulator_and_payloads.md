@@ -6,12 +6,12 @@ This document covers programming interfaces for the D1 robotic arm, RTSP video s
 
 ## 1. Reference Links to Archive Sources
 For original method parameters and complete IDL files, refer to the archived guides:
-* [Raw D1 Mechanical Arm Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/D1_Mechanical_Arm_Services_Interface.md)
-* [Raw Multimedia Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Multimedia_Services_Interface.md)
-* [Raw UWB Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/UWB_Services_Interface.md)
-* [Raw Fault Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Fault_Services_Interface.md)
-* [Raw AI Motion Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/AI_motion_Services_interface.md)
-* [Raw Aruco Recharge Service Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Aruco_Recharge_Service_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/D1_Mechanical_Arm_Services_Interface|Raw D1 Mechanical Arm Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Multimedia_Services_Interface|Raw Multimedia Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/UWB_Services_Interface|Raw UWB Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Fault_Services_Interface|Raw Fault Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/AI_motion_Services_interface|Raw AI Motion Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Aruco_Recharge_Service_Interface|Raw Aruco Recharge Service Guide]]
 
 ---
 

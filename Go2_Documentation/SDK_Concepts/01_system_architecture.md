@@ -6,9 +6,9 @@ This document covers the high-level hardware-software boundaries, cloud interfac
 
 ## 1. Reference Links to Archive Sources
 For original system diagrams and raw descriptions, refer to the archived guides:
-* [Raw Architecture Description](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Architecture_Description.md)
-* [Raw Basic Application Concept](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Basic_Application.md)
-* [Raw DDS Application Concept](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/DDS_Application.md)
+* [[Go2_Documentation/archive/SDK_Concepts/Architecture_Description|Raw Architecture Description]]
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Basic_Application|Raw Basic Application Concept]]
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/DDS_Application|Raw DDS Application Concept]]
 
 ---
 

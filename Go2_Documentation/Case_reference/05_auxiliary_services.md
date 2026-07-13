@@ -6,8 +6,8 @@ This document covers configuring headlight LED brightness settings and launching
 
 ## 1. Reference Links to Archive Sources
 For original code examples and simulator setup steps, refer to the archived guides:
-* [Raw Light Control Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Light_Control.md)
-* [Raw RL Control Routine Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/RL_Control_Routine.md)
+* [[Go2_Documentation/archive/Case_reference/Light_Control|Raw Light Control Guide]]
+* [[Go2_Documentation/archive/Case_reference/RL_Control_Routine|Raw RL Control Routine Guide]]
 
 ---
 

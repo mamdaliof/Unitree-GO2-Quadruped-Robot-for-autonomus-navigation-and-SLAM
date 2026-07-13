@@ -3,9 +3,8 @@
 ## 1. Documentation & Writing Style (Dual Human/LLM Focus)
 * **LLM-Optimized Format:** Use highly structured Markdown (`.md`) with explicit headers, lists, metadata blocks (key-value pairings), and clear tags to allow easy parsing/indexing by LLMs.
 * **Concise & Human-Readable:** Keep documentation direct, emphasizing practical code examples, command-line arguments, parameter guides, and quick-start tutorials. Avoid long paragraphs; use lists and tables.
-* **Obsidian-Style WikiLinks:** Cross-reference requirements, design choices, meeting notes, and files using standard wikilinks (e.g., `[[meetings/2026-06-01-meeting-poorya-leicai]]`).
-* **Technical Reports:** Document design decisions, trade-offs, limitations, and advantages with academic-style citations for external sources.
-* **Interactive Design Alignment:** Proactively outline technical details, explain design suggestions, and explain the proposed implementation strategy to keep the developer fully in the loop before starting work.
+* **Obsidian-Style WikiLinks:** Cross-reference files and notes using standard double-bracket Wikilinks (e.g., `[[meetings/2026-06-01-meeting-poorya-leicai]]` or `[[Go2_Documentation/System_Overview/README|README]]`) for any local Markdown files.
+* **Web Link Formats:** Use standard Markdown link formatting `[text](URL)` only for external web resources (e.g., `[GitHub](https://github.com/...)`). Never use standard Markdown links or `file://` URIs for local workspace files.
 
 ## 2. Code Commenting & Citation Standards
 * **Insightful Class & Function Headers:** Explain the *purpose* of each class/module, its inputs/outputs, and brief usage instructions.

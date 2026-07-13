@@ -6,9 +6,9 @@ This document details user PC connection setups, SBUS wiring, NoMachine GUI remo
 
 ## 1. Reference Links to Archive Sources
 For original illustrations, wiring diagrams, and manuals, refer to the archived guides:
-* [Raw Debugging Specification](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Debugging_Specification.md)
-* [Raw Remote Controller Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Remote_Controller.md)
-* [Raw FAQ Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/FAQ.md)
+* [[Go2_Documentation/archive/Debugging_Specification|Raw Debugging Specification]]
+* [[Go2_Documentation/archive/Remote_Controller|Raw Remote Controller Index]]
+* [[Go2_Documentation/archive/FAQ|Raw FAQ Guide]]
 
 ---
 

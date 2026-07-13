@@ -6,9 +6,9 @@ This document details the low-level CycloneDDS IDL definitions used to command m
 
 ## 1. Reference Links to Archive Sources
 For original IDL files and descriptions, refer to the archived documents:
-* [Raw Basic Services Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Basic_Services_Interface.md)
-* [Raw RobotStateClient Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/RobotStateClient_Interface.md)
-* [Raw VuiClient Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/VuiClient_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/Basic_Services_Interface|Raw Basic Services Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/RobotStateClient_Interface|Raw RobotStateClient Interface Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/VuiClient_Interface|Raw VuiClient Interface Guide]]
 
 ---
 

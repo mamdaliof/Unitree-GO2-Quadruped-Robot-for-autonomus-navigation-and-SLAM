@@ -6,7 +6,7 @@ This document details the electrical specifications of the Go2 expansion dock, p
 
 ## 1. Reference Links to Archive Sources
 If this documentation lacks detail or you need to inspect raw dimension diagrams, refer to the original files:
-* [Raw Payload Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/Payload.md)
+* [[Go2_Documentation/archive/Application_Development/Payload|Raw Payload Guide]]
 
 ---
 

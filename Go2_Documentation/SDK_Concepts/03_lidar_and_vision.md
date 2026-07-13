@@ -6,8 +6,8 @@ This document covers the technical specifications of the Unitree L1 LiDAR, the p
 
 ## 1. Reference Links to Archive Sources
 For original coordinate diagrams and application guides, refer to the archived documents:
-* [Raw LiDAR Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/LiDAR_Application.md)
-* [Raw Image Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Image_Application.md)
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/LiDAR_Application|Raw LiDAR Application Guide]]
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Image_Application|Raw Image Application Guide]]
 
 ---
 

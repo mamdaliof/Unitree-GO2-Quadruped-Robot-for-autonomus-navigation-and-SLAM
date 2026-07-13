@@ -6,7 +6,7 @@ This document details the physical parameters, joint motion limits, battery capa
 
 ## 1. Reference Links to Archive Sources
 For original product tables and detailed accessory diagrams, refer to the archived guides:
-* [Raw About Go2 Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/About_Go2.md)
+* [[Go2_Documentation/archive/About_Go2|Raw About Go2 Guide]]
 
 ---
 

@@ -8,33 +8,33 @@ This directory contains the processed, structured documentation of reference rou
 
 Use this registry to quickly locate specific programming cases and implementations:
 
-### [01_dds_communication.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/Case_reference/01_dds_communication.md)
+### [[Go2_Documentation/Case_reference/01_dds_communication]]
 * **What is in it:** Standard CycloneDDS publisher and subscriber C++ configurations, `ChannelFactory` bindings, custom IDL messages handling, and compiling simple helloworld communication routines.
 * **Original raw file:**
-  * [DDS_Communication.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/DDS_Communication.md)
+  * [[Go2_Documentation/archive/Case_reference/DDS_Communication]]
 
-### [02_low_level_control.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/Case_reference/02_low_level_control.md)
+### [[Go2_Documentation/Case_reference/02_low_level_control]]
 * **What is in it:** Leg joint motor control (thigh, calf, hip FOC parameters), linear interpolation for joint transitions, sine-wave leg swinging example, motor state conversion functions (`lowCmd2Dds` / `dds2LowState`), and motor error bitmask decoding (overcurrent, thermal limits, encoder failure).
 * **Original raw files:**
-  * [Basic_Motion_Control.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Basic_Motion_Control.md)
-  * [Exapmle_of_motor_errors.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Exapmle_of_motor_errors.md)
+  * [[Go2_Documentation/archive/Case_reference/Basic_Motion_Control]]
+  * [[Go2_Documentation/archive/Case_reference/Exapmle_of_motor_errors]]
 
-### [03_high_level_locomotion.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/Case_reference/03_high_level_locomotion.md)
+### [[Go2_Documentation/Case_reference/03_high_level_locomotion]]
 * **What is in it:** `SportClient` high-level control nodes, testing modes (normal/balanced stands, velocity tracking, trajectory tracking, special actions like sit/flip), Euler/height ranges, and obtaining status variables.
 * **Original raw file:**
-  * [High_Motion_Control.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/High_Motion_Control.md)
+  * [[Go2_Documentation/archive/Case_reference/High_Motion_Control]]
 
-### [04_debugging_framework.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/Case_reference/04_debugging_framework.md)
+### [[Go2_Documentation/Case_reference/04_debugging_framework]]
 * **What is in it:** Multithreaded control architectures (`RobotController`), state machine transitions (DAMPING, STAND, CTRL), safety termination triggers based on gravity vector projections, advanced gamepad button packaging (on-press/on-release edge detection), dead zones, and exponential smoothing filters.
 * **Original raw files:**
-  * [Deployment_Framework.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Deployment_Framework.md)
-  * [Get_Remote_Control_Status.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Get_Remote_Control_Status.md)
+  * [[Go2_Documentation/archive/Case_reference/Deployment_Framework]]
+  * [[Go2_Documentation/archive/Case_reference/Get_Remote_Control_Status]]
 
-### [05_auxiliary_services.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/Case_reference/05_auxiliary_services.md)
+### [[Go2_Documentation/Case_reference/05_auxiliary_services]]
 * **What is in it:** Headlight LED white brightness adjustment using the `VuiClient` class, and virtual reinforcement learning training pipelines using Isaac Gym, CUDA, PyTorch, and `unitree_rl_gym`.
 * **Original raw files:**
-  * [Light_Control.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Light_Control.md)
-  * [RL_Control_Routine.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/RL_Control_Routine.md)
+  * [[Go2_Documentation/archive/Case_reference/Light_Control]]
+  * [[Go2_Documentation/archive/Case_reference/RL_Control_Routine]]
 
 ---
 

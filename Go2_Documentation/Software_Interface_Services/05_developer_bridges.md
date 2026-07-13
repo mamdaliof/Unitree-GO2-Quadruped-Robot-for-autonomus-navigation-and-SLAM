@@ -6,9 +6,9 @@ This document details configuring the ROS 2 Jazzy interface, Python bindings, an
 
 ## 1. Reference Links to Archive Sources
 For original script lines and raw XML configuration schemas, refer to the archived guides:
-* [Raw ROS2 Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/ROS2_Services_Interface.md)
-* [Raw Python Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/Python_Services_Interface.md)
-* [Raw DDS Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/DDS_Services_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/ROS2_Services_Interface|Raw ROS2 Services Interface Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/Python_Services_Interface|Raw Python Services Interface Guide]]
+* [[Go2_Documentation/archive/Software_Interface_Services/DDS_Services_Interface|Raw DDS Services Interface Guide]]
 
 ---
 

@@ -6,8 +6,8 @@ This document details the configuration workflows for the Unitree Go App and the
 
 ## 1. Reference Links to Archive Sources
 If this documentation lacks detail or you need to inspect raw interface images, refer to the original files:
-* [Raw App Binding Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/App_Binding.md)
-* [Raw TouchScreen RC Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/TouchScreen_RC_Supporting_Instructions.md)
+* [[Go2_Documentation/archive/Application_Development/App_Binding|Raw App Binding Guide]]
+* [[Go2_Documentation/archive/Application_Development/TouchScreen_RC_Supporting_Instructions|Raw TouchScreen RC Guide]]
 
 ---
 

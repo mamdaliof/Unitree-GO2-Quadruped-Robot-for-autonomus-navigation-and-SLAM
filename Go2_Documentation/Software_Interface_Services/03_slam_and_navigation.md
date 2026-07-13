@@ -6,7 +6,7 @@ This document details the software interfaces, API JSON schemas, coordinate tran
 
 ## 1. Reference Links to Archive Sources
 For original configuration parameters, shell scripts, and network configuration figures, refer to the archived guides:
-* [Raw SLAM and Navigation Services Interface Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Software_Interface_Services/SLAM_and_Navigation_Services_Interface.md)
+* [[Go2_Documentation/archive/Software_Interface_Services/SLAM_and_Navigation_Services_Interface|Raw SLAM and Navigation Services Interface Guide]]
 
 ---
 

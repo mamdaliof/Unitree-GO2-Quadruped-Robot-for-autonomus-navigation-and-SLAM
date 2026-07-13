@@ -6,7 +6,7 @@ This document defines the Cartesian coordinate system, physical scale clearances
 
 ## 1. Reference Links to Archive Sources
 For original coordinate diagrams and state transition flowcharts, refer to the archived guides:
-* [Raw Motion Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Motion_Application.md)
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Motion_Application|Raw Motion Application Guide]]
 
 ---
 

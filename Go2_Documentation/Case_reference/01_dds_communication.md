@@ -6,7 +6,7 @@ This document details how to establish native DDS communication channels using `
 
 ## 1. Reference Links to Archive Sources
 For the untouched original C++ source files, refer to the archived document:
-* [Raw DDS Communication Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/DDS_Communication.md)
+* [[Go2_Documentation/archive/Case_reference/DDS_Communication|Raw DDS Communication Guide]]
 
 ---
 

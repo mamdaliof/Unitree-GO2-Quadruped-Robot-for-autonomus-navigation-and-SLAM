@@ -6,8 +6,8 @@ This document outlines the multithreaded architecture used to safely test contro
 
 ## 1. Reference Links to Archive Sources
 For original code examples and class templates, refer to the archived guides:
-* [Raw Deployment Framework Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Deployment_Framework.md)
-* [Raw Remote Control Status Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Case_reference/Get_Remote_Control_Status.md)
+* [[Go2_Documentation/archive/Case_reference/Deployment_Framework|Raw Deployment Framework Guide]]
+* [[Go2_Documentation/archive/Case_reference/Get_Remote_Control_Status|Raw Remote Control Status Guide]]
 
 ---
 

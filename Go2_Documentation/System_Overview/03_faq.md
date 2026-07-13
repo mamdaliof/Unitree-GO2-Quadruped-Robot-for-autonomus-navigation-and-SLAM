@@ -6,7 +6,7 @@ This document compiles common developer questions, compiling issues, dependency 
 
 ## 1. Reference Links to Archive Sources
 For the raw FAQ document, refer to the archived file:
-* [Raw FAQ Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/FAQ.md)
+* [[Go2_Documentation/archive/FAQ|Raw FAQ Guide]]
 
 ---
 

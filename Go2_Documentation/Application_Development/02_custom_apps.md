@@ -6,7 +6,7 @@ This document details how to write, compile, and run custom C++ applications uti
 
 ## 1. Reference Links to Archive Sources
 If this documentation lacks detail or you need to inspect raw header files, refer to the original files:
-* [Raw Creating Customer Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/Application_Development/Creating_Customer_Application.md)
+* [[Go2_Documentation/archive/Application_Development/Creating_Customer_Application|Raw Creating Customer Application Guide]]
 
 ---
 

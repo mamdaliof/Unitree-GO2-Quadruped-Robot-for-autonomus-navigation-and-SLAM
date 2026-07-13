@@ -6,7 +6,7 @@ This document details the Go2 wireless networking architecture, including connec
 
 ## 1. Reference Links to Archive Sources
 For original configuration screenshots and application setup workflows, refer to the archived guides:
-* [Raw Network Application Guide](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Network_Application.md)
+* [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Network_Application|Raw Network Application Guide]]
 
 ---
 

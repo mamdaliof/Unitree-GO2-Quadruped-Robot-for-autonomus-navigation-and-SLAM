@@ -8,34 +8,34 @@ This directory contains the structured, processed documentation of core SDK conc
 
 To read specific hardware or software architecture definitions, reference the processed documents below:
 
-### [01_system_architecture.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/SDK_Concepts/01_system_architecture.md)
+### [[Go2_Documentation/SDK_Concepts/01_system_architecture]]
 * **What is in it:** System architecture diagrams, Cloud IoT interfaces (MQTT & WebRTC turn servers), Bluetooth BLE security pairing, DDS middleware with ROS 2 compatibility, serial data streams forwarding, and standard basic control blocks.
 * **Original raw files:**
-  * [Architecture_Description.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Architecture_Description.md)
-  * [Basic_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Basic_Application.md)
-  * [DDS_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/DDS_Application.md)
+  * [[Go2_Documentation/archive/SDK_Concepts/Architecture_Description]]
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Basic_Application]]
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/DDS_Application]]
 
-### [02_network_topology.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/SDK_Concepts/02_network_topology.md)
+### [[Go2_Documentation/SDK_Concepts/02_network_topology]]
 * **What is in it:** Detailed networking specifications (Wi-Fi STA, Wi-Fi AP, and 4G fallback priorities), Bluetooth-based pairing workflows, and step-by-step setup guides for both bound and unbound devices.
 * **Original raw file:**
-  * [Network_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Network_Application.md)
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Network_Application]]
 
-### [03_lidar_and_vision.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/SDK_Concepts/03_lidar_and_vision.md)
+### [[Go2_Documentation/SDK_Concepts/03_lidar_and_vision]]
 * **What is in it:** Unitree L1 LiDAR specs (hemispherical scanning direction, TOF lasers), Unilidar SDK point cloud parser, distortion removal mapping, 2.5D height map construction for foot placement, 3D voxel maps, WebRTC streaming, and gesture view switching.
 * **Original raw files:**
-  * [LiDAR_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/LiDAR_Application.md)
-  * [Image_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Image_Application.md)
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/LiDAR_Application]]
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Image_Application]]
 
-### [04_locomotion_states.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/SDK_Concepts/04_locomotion_states.md)
+### [[Go2_Documentation/SDK_Concepts/04_locomotion_states]]
 * **What is in it:** Cartesian coordinate definitions (X-front, Y-left, Z-up), joint clearance parameters, state machine priority switching (Damping, Standing Lock, Balanced Stand, Locomotion, Special actions, rollover Protection), and gait profiles (Trot, Trot-Run, Climb Stairs).
 * **Original raw file:**
-  * [Motion_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Motion_Application.md)
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/Motion_Application]]
 
-### [05_uwb_and_diagnostics.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/SDK_Concepts/05_uwb_and_diagnostics.md)
+### [[Go2_Documentation/SDK_Concepts/05_uwb_and_diagnostics]]
 * **What is in it:** UWB tag/base station vector positioning, button configurations, companion following modes (slow/fast), wearing placement alignments, and system fault classifications (System, Behavior, Application faults) with recovery reboot rules.
 * **Original raw files:**
-  * [UWB_Application.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/UWB_Application.md)
-  * [FAULTS.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/Go2_Documentation/archive/SDK_Concepts/FAULTS.md)
+  * [[Go2_Documentation/archive/SDK_Concepts/Robot_Dog_Application/UWB_Application]]
+  * [[Go2_Documentation/archive/SDK_Concepts/FAULTS]]
 
 ---
 
