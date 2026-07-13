@@ -1,4 +1,4 @@
-# Design Choices Trade-Off Analysis
+	# Design Choices Trade-Off Analysis
 
 This document compiles technical evaluations of competing design alternatives across SLAM, safety fallbacks, path planning, and state coordination.
 

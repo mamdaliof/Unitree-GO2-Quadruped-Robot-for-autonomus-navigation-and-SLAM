@@ -41,3 +41,13 @@ This document outlines active engineering questions and fields that require rese
   2. Decrease the LiDAR point cloud voxel grid filter sampling rate to reduce computation when processing loads spike.
 * **Research Tasks:** Research "dynamic CPU load balancing in ROS 2 navigation stacks."
   * *Citation Placeholder:* [User Citation Needed]
+
+---
+
+## ❓ Question 5: Which KITTI Leaderboard SLAM Candidate Best Fits Our Setup?
+* **Problem:** We need to evaluate top-performing SLAM algorithms from the KITTI Odometry leaderboard, selecting candidates that support LiDAR-Inertial fusion and multi-LiDAR setups while running efficiently on the Orin NX.
+* **Suggested Approaches:**
+  1. Compile a list of top 5 KITTI LiDAR/LIO algorithms with open-source ROS 2 implementations (e.g., candidates like Kiss-ICP, FAST-LIO2, or CT-ICP).
+  2. Map their memory footprint, GPU acceleration dependency, and z-drift parameters.
+* **Research Tasks:** Audit the KITTI Odometry leaderboard for high-ranking LiDAR-only or LIO algorithms.
+  * *Citation Placeholder:* [User Citation Needed]
