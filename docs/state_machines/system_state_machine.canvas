@@ -1,0 +1,172 @@
+{
+  "nodes": [
+    {
+      "id": "state-idle",
+      "type": "text",
+      "text": "### 💤 State: IDLE\n* **Description:** Default boot state. Robot stands locked or lies down. Low stiffness.\n* **Locomotion Mode:** MCF stand state.\n* **Safety checks active:** Battery, connection.",
+      "x": 0,
+      "y": 0,
+      "width": 300,
+      "height": 130,
+      "color": "1"
+    },
+    {
+      "id": "state-auto-mapping",
+      "type": "text",
+      "text": "### 🗺️ State: AUTONOMOUS_MAPPING\n* **Description:** Robot automatically navigates the floor to build the 3D map.\n* **Locomotion Mode:** High-level velocity/coordinates.\n* **Inputs:** LiDAR point clouds, IMU odometry.",
+      "x": 450,
+      "y": -150,
+      "width": 300,
+      "height": 130,
+      "color": "3"
+    },
+    {
+      "id": "state-manual-mapping",
+      "type": "text",
+      "text": "### 🎮 State: MANUAL_MAPPING\n* **Description:** Backup mapping mode. Guided by operator remote joystick.\n* **Trigger:** Joystick input override detected during active mapping runs.",
+      "x": 900,
+      "y": -150,
+      "width": 300,
+      "height": 130,
+      "color": "4"
+    },
+    {
+      "id": "state-patrol-nav",
+      "type": "text",
+      "text": "### 🚀 State: PATROL_NAVIGATION\n* **Description:** Autonomously patrolling manufacturing floor via pre-defined coordinates.\n* **Locomotion Mode:** Twist rates (`cmd_vel`) / Absolute coordinates.\n* **Avoidance:** Default SDK / Nav2.",
+      "x": 450,
+      "y": 150,
+      "width": 300,
+      "height": 130,
+      "color": "5"
+    },
+    {
+      "id": "state-low-battery",
+      "type": "text",
+      "text": "### 🔋 State: LOW_BATTERY_RETURN\n* **Description:** Triggered when battery drops below 15%.\n* **Behavior:** Cancels active patrol, plans trajectory back to docking station electrodes.",
+      "x": 900,
+      "y": 150,
+      "width": 300,
+      "height": 130,
+      "color": "1"
+    },
+    {
+      "id": "state-stand-still",
+      "type": "text",
+      "text": "### 🛑 State: STAND_STILL_SAFETY\n* **Description:** Triggered by LiDAR dropout or connection lag.\n* **Behavior:** Holds current standing stance. Waits for telemetry recovery.",
+      "x": 450,
+      "y": 450,
+      "width": 300,
+      "height": 130,
+      "color": "1"
+    },
+    {
+      "id": "state-damping",
+      "type": "text",
+      "text": "### ⚠️ State: EMERGENCY_DAMPING\n* **Description:** Triggered on rollover detection (pitch/roll > 90°).\n* **Behavior:** Writes zero joint stiffness (Kd) immediately to collapse legs and prevent motor damage.",
+      "x": 0,
+      "y": 450,
+      "width": 300,
+      "height": 130,
+      "color": "1"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-idle-to-automap",
+      "fromNode": "state-idle",
+      "fromSide": "right",
+      "toNode": "state-auto-mapping",
+      "toSide": "left",
+      "label": "CMD: Start Auto Mapping"
+    },
+    {
+      "id": "edge-automap-to-manualmap",
+      "fromNode": "state-auto-mapping",
+      "fromSide": "right",
+      "toNode": "state-manual-mapping",
+      "toSide": "left",
+      "label": "JoyOverride detected"
+    },
+    {
+      "id": "edge-manualmap-to-automap",
+      "fromNode": "state-manual-mapping",
+      "fromSide": "bottom",
+      "toNode": "state-auto-mapping",
+      "toSide": "right",
+      "label": "JoyRelease & CMD: Resume"
+    },
+    {
+      "id": "edge-automap-to-idle",
+      "fromNode": "state-auto-mapping",
+      "fromSide": "top",
+      "toNode": "state-idle",
+      "toSide": "top",
+      "label": "CMD: Save Map & Finish"
+    },
+    {
+      "id": "edge-idle-to-patrol",
+      "fromNode": "state-idle",
+      "fromSide": "right",
+      "toNode": "state-patrol-nav",
+      "toSide": "left",
+      "label": "CMD: Start Patrol"
+    },
+    {
+      "id": "edge-patrol-to-lowbat",
+      "fromNode": "state-patrol-nav",
+      "fromSide": "right",
+      "toNode": "state-low-battery",
+      "toSide": "left",
+      "label": "Battery < 15%"
+    },
+    {
+      "id": "edge-lowbat-to-idle",
+      "fromNode": "state-low-battery",
+      "fromSide": "top",
+      "toNode": "state-idle",
+      "toSide": "right",
+      "label": "Docking complete & Charging"
+    },
+    {
+      "id": "edge-patrol-to-safety",
+      "fromNode": "state-patrol-nav",
+      "fromSide": "bottom",
+      "toNode": "state-stand-still",
+      "toSide": "top",
+      "label": "LiDAR_Loss / Net_Lag > Limit"
+    },
+    {
+      "id": "edge-automap-to-safety",
+      "fromNode": "state-auto-mapping",
+      "fromSide": "bottom",
+      "toNode": "state-stand-still",
+      "toSide": "top",
+      "label": "Sensor dropout"
+    },
+    {
+      "id": "edge-safety-to-resume",
+      "fromNode": "state-stand-still",
+      "fromSide": "right",
+      "toNode": "state-patrol-nav",
+      "toSide": "bottom",
+      "label": "Signal recovered"
+    },
+    {
+      "id": "edge-any-to-damping",
+      "fromNode": "state-patrol-nav",
+      "fromSide": "left",
+      "toNode": "state-damping",
+      "toSide": "right",
+      "label": "Rollover detected (gravity.z > 0)"
+    },
+    {
+      "id": "edge-damping-to-idle",
+      "fromNode": "state-damping",
+      "fromSide": "top",
+      "toNode": "state-idle",
+      "toSide": "bottom",
+      "label": "RecoveryStand command triggered"
+    }
+  ]
+}
