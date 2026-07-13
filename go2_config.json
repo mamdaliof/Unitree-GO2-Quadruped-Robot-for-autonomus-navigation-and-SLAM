@@ -1,0 +1,25 @@
+{
+  "system": {
+    "target_localization_accuracy_m": 0.05,
+    "allowable_slope_angle_deg": "PENDING_RESEARCH",
+    "dynamic_speed_scaling": true,
+    "sampling_frequency_hz": 500.0
+  },
+  "locomotion": {
+    "max_linear_velocity_m_s": 1.0,
+    "min_battery_reserve_pct": 15.0,
+    "movement_modes": {
+      "relative_positioning": true,
+      "absolute_positioning": true
+    }
+  },
+  "safety": {
+    "sensor_loss_action": "STAND_STILL",
+    "network_lag_action": "STAND_STILL",
+    "human_proximity_slowdown": {
+      "enabled_in_phase_1": false,
+      "slowdown_radius_m": 2.0,
+      "target_slowdown_velocity_m_s": 0.3
+    }
+  }
+}

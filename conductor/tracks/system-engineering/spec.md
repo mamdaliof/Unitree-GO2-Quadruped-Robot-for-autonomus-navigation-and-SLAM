@@ -16,6 +16,14 @@ Each requirement must be verified by a corresponding test or validation method:
 * **REQ-SYS-004 (Glass/Obstacle Handling):** The perception pipeline must filter out false returns from glass or transparent structures. *Validation:* Offline replay validation of PointCloud filters on dynamic/glass targets.
 * **REQ-SYS-005 (LLM SDK Directory):** Intermediate documents must provide an indexed representation of Go2 SDK commands, topics, and parameters. *Validation:* LLM utility query script test (retrieving command syntax successfully).
 
+> [!NOTE]
+> **Iterative Deliverables:**
+> This track establishes three core interactive design files:
+> 1. `docs/architecture/key_questions.md` - Open engineering challenges and research queries.
+> 2. `docs/architecture/morphological_diagram.md` - Component option matrix.
+> 3. `docs/architecture/tradeoff_analysis.md` - Design trade-offs.
+> These files are iterative. We will draft choices and options, leaving them open for user manual research and citations to resolve before moving to code implementation.
+
 ## 3. Modular Architecture (Proposed Modules)
 * **`go2_control_node` (C++):** Wraps high-level Go2 SDK commands (`SportClient`), publishing odometer states and subscribing to `geometry_msgs/Twist`. It inherits from/extends standard ROS 2 SDK wrapper classes to maintain API compatibility.
 * **`go2_slam_node` (C++):** Tightly-coupled LiDAR SLAM. Swappable backend (candidate: FAST-LIO2 or LIO-SAM).
