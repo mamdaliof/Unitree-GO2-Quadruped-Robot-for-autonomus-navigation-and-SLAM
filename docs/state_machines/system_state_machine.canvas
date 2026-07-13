@@ -1,184 +1,36 @@
 {
-  "nodes": [
-    {
-      "id": "state-init",
-      "type": "text",
-      "text": "### 🔌 State: INITIALIZATION\n* **Description:** Power-on self-test. ROS 2 node startup.\n* **Locomotion Mode:** MCF initial standby.\n* **Checks:** LiDAR heartbeat, IMU status, SDK connection.",
-      "x": 0,
-      "y": 0,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-selection",
-      "type": "text",
-      "text": "### 🎛️ State: MODE_SELECTION\n* **Description:** Idle stance. Reads ROS 2 launch parameter `mode` to route execution.\n* **Default Mode:** `idle` (stay standing, wait for command).\n* **Checked Parameters:** `joystick`, `auto_deployment`, `manual_deployment`, `inspection`.",
-      "x": 550,
-      "y": 0,
-      "width": 380,
-      "height": 140,
-      "color": "3"
-    },
-    {
-      "id": "state-joystick",
-      "type": "text",
-      "text": "### 🎮 State: JOYSTICK_MANUAL\n* **Description:** Direct operator driving via remote control joystick.\n* **Trigger:** Launch param `mode:=joystick` OR joystick interrupt.\n* **Locomotion Mode:** High-level remote MCF listener.",
-      "x": 1100,
-      "y": -300,
-      "width": 380,
-      "height": 140,
-      "color": "4"
-    },
-    {
-      "id": "state-auto-mapping",
-      "type": "text",
-      "text": "### 🗺️ State: AUTONOMOUS_DEPLOYMENT\n* **Description:** Automatic mapping patrol. Robot explores the floor autonomously.\n* **Trigger:** Launch param `mode:=auto_deployment`.\n* **Locomotion Mode:** Target coordinates navigation.",
-      "x": 1100,
-      "y": -100,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-manual-mapping",
-      "type": "text",
-      "text": "### 🗺️ State: MANUAL_DEPLOYMENT\n* **Description:** SLAM mapping run controlled manually via remote joystick.\n* **Trigger:** Launch param `mode:=manual_deployment`.\n* **Locomotion:** Joystick manual velocity override.",
-      "x": 1100,
-      "y": 100,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-patrol-nav",
-      "type": "text",
-      "text": "### 🚀 State: INSPECTION_PATROL\n* **Description:** Autonomous patrol navigation on pre-recorded map.\n* **Trigger:** Launch param `mode:=inspection`.\n* **Locomotion Mode:** `/cmd_vel` waypoints / Nav2 coordinate goals.",
-      "x": 1100,
-      "y": 300,
-      "width": 380,
-      "height": 140,
-      "color": "2"
-    },
-    {
-      "id": "state-low-battery",
-      "type": "text",
-      "text": "### 🔋 State: LOW_BATTERY_RETURN\n* **Description:** Return-to-dock routine. Triggered at < 15% battery.\n* **Behavior:** Suspends active patrol, plans trajectory to charging electrodes.",
-      "x": 1650,
-      "y": 300,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-stand-still",
-      "type": "text",
-      "text": "### 🛑 State: STAND_STILL_SAFETY\n* **Description:** Holds current stand posture. Waits for sensor recovery.\n* **Trigger:** LiDAR dropout OR network latency > limit.\n* **Exit:** Resume previous state on sensor recovery.",
-      "x": 550,
-      "y": 350,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-damping",
-      "type": "text",
-      "text": "### ⚠️ State: EMERGENCY_DAMPING\n* **Description:** Collapse state. Sets joint stiffness to zero to prevent burnout.\n* **Trigger:** Rollover detected (pitch/roll > 45 deg or gravity.z > 0).\n* **Exit:** RecoveryStand command.",
-      "x": 0,
-      "y": 350,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    }
-  ],
-  "edges": [
-    {
-      "id": "edge-init-to-selection",
-      "fromNode": "state-init",
-      "fromSide": "right",
-      "toNode": "state-selection",
-      "toSide": "left",
-      "label": "Self-Test Pass"
-    },
-    {
-      "id": "edge-select-to-joystick",
-      "fromNode": "state-selection",
-      "fromSide": "top",
-      "toNode": "state-joystick",
-      "toSide": "left",
-      "label": "mode == joystick"
-    },
-    {
-      "id": "edge-select-to-automap",
-      "fromNode": "state-selection",
-      "fromSide": "right",
-      "toNode": "state-auto-mapping",
-      "toSide": "left",
-      "label": "mode == auto_deployment"
-    },
-    {
-      "id": "edge-select-to-manualmap",
-      "fromNode": "state-selection",
-      "fromSide": "right",
-      "toNode": "state-manual-mapping",
-      "toSide": "left",
-      "label": "mode == manual_deployment"
-    },
-    {
-      "id": "edge-select-to-patrol",
-      "fromNode": "state-selection",
-      "fromSide": "bottom",
-      "toNode": "state-patrol-nav",
-      "toSide": "left",
-      "label": "mode == inspection"
-    },
-    {
-      "id": "edge-patrol-to-lowbat",
-      "fromNode": "state-patrol-nav",
-      "fromSide": "right",
-      "toNode": "state-low-battery",
-      "toSide": "left",
-      "label": "Battery < 15%"
-    },
-    {
-      "id": "edge-lowbat-to-selection",
-      "fromNode": "state-low-battery",
-      "fromSide": "top",
-      "toNode": "state-selection",
-      "toSide": "right",
-      "label": "Charging complete"
-    },
-    {
-      "id": "edge-active-to-safety",
-      "fromNode": "state-patrol-nav",
-      "fromSide": "bottom",
-      "toNode": "state-stand-still",
-      "toSide": "right",
-      "label": "Sensor drop / lag"
-    },
-    {
-      "id": "edge-safety-to-resume",
-      "fromNode": "state-stand-still",
-      "fromSide": "top",
-      "toNode": "state-patrol-nav",
-      "toSide": "bottom",
-      "label": "Sensor recovered"
-    },
-    {
-      "id": "edge-any-to-damping",
-      "fromNode": "state-patrol-nav",
-      "fromSide": "left",
-      "toNode": "state-damping",
-      "toSide": "right",
-      "label": "Rollover detected"
-    },
-    {
-      "id": "edge-damping-to-init",
-      "fromNode": "state-damping",
-      "fromSide": "top",
-      "toNode": "state-init",
-      "toSide": "bottom",
-      "label": "Recovery command"
-    }
-  ]
+	"nodes":[
+		{"id":"state-init","type":"text","text":"### 🔌 State: INITIALIZATION\n* **Description:** Power-on self-test. ROS 2 node startup.\n* **Locomotion Mode:** MCF initial standby.\n* **Checks:** LiDAR heartbeat, IMU status, SDK connection.","x":0,"y":0,"width":380,"height":140,"color":"1"},
+		{"id":"state-selection","type":"text","text":"### 🎛️ State: MODE_SELECTION\n* **Description:** Idle stance. Waits for ROS 2 launch parameter `mode` trigger.\n* **Default Mode:** `idle`.\n* **Checked Parameters:** `auto_mapping`, `manual_mapping`, `inspection`.","x":1000,"y":0,"width":380,"height":140,"color":"3"},
+		{"id":"state-mapping","type":"text","text":"### 🗺️ State: MAPPING_DEPLOYMENT\n* **Description:** Core SLAM mapping & localization running.\n* **Bypass Option:** Joystick override (manual deployment) vs. Autonomous exploration planner (auto deployment).\n* **Exit:** Saved map to PCD.","x":1550,"y":-150,"width":380,"height":140,"color":"5"},
+		{"id":"state-waypoint-gen","type":"text","text":"### 📍 State: WAYPOINT_GENERATION\n* **Description:** Reads prior PCD map. Calculates coordinates of the next target checkpoint.\n* **Subsystem:** Nav2 Waypoint follower client.","x":1550,"y":150,"width":380,"height":140,"color":"2"},
+		{"id":"state-navigating","type":"text","text":"### 🚀 State: NAVIGATING\n* **Description:** Moving towards target checkpoint.\n* **Control:** `/cmd_vel` velocity commands.\n* **Exit Blocked:** RE_ROUTING.\n* **Exit Reached:** CHECKPOINT_PAUSE.","x":2100,"y":150,"width":380,"height":140,"color":"2"},
+		{"id":"state-rerouting","type":"text","text":"### 🔄 State: RE_ROUTING (Occlusion)\n* **Description:** Triggered when costmap detects obstacle blocking path.\n* **Behavior:** Suspends forward motion, recalculates alternative detour path to checkpoint.","x":2650,"y":0,"width":380,"height":140,"color":"4"},
+		{"id":"state-pause","type":"text","text":"### ⏸️ State: CHECKPOINT_PAUSE\n* **Description:** Robot stands still at waypoint checkpoint for sensor scanning.\n* **Stance:** Holds lock pose for configured delay (e.g. 5 seconds).","x":2650,"y":300,"width":380,"height":140,"color":"4"},
+		{"id":"state-return","type":"text","text":"### 🔌 State: RETURN_TO_STATION\n* **Description:** Triggered at patrol end OR battery < 15%.\n* **Behavior:** Aborts mission, navigates to charging dock contacts.","x":1550,"y":450,"width":380,"height":140,"color":"1"},
+		{"id":"state-charging","type":"text","text":"### ⚡ State: CHARGING\n* **Description:** Resting on charging contacts. Monitor battery percentage.\n* **Exit:** Battery > 90% transitions to MODE_SELECTION (awaits launch command).","x":1000,"y":450,"width":380,"height":140,"color":"1"},
+		{"id":"state-stand-still","type":"text","text":"### 🛑 State: STAND_STILL_SAFETY\n* **Description:** Holds current stand posture. Waits for sensor recovery.\n* **Trigger:** LiDAR dropout OR network latency > limit.\n* **Exit:** Resume previous state on sensor recovery.","x":1000,"y":-250,"width":380,"height":140,"color":"1"},
+		{"id":"state-damping","type":"text","text":"### ⚠️ State: EMERGENCY_DAMPING\n* **Description:** Collapse state. Sets joint stiffness to zero to prevent burnout.\n* **Trigger:** Rollover detected (pitch/roll > 45 deg or gravity.z > 0).\n* **Exit:** RecoveryStand command.","x":380,"y":-720,"width":380,"height":140,"color":"1"},
+		{"id":"state-calibration","type":"text","text":"### ⚖️ State: CALIBRATION\n* **Description:** Automatic sensors alignment.\n* **LED Status:** Slow Flash Blue.\n* **Tasks:** IMU bias calibration, foot force sensor zero-drift correction.\n* **Exit Fail:** DAMPING.","x":520,"y":440,"width":380,"height":140,"color":"3"}
+	],
+	"edges":[
+		{"id":"edge-init-to-calib","fromNode":"state-init","fromSide":"right","toNode":"state-calibration","toSide":"left","label":"Self-Test Pass"},
+		{"id":"edge-calib-to-select","fromNode":"state-calibration","fromSide":"right","toNode":"state-selection","toSide":"left","label":"Calibration Pass"},
+		{"id":"edge-calib-to-damping","fromNode":"state-calibration","fromSide":"top","toNode":"state-damping","toSide":"right","label":"Calibration Fail"},
+		{"id":"edge-select-to-mapping","fromNode":"state-selection","fromSide":"right","toNode":"state-mapping","toSide":"left","label":"mode == deployment"},
+		{"id":"edge-select-to-waypoint","fromNode":"state-selection","fromSide":"right","toNode":"state-waypoint-gen","toSide":"left","label":"mode == inspection"},
+		{"id":"edge-waypoint-to-nav","fromNode":"state-waypoint-gen","fromSide":"right","toNode":"state-navigating","toSide":"left","label":"Target waypoint defined"},
+		{"id":"edge-nav-to-reroute","fromNode":"state-navigating","fromSide":"right","toNode":"state-rerouting","toSide":"left","label":"Occlusion detected"},
+		{"id":"edge-reroute-to-nav","fromNode":"state-rerouting","fromSide":"bottom","toNode":"state-navigating","toSide":"right","label":"Detour calculated"},
+		{"id":"edge-nav-to-pause","fromNode":"state-navigating","fromSide":"bottom","toNode":"state-pause","toSide":"top","label":"Waypoint reached"},
+		{"id":"edge-pause-to-waypoint","fromNode":"state-pause","fromSide":"left","toNode":"state-waypoint-gen","toSide":"bottom","label":"Pause delay complete (next waypoint)"},
+		{"id":"edge-pause-to-return","fromNode":"state-pause","fromSide":"bottom","toNode":"state-return","toSide":"right","label":"All waypoints complete"},
+		{"id":"edge-any-to-return","fromNode":"state-waypoint-gen","fromSide":"bottom","toNode":"state-return","toSide":"top","label":"Battery < 15%"},
+		{"id":"edge-return-to-charging","fromNode":"state-return","fromSide":"left","toNode":"state-charging","toSide":"right","label":"Docked"},
+		{"id":"edge-charging-to-select","fromNode":"state-charging","fromSide":"top","toNode":"state-selection","toSide":"bottom","label":"Charged > 90% (wait command)"},
+		{"id":"edge-active-to-safety","fromNode":"state-selection","fromSide":"top","toNode":"state-stand-still","toSide":"bottom","label":"LiDAR drop / lag"},
+		{"id":"edge-safety-to-resume","fromNode":"state-stand-still","fromSide":"right","toNode":"state-selection","toSide":"top","label":"Signal recovered"},
+		{"id":"edge-any-to-damping-g","fromNode":"state-selection","fromSide":"left","toNode":"state-damping","toSide":"right","label":"Rollover detected"},
+		{"id":"edge-damping-to-init","fromNode":"state-damping","fromSide":"bottom","toNode":"state-init","toSide":"top","label":"Recovery command"}
+	]
 }
