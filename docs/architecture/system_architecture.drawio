@@ -1,0 +1,60 @@
+<mxfile host="65bd71144e">
+    <diagram id="uml-architecture" name="Go2 UML Component Diagram">
+        <mxGraphModel dx="1000" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                
+                <!-- Package: ROS 2 Control Wrapper -->
+                <mxCell id="p-control" value="&lt;b&gt;Package: go2_control&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="40" width="300" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-control-node" value="Go2ControlNode&#x0A;--&#x0A;- sport_client: SportClient&#x0A;- cmd_vel_sub: Subscription&lt;Twist&gt;&#x0A;- odom_pub: Publisher&lt;Odometry&gt;&#x0A;--&#x0A;+ StandUp(): void&#x0A;+ StandDown(): void&#x0A;+ Move(vx: float, vy: float, yaw: float): void" style="swimlane;fontStyle=0;childLayout=poseLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="p-control">
+                    <mxGeometry x="20" y="40" width="260" height="140" as="geometry"/>
+                </mxCell>
+
+                <!-- Package: ROS 2 State Orchestration -->
+                <mxCell id="p-state" value="&lt;b&gt;Package: go2_state_orchestrator&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="40" width="320" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-orchestrator" value="Go2StateOrchestrator&#x0A;--&#x0A;- active_state: string&#x0A;- battery_pct: float&#x0A;- sensor_connected: bool&#x0A;--&#x0A;+ execute_transitions(): void&#x0A;+ check_safety_fallbacks(): void&#x0A;+ trigger_emergency_damping(): void" style="swimlane;fontStyle=0;childLayout=poseLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="p-state">
+                    <mxGeometry x="30" y="40" width="260" height="140" as="geometry"/>
+                </mxCell>
+
+                <!-- Package: ROS 2 Perception -->
+                <mxCell id="p-perception" value="&lt;b&gt;Package: go2_perception&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="320" width="300" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-perception-node" value="Go2PerceptionNode&#x0A;--&#x0A;- ground_filter: PatchWorkFilter&#x0A;- raw_cloud_sub: Subscription&lt;PointCloud2&gt;&#x0A;- costmap_pub: Publisher&lt;OccupancyGrid&gt;&#x0A;--&#x0A;+ filter_reflections(cloud: PointCloud2): PointCloud2&#x0A;+ generate_costmap(): void" style="swimlane;fontStyle=0;childLayout=poseLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="p-perception">
+                    <mxGeometry x="20" y="40" width="260" height="130" as="geometry"/>
+                </mxCell>
+
+                <!-- Package: ROS 2 SLAM Backend -->
+                <mxCell id="p-slam" value="&lt;b&gt;Package: go2_slam&lt;/b&gt;" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#b854d4;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="320" width="320" height="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="c-slam-node" value="Go2SlamNode&#x0A;--&#x0A;- slam_backend: LioBackend&#x0A;- deskewed_cloud_sub: Subscription&lt;PointCloud2&gt;&#x0A;- pose_pub: Publisher&lt;PoseStamped&gt;&#x0A;--&#x0A;+ process_lidar_imu(cloud: PointCloud2, imu: Imu): void&#x0A;+ publish_localization(): void" style="swimlane;fontStyle=0;childLayout=poseLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="p-slam">
+                    <mxGeometry x="30" y="40" width="260" height="130" as="geometry"/>
+                </mxCell>
+
+                <!-- Connectors: Subscriptions & Relationships -->
+                <mxCell id="conn-state-to-control" value="pub/sub commands" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;strokeWidth=2;" edge="1" parent="1" source="c-orchestrator" target="c-control-node">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn-slam-to-state" value="pub localization pose" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;strokeWidth=2;" edge="1" parent="1" source="c-slam-node" target="c-orchestrator">
+                    <mxGeometry x="-0.2" y="-10" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="conn-perception-to-state" value="pub dynamic obstacles" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;dashed=1;strokeWidth=2;" edge="1" parent="1" source="c-perception-node" target="c-orchestrator">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn-control-to-slam" value="pub odometer state" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;strokeWidth=2;" edge="1" parent="1" source="c-control-node" target="c-slam-node">
+                    <mxGeometry x="0.2" y="10" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
