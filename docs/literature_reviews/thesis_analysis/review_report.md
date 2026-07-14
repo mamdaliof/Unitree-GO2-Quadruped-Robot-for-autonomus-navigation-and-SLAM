@@ -6,13 +6,13 @@ This report analyzes the thesis *"Autonomous Navigation and Real-Time 3D Reconst
 
 ## 1. System Engineering & Architecture Comparison
 
-| Architectural Aspect | Wilhelm (2025) Setup | Our Go2 Stack Setup | Comparison & Impact |
+| Architectural Aspect | Wilhelm (2025) Setup | Our Candidate Morphological Choices | Comparison & Impact |
 | :--- | :--- | :--- | :--- |
 | **Robot Platform** | Unitree Go2 EDU with Expansion Dock | Unitree Go2 Edu with Expansion Dock | Identical hardware platform. |
-| **3D SLAM / Odom** | LIO-SAM (Shan et al.) & DLIO (Chen et al.) | Point-LIO / FAST-LIO2 | LIO-SAM requires tight LiDAR-IMU time sync. DLIO is lighter but fails in narrow hallways. |
-| **2D SLAM** | SLAM Toolbox (converted 3D points to 2D scan) | SLAM Toolbox / Nav2 Map Server | Both project 3D clouds to 2D scans using `pointcloud_to_laserscan`. |
-| **Local Planner** | DWB Local Planner (default Nav2) | DWB Local Planner | DWB planner is suitable for omnidirectional quadruped walking. |
-| **Kinematics Model**| `nav2_amcl::OmniMotionModel` | `nav2_amcl::OmniMotionModel` | Omnidirectional motion allows the quadruped to strafe sideways around obstacles. |
+| **3D SLAM / Odom** | LIO-SAM (Shan et al.) & DLIO (Chen et al.) | Point-LIO / FAST-LIO2 (Under evaluation) | Wilhelm used LIO-SAM/DLIO. Our stack has Point-LIO/FAST-LIO2 as candidates; further evaluation is needed. |
+| **2D SLAM** | SLAM Toolbox (converted 3D points to 2D scan) | SLAM Toolbox / Nav2 Map Server (Under evaluation) | Conversion of 3D clouds to 2D scans via `pointcloud_to_laserscan` is a candidate workflow. |
+| **Local Planner** | DWB Local Planner (default Nav2) | DWB Local Planner / TEB / DWA (Under evaluation) | Local planner selections remain open; omnidirectional planners are primary candidates. |
+| **Kinematics Model**| `nav2_amcl::OmniMotionModel` | `nav2_amcl::OmniMotionModel` (Suggested) | Omnidirectional model is recommended if mapping is done via AMCL, allowing side-stepping. |
 
 ---
 
@@ -30,7 +30,7 @@ This report analyzes the thesis *"Autonomous Navigation and Real-Time 3D Reconst
 ---
 
 ## 3. Workflow Adaptation Recommendations
-* **3D-to-2D Point Cloud Slicing:**
-  Configure the `pointcloud_to_laserscan` node with strict vertical height bounds (e.g., $0.1\text{ m}$ to $1.0\text{ m}$ relative to `base_link`) to capture walls and large obstacles while discarding floor reflections and high ceiling structures.
-* **Offloaded Visualization:**
-  Keep the onboard processor dedicated entirely to ROS driver nodes, LIO state estimation, and data compression. Offload RViz or Foxglove visualization to a remote PC via a high-bandwidth network to prevent onboard CPU starvation.
+* **3D-to-2D Point Cloud Slicing (Candidate):**
+  If projecting 3D point clouds to 2D is selected for mapping/navigation, configure the `pointcloud_to_laserscan` node with strict vertical height bounds (e.g., $0.1\text{ m}$ to $1.0\text{ m}$ relative to `base_link`) to capture walls and large obstacles while discarding floor reflections and high ceiling structures.
+* **Offloaded Computation (Candidate):**
+  If running computationally heavy SLAM, keep the onboard processor dedicated entirely to drivers and data compression. Offload visualization or heavy SLAM nodes to a remote PC or a mounted mini-PC.
