@@ -16,6 +16,7 @@
 | `repo-audit-autonomy-stack` | Autonomy Stack Go2 Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-autonomy-stack/index.md) |
 | `repo-audit-fast-lio-humanoid` | FAST_LIO_LOCALIZATION_HUMANOID Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-fast-lio-humanoid/index.md) |
 | `repo-audit-go2-slam-nav` | unitree-go2-slam-nav2 Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-go2-slam-nav/index.md) |
+| `thesis-analysis-reconstruction` | Thesis Review: Autonomous Navigation and 3D Reconstruction | In Progress | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/thesis-analysis-reconstruction/index.md) |
 
 ---
 
@@ -31,5 +32,11 @@
 
 - [x] **Track: unitree-go2-slam-nav2 Repository Audit**
 *Link: [./tracks/repo-audit-go2-slam-nav/](./tracks/repo-audit-go2-slam-nav/)*
+
+---
+
+- [ ] **Track: Thesis Review: Autonomous Navigation and 3D Reconstruction**
+*Link: [./tracks/thesis-analysis-reconstruction/](./tracks/thesis-analysis-reconstruction/)*
+
 
 
