@@ -1,0 +1,102 @@
+{
+  "project": "Unitree Go2 Autonomy & SLAM Stack Reference",
+  "version": "1.0",
+  "dds_telemetry_topics": {
+    "rt/unitree/slam_mapping/points": {
+      "type": "sensor_msgs/msg/PointCloud2",
+      "description": "Real-time mapping point clouds published by onboard SLAM node."
+    },
+    "rt/unitree/slam_mapping/odom": {
+      "type": "nav_msgs/msg/Odometry",
+      "description": "High-frequency local odometry output during mapping runs."
+    },
+    "rt/unitree/slam_relocation/points": {
+      "type": "sensor_msgs/msg/PointCloud2",
+      "description": "Real-time localization point clouds aligned against active PCD map."
+    },
+    "rt/unitree/slam_relocation/odom": {
+      "type": "nav_msgs/msg/Odometry",
+      "description": "Current global localized position of the robot relative to the map."
+    },
+    "rt/slam_info": {
+      "type": "std_msgs/msg/String",
+      "description": "JSON string containing real-time system diagnostic parameters (CPU, CPU temperature, motor temperatures, battery voltage, active PCD map name, active planner states)."
+    },
+    "rt/slam_key_info": {
+      "type": "std_msgs/msg/String",
+      "description": "JSON string reporting state machine task status outputs (e.g., 'is_arrived': true)."
+    }
+  },
+  "sport_mode_locomotion_calls": {
+    "StandUp": {
+      "api_id": 1002,
+      "description": "Stands up with locked joints (height: 0.33m)."
+    },
+    "StandDown": {
+      "api_id": 1003,
+      "description": "Lies down with locked joints."
+    },
+    "BalanceStand": {
+      "api_id": 1004,
+      "description": "Stands dynamically balancing."
+    },
+    "StopMove": {
+      "api_id": 1005,
+      "description": "Instantly halts high-level locomotion command loop."
+    },
+    "Move": {
+      "api_id": 1008,
+      "parameters": {
+        "vx": "linear velocity on X-axis (m/s) [-2.5 ~ 3.8]",
+        "vy": "linear velocity on Y-axis (m/s) [-1.0 ~ 1.0]",
+        "vyaw": "angular velocity around Z-axis (rad/s) [-4.0 ~ 4.0]"
+      },
+      "description": "High-level velocity control."
+    },
+    "Euler": {
+      "api_id": 1010,
+      "parameters": {
+        "roll": "roll offset in radians [-0.75 ~ 0.75]",
+        "pitch": "pitch offset in radians [-0.75 ~ 0.75]",
+        "yaw": "yaw offset in radians [-0.60 ~ 0.60]"
+      },
+      "description": "Adjusts body roll, pitch, and yaw attitude angles."
+    },
+    "BodyHeight": {
+      "api_id": 1011,
+      "parameters": {
+        "height": "height offset in meters relative to default 0.33m [-0.18 ~ 0.03]"
+      },
+      "description": "Adjusts stand height."
+    },
+    "SwitchGait": {
+      "api_id": 1012,
+      "parameters": {
+        "gait": "gait profile ID (0: Idle, 1: Trot, 2: Trot-Run, 3: Climb, 4: Descend)"
+      },
+      "description": "Toggles active gaits."
+    }
+  },
+  "lidar_mounting_extrinsics": {
+    "livox_mid360": {
+      "translation": [0.1870, 0.0, 0.0803],
+      "rotation_tilt_pitch_degrees": 13.0,
+      "matrix_row_major": [
+        0.9743701, 0.0, 0.2249511, 0.1870,
+        0.0, 1.0, 0.0, 0.0,
+        -0.2249511, 0.0, 0.9743701, 0.0803,
+        0.0, 0.0, 0.0, 1.0
+      ]
+    },
+    "hesai_xt16": {
+      "translation": [0.1710, 0.0, 0.0908],
+      "rotation_tilt_pitch_degrees": 0.0,
+      "matrix_row_major": [
+        1.0, 0.0, 0.0, 0.1710,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0908,
+        0.0, 0.0, 0.0, 1.0
+      ]
+    }
+  }
+}

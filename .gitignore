@@ -68,3 +68,7 @@ vcpkg_installed/
 Testing/
 .cache/
 3rdparty/
+
+# ROS 2 build directories
+install/
+log/

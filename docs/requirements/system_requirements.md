@@ -1,20 +1,3 @@
-# Approved Sensor and Calibration Changes
-Me record changes agreed by tribal consensus:
-* **Approved Additions:**
-  - `REQ-FUN-005` (Sensor Calibration Phase)
-  - `REQ-FUN-006` (Sensor Accuracy Setup Phase)
-  - `REQ-FUN-007` (Perception Self-Filter)
-  - `REQ-FUN-008` (Debug Mode & Code Profiling)
-* **Details:**
-  1. **LiDAR Tilt Angle:** We do not use repository tilt of 15.1 degrees. We keep the catalog value of 13.0 degrees for now. The user will calculate the physical tilt angle themselves.
-  2. **Calibration Phase:** We require a distinct phase for all sensors that need calibration.
-  3. **Setup Phase:** Run once to check sensor accuracy: static IMU drift, 1-meter forward movement, and rotation in place.
-  4. **Self-Filter:** Bounding box filters out reflections from the robot's own legs and chassis.
-  5. **Debug Mode:** A global software debug mode configuration. When enabled, the system measures and logs the processing time of each major block of code/node.
-
----
-
-
 # System Requirements Specification
 
 This document details the functional, non-functional, safety, and environmental requirements for the Unitree Go2 Smart Navigation and SLAM system.
@@ -33,9 +16,9 @@ System configurations are managed in the global config file: `[[go2_config.json]
 
 ### 📌 REQ-FUN-001: Mapping Workflow for Deployment (Autonomous-First)
 * **Description:** The system must support two mapping methods:
-  1. **Autonomous Mapping (Primary):** The robot automatically navigates the location to sweep and construct the 3D map.
+  1. **Autonomous Mapping (Primary):** The robot automatically navigates the environment to sweep and construct the 3D map.
   2. **Manual Mapping (Backup):** Human manual joystick override to guide the robot during mapping if autonomous exploration fails.
-after the deployment mapping, the rest of movements and inspection runs are for adjusting map, monitor changes in station, and accurate localization.
+  3. **Post-Mapping Phase:** After the initial deployment mapping is completed, subsequent movements and inspection runs are dedicated to map adjustment, monitoring environmental changes at stations, and maintaining accurate real-time localization.
 ### 📌 REQ-FUN-002: Staged Sensor Integration
 * **Description:** The system architecture must accommodate the following incremental sensor phases:
   1. **Phase 1:** Single 3D LiDAR and basic odometry.
@@ -50,27 +33,30 @@ after the deployment mapping, the rest of movements and inspection runs are for 
   * Linear and angular velocity tracking.
   * **Absolute positioning** coordinates.
   * **Relative positioning** coordinate displacements.
+  * **Unified Double-Publishing Control:** The control wrapper must support double-publishing: standard `geometry_msgs/msg/TwistStamped` messages (for simulator/generic) and Unitree Sport SDK DDS Request packets (for physical robot deployment), dynamically toggled by the `is_real_robot` configuration flag.
   * *Constraint:* Direct low-level joint pd-torque control is out of scope.
 
 ### 📌 REQ-FUN-004: Safe Navigation & Avoidance
 * **Description:** Collision-free navigation is the primary goal:
-  1. **SDK Navigation (Primary):** Try the built-in Go2 SDK obstacle avoidance and path planning.
-  2. **Custom Navigation (Fallback):** If the default SDK planner fails or is insufficient, implement custom ROS 2 Nav2 planners and point cloud perception filters.
+  1. **SDK Navigation (phase1):** Try the built-in Go2 SDK obstacle avoidance and path planning.
+  2. **Custom Navigation (phase2):** If the default SDK planner fails or is insufficient, implement custom ROS 2 Nav2 planners and point cloud perception filters.
 
 ### 📌 REQ-FUN-005: Sensor Calibration Phase
-* **Description:** Me mandate distinct sensor calibration phase:
+* **Description:** Mandate distinct sensor calibration phase:
   1. **IMU Calibration:** Robot must write IMU calibration file (`imu_calib_data.yaml`). SLAM reads this file. No run SLAM without calibration.
-  2. **LiDAR Tilt Calibration:** User will calculate LiDAR physical tilt angle. Do not use repository value of 15.1 degrees. Keep catalog value of 13.0 degrees for now.
+  2. **LiDAR Tilt Calibration:** LiDAR physical tilt angle should be calculated manually or use the catalog value.
 
 ### 📌 REQ-FUN-006: Sensor Accuracy Setup Phase
-* **Description:** Robot must run setup diagnostics once to check sensor accuracy:
-  1. **Static Drift Check:** Robot stands still to measure IMU drift.
-  2. **Translation Check:** Robot walks 1 meter forward to verify translation calculations.
-  3. **Rotation Check:** Robot rotates in place to verify orientation calculations.
+* **Description:** The robot must run diagnostic checks once at startup to verify sensor calibration and synchronization:
+  1. **Static Drift Check:** The robot remains stationary to measure and log IMU accelerometer and gyro static drifts.
+  2. **Translation Check (Optional/Manual):** Verification of translation accuracy can be manually triggered during setup. The robot walks 1.0 meter forward, and the system compares the estimated SLAM/odometry displacement against a physical floor reference marker.
+  3. **Rotation Check (Optional/Manual):** Verification of orientation tracking can be manually triggered. The robot rotates 360 degrees in place, and the system compares the integrated yaw angle against a physical alignment line.
+  4. **Hardware Time-Sync Check:** Validate that the hardware timestamp offset between the LiDAR and the IMU is within a strict tolerance bounds (e.g., < 10 ms) to avoid rotational "ghosting" artifacts in SLAM.
 
 ### 📌 REQ-FUN-007: Perception Self-Filter
-* **Description:** Filter out points from robot's own body and legs:
-  1. **Self-Filter Box:** Spatial bounding box discards points inside:
+* **Description:** Filter out points from the robot's own body structure and legs:
+  1. **Self-Filter Box:** A spatial bounding box filters the active LiDAR points (supporting both the built-in 4D L1 LiDAR and any optional top-mounted L2 LiDAR) to discard reflections from the robot's chassis and legs.
+  2. **Bounding Box Parameters:** Points falling inside the following candidate coordinates are discarded (coordinates are parameterized in `go2_config.json` and subject to dynamic tuning):
      * $x \in [-0.7, -0.1]$
      * $y \in [-0.3, 0.3]$
      * $z \in [-0.6, 0.0]$
@@ -80,6 +66,16 @@ after the deployment mapping, the rest of movements and inspection runs are for 
   1. **Activation:** Enabled via the system configuration (`go2_config.json`).
   2. **Profiling:** When active, the system must measure and log the processing/execution time of each major functional block, callback, or ROS 2 node pipeline.
   3. **Diagnostics:** Provide timing details to help identify CPU bottlenecking or frame drops.
+  4. **Extensibility:** The debug framework must remain flexible to accommodate additional diagnostic metrics (e.g., memory usage, temperature, or DDS packet drop rates) in future implementation phases.
+
+### 📌 REQ-FUN-009: Motion Noise Mitigation on SLAM
+* **Description:** The system must mitigate SLAM odometry drift and point cloud registration noise caused by the robot's dynamic walking movements (e.g., body shaking, leg impacts, and startup height/pitch adjustments).
+
+### 📌 REQ-FUN-010: Autonomous Exploration FOV & Loop Closure Preference
+* **Description:** During autonomous exploration mapping:
+  1. **Field of View Preference:** The planner should prefer exploration goals within the robot's forward 100-degree field of view to ensure the sensors actively scan the path ahead.
+  2. **Safe Fallback:** If forward goals are blocked or unavailable, the robot is permitted to rotate in place or explore side/backward frontiers.
+  3. **Loop Closure Preference:** The global path planner should prioritize routes that return to previously mapped regions to maximize loop closure occurrences and improve global map consistency.
 
 ---
 
@@ -91,7 +87,10 @@ after the deployment mapping, the rest of movements and inspection runs are for 
 
 ### 📌 REQ-SFT-002: Safety Fallback Actions
 * **LiDAR/Sensor Loss:** If the primary LiDAR data drops, the robot must immediately transition to the `STAND_STILL` state and wait.
-* **Network Connection Loss:** If communication lag exceeds the safety threshold, the robot must immediately stand still and wait.
+* **Network Connection Loss:** If communication lag *between the companion computer (Jetson) and the robot's onboard controller* exceeds the safety threshold, the robot must stand still and wait. Loss of external Wi-Fi/network connectivity to a remote operator must NOT trigger standstill if the robot is performing an autonomous untethered inspection run.
+* **Control Watchdog Timeout:** A watchdog timer running at 20 Hz (checking every 50 ms) must monitor the command velocity stream. If no new `cmd_vel` messages are received within 0.25 seconds, the control bridge must automatically publish an Idle command (SDK API ID 0) to stop the robot.
+* **Empty-Path & Tilt Failsafes:** The robot must halt and execute a `StopMove` SDK command if the active local path becomes empty or if the robot's measured pitch/roll tilt angle exceeds predefined safety limits.
+* **Kidnapped Robot Detection:** If the global ICP registration fitness drops below 0.9 (indicating a severe localization drift, slip, or kidnapping event), the SLAM interface must stop updating the `map` to `odom` frame offset, raise a high-priority system warning, and halt autonomous movement.
 
 ### 📌 REQ-SFT-003: Human Proximity Safety (Future Phase)
 * **Description:** The robot must reduce speed when humans are detected within a 2.0-meter radius. *Note: Deferred to post-Phase 1 (requires active LiDAR/vision object classification).*

@@ -41,7 +41,7 @@
 
 ---
 
-- [ ] **Track: OOP Architecture & System Engineering Enhancements**
+- [~] **Track: OOP Architecture & System Engineering Enhancements**
 *Link: [./tracks/oop-system-design_20260714/](./tracks/oop-system-design_20260714/)*
 
 
