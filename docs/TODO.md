@@ -1,1 +1,1 @@
-another mode should be add named debug so some specific actions are done under it like process time of each block of code
+- [x] Another mode should be added named debug so some specific actions are done under it like processing time of each block of code (Added to system_requirements.md, validation_matrix.md, morphological_diagram.md, and go2_config.json).

@@ -3,13 +3,18 @@
     "lidar_tilt": "Me do not use repository tilt of 15.1 degrees. Keep catalog value of 13.0 degrees for now. User will calculate real tilt.",
     "calibration": "Me need distinct calibration phase for all sensors.",
     "setup_phase": "Me run accuracy diagnostics once at start. Static IMU drift check, walk 1 meter forward check, spin check.",
-    "self_filter": "Me filter out point cloud hits on chassis and legs."
+    "self_filter": "Me filter out point cloud hits on chassis and legs.",
+    "debug_mode": "Me support debug mode to measure processing times of code blocks."
   },
   "system": {
     "target_localization_accuracy_m": 0.05,
     "allowable_slope_angle_deg": "PENDING_RESEARCH",
     "dynamic_speed_scaling": true,
-    "sampling_frequency_hz": 500.0
+    "sampling_frequency_hz": 500.0,
+    "debug_mode": {
+      "enabled": false,
+      "log_block_process_times": true
+    }
   },
   "sensors": {
     "lidar_tilt_angle_deg": 13.0,

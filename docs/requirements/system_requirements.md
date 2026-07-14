@@ -4,13 +4,16 @@ Me record changes agreed by tribal consensus:
   - `REQ-FUN-005` (Sensor Calibration Phase)
   - `REQ-FUN-006` (Sensor Accuracy Setup Phase)
   - `REQ-FUN-007` (Perception Self-Filter)
+  - `REQ-FUN-008` (Debug Mode & Code Profiling)
 * **Details:**
   1. **LiDAR Tilt Angle:** We do not use repository tilt of 15.1 degrees. We keep the catalog value of 13.0 degrees for now. The user will calculate the physical tilt angle themselves.
   2. **Calibration Phase:** We require a distinct phase for all sensors that need calibration.
   3. **Setup Phase:** Run once to check sensor accuracy: static IMU drift, 1-meter forward movement, and rotation in place.
   4. **Self-Filter:** Bounding box filters out reflections from the robot's own legs and chassis.
+  5. **Debug Mode:** A global software debug mode configuration. When enabled, the system measures and logs the processing time of each major block of code/node.
 
 ---
+
 
 # System Requirements Specification
 
@@ -71,6 +74,12 @@ after the deployment mapping, the rest of movements and inspection runs are for 
      * $x \in [-0.7, -0.1]$
      * $y \in [-0.3, 0.3]$
      * $z \in [-0.6, 0.0]$
+
+### 📌 REQ-FUN-008: Debug Mode & Code Profiling
+* **Description:** The system must support a configurable global Debug Mode:
+  1. **Activation:** Enabled via the system configuration (`go2_config.json`).
+  2. **Profiling:** When active, the system must measure and log the processing/execution time of each major functional block, callback, or ROS 2 node pipeline.
+  3. **Diagnostics:** Provide timing details to help identify CPU bottlenecking or frame drops.
 
 ---
 

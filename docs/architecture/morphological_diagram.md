@@ -14,6 +14,7 @@ The morphological diagram organizes the design options and engineering combinati
 | **Avoidance & Planning**| **Default SDK Avoidance** (Built-in obstacle avoidance) | **Nav2 TEB Planner** (Custom Timed-Elastic-Band) | **Nav2 MPPI Planner** (Custom GPU-sampled paths) |
 | **State Machine** | **Custom State Loop** (Simple python transition code) | **py_trees** (Behavior Tree framework) | **SMACH** (ROS 2 state machine package) |
 | **Vision & Thermal** | **No Cameras (Phase 1)** | **RGB Projection** (2D image mapping on PCD) | **Thermal Projection** (3D heat reconstruction) |
+| **Diagnostics & Profiling** | **Standard Logging** (ROS 2 stdout log files) | **Verbose Debug Mode** (Debug logs + block process times) | **Performance Profiling** (Dynamic profiling via Tracy/Perf) |
 
 ---
 
@@ -33,3 +34,9 @@ The morphological diagram organizes the design options and engineering combinati
 * *Selection:* **Option A (Default SDK)** as primary; **Option B/C (Custom Nav2)** as fallback.
 * *Why:* We try the built-in Go2 obstacle avoidance first to keep things simple. If it fails in complex corridors, we implement custom Nav2 paths.
 * *User Verification & Citation:* [User Citation Needed]
+
+### Diagnostics & Profiling
+* *Selection:* **Option B (Verbose Debug Mode)**.
+* *Why:* Monitoring execution/process times of specific code blocks is critical to diagnose performance bottlenecks without the heavy overhead of continuous profiling tools.
+* *User Verification & Citation:* [User Citation Needed]
+

@@ -4,9 +4,11 @@ Me record tribal validation changes:
   - `REQ-FUN-005` (Sensor Calibration) -> `VM-02`, `VM-03`, `VM-04`.
   - `REQ-FUN-006` (Sensor Accuracy Setup Check) -> `VM-03`, `VM-04`.
   - `REQ-FUN-007` (Perception Self-Filter) -> `VM-01`, `VM-02`, `VM-04`.
+  - `REQ-FUN-008` (Debug Mode) -> `VM-01`, `VM-04`.
 * **Details:**
   - We do not use repository tilt of 15.1 degrees. User will calibrate tilt or keep catalog 13.0 degrees.
   - We add setup run once accuracy testing.
+  - We add debug mode profiling verification in simulation.
 
 ---
 
@@ -47,6 +49,7 @@ We define four primary verification methods to validate software and hardware be
 | **[[docs/requirements/system_requirements#📌 REQ-FUN-005: Sensor Calibration Phase\|REQ-FUN-005]]** | Sensor Calibration | [[#VM-02: Offline Rosbag Replay (Conditional)\|VM-02]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Me make robot run calibration. Verify IMU calibration writes yaml file. Verify LiDAR tilt calibration executes without hardcoded 15.1 degrees. |
 | **[[docs/requirements/system_requirements#📌 REQ-FUN-006: Sensor Accuracy Setup Phase\|REQ-FUN-006]]** | Sensor Setup Accuracy | [[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Me run setup once. Verify static IMU drift measurement. Verify 1-meter translation movement accuracy. Verify rotation angle accuracy. |
 | **[[docs/requirements/system_requirements#📌 REQ-FUN-007: Perception Self-Filter\|REQ-FUN-007]]** | Perception Self-Filter | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-02: Offline Rosbag Replay (Conditional)\|VM-02]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Me ensure bounding box discards points that hit the robot chassis or legs in simulation and rosbag replay. |
+| **[[docs/requirements/system_requirements#📌 REQ-FUN-008: Debug Mode & Code Profiling\|REQ-FUN-008]]** | Debug Mode & Profiling | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Toggle the `debug_mode` configuration flag. Verify that node timing execution diagnostics are printed to stdout/logs in simulation. Run configuration parameter audits. |
 | **[[docs/requirements/system_requirements#📌 REQ-SFT-001: Operational Constraints\|REQ-SFT-001]]** | Operational Constraints | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Command velocity $> 1.0\text{ m/s}$ and verify output is capped at $1.0\text{ m/s}$. Mock battery state at $14\%$ and verify the state machine triggers a return-to-dock sequence. Run state parameter checks. |
 | **[[docs/requirements/system_requirements#📌 REQ-SFT-002: Safety Fallback Actions\|REQ-SFT-002]]** | Safety Fallbacks | [[#VM-01: Simulation Testing\|VM-01]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Disconnect the LiDAR feed node. Confirm the state machine immediately stops the robot's movement and sets state to `STAND_STILL`. Run safety flag code checks. |
 | **[[docs/requirements/system_requirements#📌 REQ-ENV-002: Localization Accuracy Goal\|REQ-ENV-002]]** | Localization Accuracy | [[#VM-02: Offline Rosbag Replay (Conditional)\|VM-02]]<br>[[#VM-03: Physical Hardware Testing\|VM-03]]<br>[[#VM-04: Static Code & API Audit\|VM-04]] | Walk the robot past pre-surveyed physical landmarks (retroreflective markers). Compare the SLAM calculated position against the physical landmark ground truth. Target error $< 5\text{ cm}$. Verify SLAM node ROS 2 message conformity. |
