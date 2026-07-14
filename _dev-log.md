@@ -24,3 +24,12 @@
   - Reviewed the research paper [[literature/Robot Type/Mobile Structural Health Monitoring Based on Legged Robots|Mobile Structural Health Monitoring Based on Legged Robots]] detailing vibration sensing and overlapping normalization.
   - Created [[docs/literature_reviews/cmu_autonomy_stack_overview|CMU Stack Architecture Overview]] and [[docs/literature_reviews/real_robot_tutorial|Real-Robot Tutorial Guide]].
   - Prepared modification proposals at the top of the core configuration files for user review.
+
+### 2026-07-14 — APPROVED SENSOR CHANGES & CALIBRATION SETUP DECOUPLING
+- **Actions**:
+  - ME DISCARD CMU 15.1 DEGREE TILT. KEEP CATALOG 13.0 DEGREE TILT. USER CALCULATE REAL TILT.
+  - ME ADD DISTINCT CALIBRATION PHASE FOR IMU, LIDAR, CAMERAS.
+  - ME ADD SETUP RUN ONCE PHASE TO CHECK ACCURACY (STATIC IMU DRIFT, WALK 1 METER, SPIN).
+  - ME ADD PERCEPTION SELF-FILTER BOX TO CHOP OUT LEG AND BODY HITS.
+  - ME UPDATE [[docs/requirements/system_requirements|system_requirements.md]], [[docs/requirements/validation_matrix|validation_matrix.md]], AND [[go2_config.json]].
+
