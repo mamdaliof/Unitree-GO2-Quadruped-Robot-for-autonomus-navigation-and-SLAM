@@ -27,9 +27,9 @@
 
 ### 2026-07-14 — APPROVED SENSOR CHANGES & CALIBRATION SETUP DECOUPLING
 - **Actions**:
-  - ME DISCARD CMU 15.1 DEGREE TILT. KEEP CATALOG 13.0 DEGREE TILT. USER CALCULATE REAL TILT.
-  - ME ADD DISTINCT CALIBRATION PHASE FOR IMU, LIDAR, CAMERAS.
-  - ME ADD SETUP RUN ONCE PHASE TO CHECK ACCURACY (STATIC IMU DRIFT, WALK 1 METER, SPIN).
-  - ME ADD PERCEPTION SELF-FILTER BOX TO CHOP OUT LEG AND BODY HITS.
-  - ME UPDATE [[docs/requirements/system_requirements|system_requirements.md]], [[docs/requirements/validation_matrix|validation_matrix.md]], AND [[go2_config.json]].
+  - Me discard repository tilt of 15.1 degrees. Keep catalog value of 13.0 degrees. User will calculate actual physical tilt angle.
+  - Me add distinct calibration phase for IMU, LiDAR, and cameras.
+  - Me add setup run once phase to check accuracy: static IMU drift check, 1-meter walk check, and rotation check.
+  - Me add perception self-filter box to discard point cloud returns on legs and chassis.
+  - Me update [[docs/requirements/system_requirements|system_requirements.md]], [[docs/requirements/validation_matrix|validation_matrix.md]], and [[go2_config.json]].
 

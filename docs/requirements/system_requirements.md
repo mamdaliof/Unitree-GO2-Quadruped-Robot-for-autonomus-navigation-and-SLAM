@@ -1,13 +1,14 @@
-# APPROVED SENSOR AND CALIBRATION CHANGES (USER AGREE)
-* **APPROVED ADDITIONS:**
-  - `REQ-FUN-005` (SENSOR CALIBRATION PHASE)
-  - `REQ-FUN-006` (SENSOR ACCURACY SETUP PHASE RUN ONCE)
-  - `REQ-FUN-007` (PERCEPTION SELF-FILTER)
-* **REASON AND DETAILS:**
-  1. **LIDAR TILT:** WE NO USE REPO 15.1 DEGREE! USER CALCULATE REAL TILT HIMSELF. FOR NOW, KEEP CATALOG VALUE 13.0 DEGREE.
-  2. **CALIBRATION PHASE:** WE NEED DISTINCT PHASE FOR ALL SENSORS (IMU, LIDAR, ETC.) THAT NEED CALIBRATION.
-  3. **SETUP PHASE:** RUN ONCE TO CHECK SENSOR ACCURACY (IMU DRIFT STATIC, WALK 1 METER FORWARD ACCURACY, ROTATION ACCURACY).
-  4. **SELF-FILTER:** SPATIAL BOUNDING BOX FILTERS OUT ROBOT OWN LEGS AND CHASSIS TO AVOID SELF-COLLISION.
+# Approved Sensor and Calibration Changes
+Me record changes agreed by tribal consensus:
+* **Approved Additions:**
+  - `REQ-FUN-005` (Sensor Calibration Phase)
+  - `REQ-FUN-006` (Sensor Accuracy Setup Phase)
+  - `REQ-FUN-007` (Perception Self-Filter)
+* **Details:**
+  1. **LiDAR Tilt Angle:** We do not use repository tilt of 15.1 degrees. We keep the catalog value of 13.0 degrees for now. The user will calculate the physical tilt angle themselves.
+  2. **Calibration Phase:** We require a distinct phase for all sensors that need calibration.
+  3. **Setup Phase:** Run once to check sensor accuracy: static IMU drift, 1-meter forward movement, and rotation in place.
+  4. **Self-Filter:** Bounding box filters out reflections from the robot's own legs and chassis.
 
 ---
 
@@ -53,20 +54,20 @@ after the deployment mapping, the rest of movements and inspection runs are for 
   1. **SDK Navigation (Primary):** Try the built-in Go2 SDK obstacle avoidance and path planning.
   2. **Custom Navigation (Fallback):** If the default SDK planner fails or is insufficient, implement custom ROS 2 Nav2 planners and point cloud perception filters.
 
-### 📌 REQ-FUN-005: SENSOR CALIBRATION PHASE
-* **Description:** ROBOT MUST RUN SENSOR CALIBRATION IN DISTINCT PHASE.
-  1. **IMU CALIBRATION:** ROBOT MUST WRITE IMU CALIBRATION FILE (`imu_calib_data.yaml`). SLAM READS THIS FILE. NO RUN SLAM WITHOUT CALIBRATION.
-  2. **LIDAR TILT CALIBRATION:** USER CALCULATES LIDAR PHYSICAL TILT ANGLE. DO NOT USE REPO 15.1 DEGREE. FOR NOW, SYSTEM KEEPS CATALOG VALUE 13.0 DEGREE.
+### 📌 REQ-FUN-005: Sensor Calibration Phase
+* **Description:** Me mandate distinct sensor calibration phase:
+  1. **IMU Calibration:** Robot must write IMU calibration file (`imu_calib_data.yaml`). SLAM reads this file. No run SLAM without calibration.
+  2. **LiDAR Tilt Calibration:** User will calculate LiDAR physical tilt angle. Do not use repository value of 15.1 degrees. Keep catalog value of 13.0 degrees for now.
 
-### 📌 REQ-FUN-006: SENSOR ACCURACY SETUP PHASE
-* **Description:** ROBOT MUST RUN THIS SETUP PHASE ONCE TO FIND ACCURACY OF SENSORS.
-  1. **STATIC DRIFT CHECK:** ROBOT STAND STILL. MEASURE IMU DRIFT.
-  2. **WALK ONE METER FORWARD CHECK:** ROBOT WALK 1 METER FORWARD. CHECK IF IMU CAN CALCULATE 1 METER ACCURATELY.
-  3. **ROTATION CHECK:** ROBOT ROTATE/SPIN. CHECK IF IMU/ODOMETER CAN CALCULATE ROTATION ACCURATELY.
+### 📌 REQ-FUN-006: Sensor Accuracy Setup Phase
+* **Description:** Robot must run setup diagnostics once to check sensor accuracy:
+  1. **Static Drift Check:** Robot stands still to measure IMU drift.
+  2. **Translation Check:** Robot walks 1 meter forward to verify translation calculations.
+  3. **Rotation Check:** Robot rotates in place to verify orientation calculations.
 
-### 📌 REQ-FUN-007: PERCEPTION SELF-FILTER
-* **Description:** FILTER OUT POINTS FROM ROBOT OWN BODY AND LEGS.
-  1. **SELF-FILTER BOX:** SPATIAL BOUNDING BOX CHOP OUT POINTS INSIDE:
+### 📌 REQ-FUN-007: Perception Self-Filter
+* **Description:** Filter out points from robot's own body and legs:
+  1. **Self-Filter Box:** Spatial bounding box discards points inside:
      * $x \in [-0.7, -0.1]$
      * $y \in [-0.3, 0.3]$
      * $z \in [-0.6, 0.0]$

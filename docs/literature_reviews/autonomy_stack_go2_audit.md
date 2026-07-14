@@ -66,8 +66,8 @@ The CMU Autonomy Stack provides full autonomous navigation and SLAM capabilities
 ---
 
 ## 7. Flaws Identified in Our Current Documents
-ME CHOP SPEC, MAKE BETTER.
-1. **LIDAR TILT ANGLE:** CMU REPO USE 15.1 DEGREE. BUT USER SAY NO! USER CALCULATE REAL TILT HIMSELF. SO WE NO USE 15.1 DEGREE. WE KEEP CATALOG 13.0 DEGREE FOR NOW.
-2. **SENSOR CALIBRATION PHASE:** WE NEED DISTINCT CALIBRATION PHASE FOR ALL SENSORS. MUST CALIBRATE BEFORE RUN SLAM.
-3. **SETUP PHASE RUN ONCE:** RUN ONCE AT START. CHECK SENSOR ACCURACY. FIND IMU DRIFT WHEN ROBOT STAND STILL. CHECK IF ROBOT WALK 1 METER FORWARD IMU KNOWS IT. CHECK ROTATION ACCURACY.
-4. **SELF-FILTER:** WE AGREE! DISCARD LIDAR POINTS THAT HIT ROBOT LEGS AND CHASSIS.
+Me review specifications and make changes based on tribal decisions:
+1. **LiDAR Tilt Angle:** We do not use repository tilt of 15.1 degrees. We keep the catalog value of 13.0 degrees for now. The user will calculate the physical tilt angle themselves.
+2. **Sensor Calibration Phase:** We need a separate calibration phase for all sensors (such as IMU and LiDAR) before running the SLAM backend.
+3. **Sensor Accuracy Setup Phase:** We need a setup phase run once at startup. This checks sensor accuracy: static IMU drift, translation accuracy when moving 1 meter forward, and rotation accuracy.
+4. **Self-Filter Box:** We agree to implement a self-filter. This discards LiDAR points that hit the robot's own legs and chassis.

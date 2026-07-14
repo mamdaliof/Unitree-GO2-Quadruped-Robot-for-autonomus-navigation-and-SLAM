@@ -1,9 +1,9 @@
 {
   "_CONFIG_NOTES": {
-    "lidar_tilt": "ME NO USE REPO 15.1 DEGREE! WE KEEP CATALOG 13.0 DEGREE FOR NOW. USER WILL CALIBRATE REAL TILT.",
-    "calibration": "ME NEED DISTINCT CALIBRATION PHASE FOR ALL SENSORS.",
-    "setup_phase": "ME RUN ACCURACY DIAGNOSTICS ONCE. STATIC IMU DRIFT, WALK 1 METER, SPIN.",
-    "self_filter": "ME DISCARD POINT CLOUD HITS ON CHASSIS AND LEGS."
+    "lidar_tilt": "Me do not use repository tilt of 15.1 degrees. Keep catalog value of 13.0 degrees for now. User will calculate real tilt.",
+    "calibration": "Me need distinct calibration phase for all sensors.",
+    "setup_phase": "Me run accuracy diagnostics once at start. Static IMU drift check, walk 1 meter forward check, spin check.",
+    "self_filter": "Me filter out point cloud hits on chassis and legs."
   },
   "system": {
     "target_localization_accuracy_m": 0.05,
