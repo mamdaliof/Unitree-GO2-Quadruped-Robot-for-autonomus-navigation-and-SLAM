@@ -17,6 +17,7 @@
 | `repo-audit-fast-lio-humanoid` | FAST_LIO_LOCALIZATION_HUMANOID Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-fast-lio-humanoid/index.md) |
 | `repo-audit-go2-slam-nav` | unitree-go2-slam-nav2 Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-go2-slam-nav/index.md) |
 | `thesis-analysis-reconstruction` | Thesis Review: Autonomous Navigation and 3D Reconstruction | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/thesis-analysis-reconstruction/index.md) |
+| `oop-system-design_20260714` | OOP Architecture & System Engineering Enhancements | In Progress | [Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/conductor/tracks/oop-system-design_20260714/index.md) |
 
 ---
 
@@ -37,6 +38,11 @@
 
 - [x] **Track: Thesis Review: Autonomous Navigation and 3D Reconstruction**
 *Link: [./tracks/thesis-analysis-reconstruction/](./tracks/thesis-analysis-reconstruction/)*
+
+---
+
+- [ ] **Track: OOP Architecture & System Engineering Enhancements**
+*Link: [./tracks/oop-system-design_20260714/](./tracks/oop-system-design_20260714/)*
 
 
 
