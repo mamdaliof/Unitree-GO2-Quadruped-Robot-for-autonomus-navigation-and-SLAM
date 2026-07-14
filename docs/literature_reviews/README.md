@@ -13,8 +13,8 @@ This directory stores state-of-the-art audits, research paper reviews, and acade
 * **[[docs/literature_reviews/FAST_LIO_LOCALIZATION_HUMANOID/audit_report|FAST_LIO_LOCALIZATION_HUMANOID Audit Report]]** - Technical audit of CMU/DeepGlint localization stack, covering project structure, state updates, TF pipelines, and bugs.
 * **[[docs/literature_reviews/FAST_LIO_LOCALIZATION_HUMANOID/localization_config_guide|Localization Configuration Guide]]** - Config parameters, sensor configurations, and launch guidelines for G1/Go2 deployment.
 * **[[docs/literature_reviews/unitree-go2-slam-nav2/audit_report|unitree-go2-slam-nav2 Audit Report]]** - Technical audit of RTAB-Map SLAM, Nav2 costmaps, Twist velocity bridging node, and frontier exploration.
-* **[[docs/literature_reviews/thesis_analysis/review_report|Thesis Review: Wilhelm (2025)]]** - Technical comparison of the Wilhelm (2025) thesis with our system design, requirements, and verification.
-* **[[docs/literature_reviews/thesis_analysis/calibration_and_loopholes|Thesis Review: Calibration & Loopholes]]** - Detailed analysis of LiDAR-IMU/Camera calibration math, Jetson bottlenecks, and gait anomalies.
+* **[[review_report|Thesis Review: Wilhelm (2025)]]** - Technical comparison of the Wilhelm (2025) thesis with our system design, requirements, and verification.
+* **[[calibration_and_loopholes|Thesis Review: Calibration & Loopholes]]** - Detailed analysis of LiDAR-IMU/Camera calibration math, Jetson bottlenecks, and gait anomalies.
 * **`legged_robots_industrial_inspection.md` (Pending):** SOTA review of legged deployments (Spot, ANYmal) mapping environmental parameters (oily surfaces, high-voltage rooms, dynamic layouts) to structural designs.
 * **`lidar_slam_leaderboard_reviews.md` (Pending):** Review of top-ranking algorithms on the KITTI Odometry leaderboard, detailing CPU/memory footprints and multi-LiDAR support.
 
