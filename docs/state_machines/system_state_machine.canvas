@@ -1,426 +1,53 @@
 {
-  "nodes": [
-    {
-      "id": "state-init",
-      "type": "text",
-      "text": "### 🔌 State: INITIALIZATION\n* **Description:** Power-on self-test. ROS 2 node startup.\n* **Locomotion Mode:** MCF initial standby.\n* **Checks:** LiDAR heartbeat, IMU status, SDK connection.",
-      "x": 0,
-      "y": 0,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-calibration",
-      "type": "text",
-      "text": "### ⚖️ State: CALIBRATION\n* **Description:** Automatic sensors alignment.\n* **LED Status:** Slow Flash Blue.\n* **Tasks:** IMU bias calibration, foot force sensor zero-drift correction.\n* **Exit Fail:** SIT_STANDBY.",
-      "x": 500,
-      "y": 0,
-      "width": 380,
-      "height": 140,
-      "color": "3"
-    },
-    {
-      "id": "state-sit-standby",
-      "type": "text",
-      "text": "### 🧎 State: SIT_STANDBY\n* **Description:** Safe sitting rest pose. Triggered by calibration failure.\n* **Locomotion Mode:** Low-stiffness sitting stance.\n* **Exit Options:** Retry calibration (loops to INITIALIZATION) OR proceed to SHUTDOWN_READY.",
-      "x": 500,
-      "y": -250,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-selection",
-      "type": "text",
-      "text": "### 🎛️ State: MODE_SELECTION\n* **Description:** Idle stand. Waits for ROS 2 launch parameter `mode` trigger.\n* **Default Mode:** `idle`.\n* **Checked Parameters:** `joystick`, `auto_mapping`, `manual_mapping`, `inspection`.",
-      "x": 1000,
-      "y": 0,
-      "width": 380,
-      "height": 140,
-      "color": "3"
-    },
-    {
-      "id": "state-joystick",
-      "type": "text",
-      "text": "### 🎮 State: JOYSTICK_MANUAL\n* **Description:** Direct operator driving via remote control joystick.\n* **Trigger:** Launch param `mode:=joystick`.\n* **Exit:** Operator shuts down (transitions to SHUTDOWN_READY).",
-      "x": 1500,
-      "y": -450,
-      "width": 380,
-      "height": 140,
-      "color": "4"
-    },
-    {
-      "id": "state-map-waypoints",
-      "type": "text",
-      "text": "### 📍 State: MAPPING_WAYPOINTS\n* **Description:** Generates mapping target frontiers.\n* **Trigger:** Launch param `mode:=auto_mapping` or `manual_mapping`.\n* **Output:** Exploration target coordinates.",
-      "x": 1500,
-      "y": -250,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-map-navigating",
-      "type": "text",
-      "text": "### 🗺️ State: MAPPING_NAVIGATING\n* **Description:** Moving to mapping target. Builds 3D point cloud map (SLAM).\n* **Control:** `/cmd_vel` velocity commands.",
-      "x": 2000,
-      "y": -250,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-map-rerouting",
-      "type": "text",
-      "text": "### 🔄 State: MAPPING_REROUTING\n* **Description:** Calculates detour around obstacles during mapping exploration.",
-      "x": 2500,
-      "y": -350,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-map-pause",
-      "type": "text",
-      "text": "### ⏸️ State: MAPPING_PAUSE\n* **Description:** Stationary scan at mapping checkpoint. Stands still for 5 seconds.",
-      "x": 2500,
-      "y": -150,
-      "width": 380,
-      "height": 140,
-      "color": "5"
-    },
-    {
-      "id": "state-patrol-waypoints",
-      "type": "text",
-      "text": "### 📍 State: PATROL_WAYPOINTS\n* **Description:** Reads predefined inspection checkpoints from saved PCD map.\n* **Trigger:** Launch param `mode:=inspection`.",
-      "x": 1500,
-      "y": 150,
-      "width": 380,
-      "height": 140,
-      "color": "2"
-    },
-    {
-      "id": "state-patrol-navigating",
-      "type": "text",
-      "text": "### 🚀 State: PATROL_NAVIGATING\n* **Description:** Navigating to patrol target checkpoint. Localizes on pre-loaded map.",
-      "x": 2000,
-      "y": 150,
-      "width": 380,
-      "height": 140,
-      "color": "2"
-    },
-    {
-      "id": "state-patrol-rerouting",
-      "type": "text",
-      "text": "### 🔄 State: PATROL_REROUTING\n* **Description:** Calculates alternative detour around dynamic obstacles during patrol.",
-      "x": 2500,
-      "y": 50,
-      "width": 380,
-      "height": 140,
-      "color": "2"
-    },
-    {
-      "id": "state-patrol-pause",
-      "type": "text",
-      "text": "### ⏸️ State: PATROL_PAUSE\n* **Description:** Stationary pause at checkpoint for camera inspections.",
-      "x": 2500,
-      "y": 250,
-      "width": 380,
-      "height": 140,
-      "color": "2"
-    },
-    {
-      "id": "state-return",
-      "type": "text",
-      "text": "### 🔌 State: RETURN_TO_STATION\n* **Description:** Triggered at patrol end, mapping complete, or battery < 15%.\n* **Behavior:** Aborts mission, navigates to charging dock contacts.",
-      "x": 1550,
-      "y": 450,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-charging",
-      "type": "text",
-      "text": "### ⚡ State: CHARGING\n* **Description:** Resting on charging contacts. Monitor battery percentage.\n* **Exit triggers:** Battery > 90% (returns to INITIALIZATION) OR operator shutdown command.",
-      "x": 1000,
-      "y": 450,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-power-off",
-      "type": "text",
-      "text": "### 🛑 State: SHUTDOWN_READY (Terminal Exit Node)\n* **Description:** Robot sits down. Onboard computers write logs and safely power off.\n* **Action:** Signals that it is safe to physically turn off the power switch.",
-      "x": 1000,
-      "y": 680,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-stand-still",
-      "type": "text",
-      "text": "### 🛑 State: STAND_STILL_SAFETY\n* **Description:** Holds current stand posture. Waits for sensor recovery.\n* **Trigger:** LiDAR dropout OR network latency > limit.\n* **Exit:** Resume previous state on sensor recovery.",
-      "x": 1000,
-      "y": -600,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    },
-    {
-      "id": "state-damping",
-      "type": "text",
-      "text": "### ⚠️ State: EMERGENCY_DAMPING\n* **Description:** Collapse state. Sets joint stiffness to zero to prevent burnout.\n* **Trigger:** Rollover detected (pitch/roll > 45 deg or gravity.z > 0).\n* **Exit:** RecoveryStand command.",
-      "x": 500,
-      "y": -600,
-      "width": 380,
-      "height": 140,
-      "color": "1"
-    }
-  ],
-  "edges": [
-    {
-      "id": "edge-init-to-calib",
-      "fromNode": "state-init",
-      "fromSide": "right",
-      "toNode": "state-calibration",
-      "toSide": "left",
-      "label": "Self-Test Pass"
-    },
-    {
-      "id": "edge-calib-to-select",
-      "fromNode": "state-calibration",
-      "fromSide": "right",
-      "toNode": "state-selection",
-      "toSide": "left",
-      "label": "Calibration Pass"
-    },
-    {
-      "id": "edge-calib-to-sit",
-      "fromNode": "state-calibration",
-      "fromSide": "top",
-      "toNode": "state-sit-standby",
-      "toSide": "bottom",
-      "label": "Calibration Fail"
-    },
-    {
-      "id": "edge-sit-to-init",
-      "fromNode": "state-sit-standby",
-      "fromSide": "left",
-      "toNode": "state-init",
-      "toSide": "top",
-      "label": "Operator retry"
-    },
-    {
-      "id": "edge-sit-to-shutdown",
-      "fromNode": "state-sit-standby",
-      "fromSide": "bottom",
-      "toNode": "state-power-off",
-      "toSide": "left",
-      "label": "Operator shutdown"
-    },
-    {
-      "id": "edge-select-to-joystick",
-      "fromNode": "state-selection",
-      "fromSide": "top",
-      "toNode": "state-joystick",
-      "toSide": "left",
-      "label": "mode == joystick"
-    },
-    {
-      "id": "edge-joystick-to-shutdown",
-      "fromNode": "state-joystick",
-      "fromSide": "bottom",
-      "toNode": "state-power-off",
-      "toSide": "right",
-      "label": "Operator shutdown"
-    },
-    {
-      "id": "edge-select-to-mapping",
-      "fromNode": "state-selection",
-      "fromSide": "right",
-      "toNode": "state-map-waypoints",
-      "toSide": "left",
-      "label": "mode == auto_mapping OR mode == manual_mapping"
-    },
-    {
-      "id": "edge-select-to-patrol",
-      "fromNode": "state-selection",
-      "fromSide": "right",
-      "toNode": "state-patrol-waypoints",
-      "toSide": "left",
-      "label": "mode == inspection"
-    },
-    {
-      "id": "edge-map-waypoint-to-nav",
-      "fromNode": "state-map-waypoints",
-      "fromSide": "right",
-      "toNode": "state-map-navigating",
-      "toSide": "left",
-      "label": "Target defined"
-    },
-    {
-      "id": "edge-map-nav-to-reroute",
-      "fromNode": "state-map-navigating",
-      "fromSide": "right",
-      "toNode": "state-map-rerouting",
-      "toSide": "left",
-      "label": "Obstacle blocked"
-    },
-    {
-      "id": "edge-map-reroute-to-nav",
-      "fromNode": "state-map-rerouting",
-      "fromSide": "bottom",
-      "toNode": "state-map-navigating",
-      "toSide": "right",
-      "label": "Detour path calculated"
-    },
-    {
-      "id": "edge-map-nav-to-pause",
-      "fromNode": "state-map-navigating",
-      "fromSide": "bottom",
-      "toNode": "state-map-pause",
-      "toSide": "top",
-      "label": "Frontier reached"
-    },
-    {
-      "id": "edge-map-pause-to-waypoint",
-      "fromNode": "state-map-pause",
-      "fromSide": "left",
-      "toNode": "state-map-waypoints",
-      "toSide": "bottom",
-      "label": "Pause complete (next frontier)"
-    },
-    {
-      "id": "edge-map-pause-to-return",
-      "fromNode": "state-map-pause",
-      "fromSide": "bottom",
-      "toNode": "state-return",
-      "toSide": "right",
-      "label": "Mapping exploration finished"
-    },
-    {
-      "id": "edge-patrol-waypoint-to-nav",
-      "fromNode": "state-patrol-waypoints",
-      "fromSide": "right",
-      "toNode": "state-patrol-navigating",
-      "toSide": "left",
-      "label": "Checkpoint defined"
-    },
-    {
-      "id": "edge-patrol-nav-to-reroute",
-      "fromNode": "state-patrol-navigating",
-      "fromSide": "right",
-      "toNode": "state-patrol-rerouting",
-      "toSide": "left",
-      "label": "Obstacle blocked"
-    },
-    {
-      "id": "edge-patrol-reroute-to-nav",
-      "fromNode": "state-patrol-rerouting",
-      "fromSide": "bottom",
-      "toNode": "state-patrol-navigating",
-      "toSide": "right",
-      "label": "Detour path calculated"
-    },
-    {
-      "id": "edge-patrol-nav-to-pause",
-      "fromNode": "state-patrol-navigating",
-      "fromSide": "bottom",
-      "toNode": "state-patrol-pause",
-      "toSide": "top",
-      "label": "Checkpoint reached"
-    },
-    {
-      "id": "edge-patrol-pause-to-waypoint",
-      "fromNode": "state-patrol-pause",
-      "fromSide": "left",
-      "toNode": "state-patrol-waypoints",
-      "toSide": "bottom",
-      "label": "Pause complete (next waypoint)"
-    },
-    {
-      "id": "edge-patrol-pause-to-return",
-      "fromNode": "state-patrol-pause",
-      "fromSide": "bottom",
-      "toNode": "state-return",
-      "toSide": "right",
-      "label": "Patrol mission finished"
-    },
-    {
-      "id": "edge-any-to-return",
-      "fromNode": "state-patrol-waypoints",
-      "fromSide": "bottom",
-      "toNode": "state-return",
-      "toSide": "top",
-      "label": "Battery < 15%"
-    },
-    {
-      "id": "edge-return-to-charging",
-      "fromNode": "state-return",
-      "fromSide": "left",
-      "toNode": "state-charging",
-      "toSide": "right",
-      "label": "Docked"
-    },
-    {
-      "id": "edge-charging-to-init",
-      "fromNode": "state-charging",
-      "fromSide": "left",
-      "toNode": "state-init",
-      "toSide": "bottom",
-      "label": "Charged > 90%"
-    },
-    {
-      "id": "edge-charging-to-shutdown",
-      "fromNode": "state-charging",
-      "fromSide": "bottom",
-      "toNode": "state-power-off",
-      "toSide": "top",
-      "label": "Operator shutdown command"
-    },
-    {
-      "id": "edge-select-to-shutdown",
-      "fromNode": "state-selection",
-      "fromSide": "bottom",
-      "toNode": "state-power-off",
-      "toSide": "top",
-      "label": "Operator shutdown"
-    },
-    {
-      "id": "edge-active-to-safety",
-      "fromNode": "state-selection",
-      "fromSide": "top",
-      "toNode": "state-stand-still",
-      "toSide": "bottom",
-      "label": "LiDAR drop / lag"
-    },
-    {
-      "id": "edge-safety-to-resume",
-      "fromNode": "state-stand-still",
-      "fromSide": "right",
-      "toNode": "state-selection",
-      "toSide": "top",
-      "label": "Signal recovered"
-    },
-    {
-      "id": "edge-any-to-damping-g",
-      "fromNode": "state-selection",
-      "fromSide": "left",
-      "toNode": "state-damping",
-      "toSide": "right",
-      "label": "Rollover detected"
-    },
-    {
-      "id": "edge-damping-to-init",
-      "fromNode": "state-damping",
-      "fromSide": "bottom",
-      "toNode": "state-init",
-      "toSide": "top",
-      "label": "Recovery command"
-    }
-  ]
+	"nodes":[
+		{"id":"state-init","type":"text","text":"### 🔌 State: INITIALIZATION\n* **Description:** Power-on self-test. ROS 2 node startup.\n* **Locomotion Mode:** MCF initial standby.\n* **Checks:** LiDAR heartbeat, IMU status, SDK connection.","x":0,"y":0,"width":380,"height":140,"color":"1"},
+		{"id":"state-calibration","type":"text","text":"### ⚖️ State: CALIBRATION\n* **Description:** Automatic sensors alignment.\n* **LED Status:** Slow Flash Blue.\n* **Tasks:** IMU bias calibration, foot force sensor zero-drift correction.\n* **Exit Fail:** SIT_STANDBY.","x":500,"y":0,"width":380,"height":140,"color":"3"},
+		{"id":"state-sit-standby","type":"text","text":"### 🧎 State: SIT_STANDBY\n* **Description:** Safe sitting rest pose. Triggered by calibration failure.\n* **Locomotion Mode:** Low-stiffness sitting stance.\n* **Exit Options:** Retry calibration (loops to INITIALIZATION) OR proceed to SHUTDOWN_READY.","x":500,"y":-250,"width":380,"height":140,"color":"1"},
+		{"id":"state-selection","type":"text","text":"### 🎛️ State: MODE_SELECTION\n* **Description:** Idle stand. Waits for ROS 2 launch parameter `mode` trigger.\n* **Default Mode:** `idle`.\n* **Checked Parameters:** `joystick`, `auto_mapping`, `manual_mapping`, `inspection`.","x":1000,"y":0,"width":380,"height":140,"color":"3"},
+		{"id":"state-map-waypoints","type":"text","text":"### 📍 State: MAPPING_WAYPOINTS\n* **Description:** Generates mapping target frontiers.\n* **Trigger:** Launch param `mode:=auto_mapping` or `manual_mapping`.\n* **Output:** Exploration target coordinates.","x":1500,"y":-250,"width":380,"height":140,"color":"5"},
+		{"id":"state-map-navigating","type":"text","text":"### 🗺️ State: MAPPING_NAVIGATING\n* **Description:** Moving to mapping target. Builds 3D point cloud map (SLAM).\n* **Control:** `/cmd_vel` velocity commands.","x":2000,"y":-250,"width":380,"height":140,"color":"5"},
+		{"id":"state-map-rerouting","type":"text","text":"### 🔄 State: MAPPING_REROUTING\n* **Description:** Calculates detour around obstacles during mapping exploration.","x":2500,"y":-350,"width":380,"height":140,"color":"5"},
+		{"id":"state-map-pause","type":"text","text":"### ⏸️ State: MAPPING_PAUSE\n* **Description:** Stationary scan at mapping checkpoint. Stands still for 5 seconds.","x":2500,"y":-150,"width":380,"height":140,"color":"5"},
+		{"id":"state-patrol-waypoints","type":"text","text":"### 📍 State: PATROL_WAYPOINTS\n* **Description:** Reads predefined inspection checkpoints from saved PCD map.\n* **Trigger:** Launch param `mode:=inspection`.","x":1500,"y":150,"width":380,"height":140,"color":"2"},
+		{"id":"state-patrol-navigating","type":"text","text":"### 🚀 State: PATROL_NAVIGATING\n* **Description:** Navigating to patrol target checkpoint. Localizes on pre-loaded map.","x":2000,"y":150,"width":380,"height":140,"color":"2"},
+		{"id":"state-patrol-rerouting","type":"text","text":"### 🔄 State: PATROL_REROUTING\n* **Description:** Calculates alternative detour around dynamic obstacles during patrol.","x":2500,"y":50,"width":380,"height":140,"color":"2"},
+		{"id":"state-patrol-pause","type":"text","text":"### ⏸️ State: PATROL_PAUSE\n* **Description:** Stationary pause at checkpoint for camera inspections.","x":2500,"y":250,"width":380,"height":140,"color":"2"},
+		{"id":"state-return","type":"text","text":"### 🔌 State: RETURN_TO_STATION\n* **Description:** Triggered at patrol end, mapping complete, or battery < 15%.\n* **Behavior:** Aborts mission, navigates to charging dock contacts.","x":1550,"y":450,"width":380,"height":140,"color":"1"},
+		{"id":"state-power-off","type":"text","text":"### 🛑 State: SHUTDOWN_READY (Terminal Exit Node)\n* **Description:** Robot sits down. Onboard computers write logs and safely power off.\n* **Action:** Signals that it is safe to physically turn off the power switch.","x":1000,"y":680,"width":380,"height":140,"color":"1"},
+		{"id":"state-stand-still","type":"text","text":"### 🛑 State: STAND_STILL_SAFETY\n* **Description:** Holds current stand posture. Waits for sensor recovery.\n* **Trigger:** LiDAR dropout OR network latency > limit.\n* **Exit:** Resume previous state on sensor recovery.","x":1000,"y":-600,"width":380,"height":140,"color":"1"},
+		{"id":"state-damping","type":"text","text":"### ⚠️ State: EMERGENCY_DAMPING\n* **Description:** Collapse state. Sets joint stiffness to zero to prevent burnout.\n* **Trigger:** Rollover detected (pitch/roll > 45 deg or gravity.z > 0).\n* **Exit:** RecoveryStand command.","x":500,"y":-600,"width":380,"height":140,"color":"1"},
+		{"id":"state-charging","type":"text","text":"### ⚡ State: CHARGING\n* **Description:** Resting on charging contacts. Monitor battery percentage.\n* **Exit triggers:** Battery > 90% (returns to INITIALIZATION) OR operator shutdown command.","x":1760,"y":750,"width":380,"height":140,"color":"1"},
+		{"id":"state-joystick","type":"text","text":"### 🎮 State: JOYSTICK_MANUAL\n* **Description:** Direct operator driving via remote control joystick.\n* **Trigger:** Launch param `mode:=joystick`.\n* **Exit:** Operator shuts down (transitions to SHUTDOWN_READY).","x":40,"y":390,"width":380,"height":140,"color":"4"}
+	],
+	"edges":[
+		{"id":"edge-init-to-calib","fromNode":"state-init","fromSide":"right","toNode":"state-calibration","toSide":"left","label":"Self-Test Pass"},
+		{"id":"edge-calib-to-select","fromNode":"state-calibration","fromSide":"right","toNode":"state-selection","toSide":"left","label":"Calibration Pass"},
+		{"id":"edge-calib-to-sit","fromNode":"state-calibration","fromSide":"top","toNode":"state-sit-standby","toSide":"bottom","label":"Calibration Fail"},
+		{"id":"edge-sit-to-init","fromNode":"state-sit-standby","fromSide":"left","toNode":"state-init","toSide":"top","label":"Operator retry"},
+		{"id":"edge-sit-to-shutdown","fromNode":"state-sit-standby","fromSide":"bottom","toNode":"state-power-off","toSide":"left","label":"Operator shutdown"},
+		{"id":"edge-select-to-joystick","fromNode":"state-selection","fromSide":"bottom","toNode":"state-joystick","toSide":"top","label":"mode == joystick"},
+		{"id":"edge-joystick-to-shutdown","fromNode":"state-joystick","fromSide":"bottom","toNode":"state-power-off","toSide":"left","label":"Operator shutdown"},
+		{"id":"edge-select-to-mapping","fromNode":"state-selection","fromSide":"right","toNode":"state-map-waypoints","toSide":"left","label":"mode == auto_mapping OR mode == manual_mapping"},
+		{"id":"edge-select-to-patrol","fromNode":"state-selection","fromSide":"right","toNode":"state-patrol-waypoints","toSide":"left","label":"mode == inspection"},
+		{"id":"edge-map-waypoint-to-nav","fromNode":"state-map-waypoints","fromSide":"right","toNode":"state-map-navigating","toSide":"left","label":"Target defined"},
+		{"id":"edge-map-nav-to-reroute","fromNode":"state-map-navigating","fromSide":"right","toNode":"state-map-rerouting","toSide":"left","label":"Obstacle blocked"},
+		{"id":"edge-map-reroute-to-nav","fromNode":"state-map-rerouting","fromSide":"bottom","toNode":"state-map-navigating","toSide":"right","label":"Detour path calculated"},
+		{"id":"edge-map-nav-to-pause","fromNode":"state-map-navigating","fromSide":"bottom","toNode":"state-map-pause","toSide":"top","label":"Frontier reached"},
+		{"id":"edge-map-pause-to-waypoint","fromNode":"state-map-pause","fromSide":"left","toNode":"state-map-waypoints","toSide":"bottom","label":"Pause complete (next frontier)"},
+		{"id":"edge-map-pause-to-return","fromNode":"state-map-pause","fromSide":"bottom","toNode":"state-return","toSide":"right","label":"Mapping exploration finished"},
+		{"id":"edge-patrol-waypoint-to-nav","fromNode":"state-patrol-waypoints","fromSide":"right","toNode":"state-patrol-navigating","toSide":"left","label":"Checkpoint defined"},
+		{"id":"edge-patrol-nav-to-reroute","fromNode":"state-patrol-navigating","fromSide":"right","toNode":"state-patrol-rerouting","toSide":"left","label":"Obstacle blocked"},
+		{"id":"edge-patrol-reroute-to-nav","fromNode":"state-patrol-rerouting","fromSide":"bottom","toNode":"state-patrol-navigating","toSide":"right","label":"Detour path calculated"},
+		{"id":"edge-patrol-nav-to-pause","fromNode":"state-patrol-navigating","fromSide":"bottom","toNode":"state-patrol-pause","toSide":"top","label":"Checkpoint reached"},
+		{"id":"edge-patrol-pause-to-waypoint","fromNode":"state-patrol-pause","fromSide":"left","toNode":"state-patrol-waypoints","toSide":"bottom","label":"Pause complete (next waypoint)"},
+		{"id":"edge-patrol-pause-to-return","fromNode":"state-patrol-pause","fromSide":"bottom","toNode":"state-return","toSide":"right","label":"Patrol mission finished"},
+		{"id":"edge-any-to-return","fromNode":"state-patrol-waypoints","fromSide":"bottom","toNode":"state-return","toSide":"top","label":"Battery < 15%"},
+		{"id":"edge-return-to-charging","fromNode":"state-return","fromSide":"left","toNode":"state-charging","toSide":"right","label":"Docked"},
+		{"id":"edge-charging-to-shutdown","fromNode":"state-charging","fromSide":"bottom","toNode":"state-power-off","toSide":"right","label":"Operator shutdown command"},
+		{"id":"edge-select-to-shutdown","fromNode":"state-selection","fromSide":"bottom","toNode":"state-power-off","toSide":"top","label":"Operator shutdown"},
+		{"id":"edge-active-to-safety","fromNode":"state-selection","fromSide":"top","toNode":"state-stand-still","toSide":"bottom","label":"LiDAR drop / lag"},
+		{"id":"edge-safety-to-resume","fromNode":"state-stand-still","fromSide":"right","toNode":"state-selection","toSide":"top","label":"Signal recovered"},
+		{"id":"edge-any-to-damping-g","fromNode":"state-selection","fromSide":"left","toNode":"state-damping","toSide":"right","label":"Rollover detected"},
+		{"id":"edge-damping-to-init","fromNode":"state-damping","fromSide":"bottom","toNode":"state-init","toSide":"top","label":"Recovery command"}
+	]
 }

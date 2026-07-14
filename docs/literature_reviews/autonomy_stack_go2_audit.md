@@ -66,7 +66,6 @@ The CMU Autonomy Stack provides full autonomous navigation and SLAM capabilities
 ---
 
 ## 7. Flaws Identified in Our Current Documents
-Me review specifications and make changes based on tribal decisions:
 1. **LiDAR Tilt Angle:** We do not use repository tilt of 15.1 degrees. We keep the catalog value of 13.0 degrees for now. The user will calculate the physical tilt angle themselves.
 2. **Sensor Calibration Phase:** We need a separate calibration phase for all sensors (such as IMU and LiDAR) before running the SLAM backend.
 3. **Sensor Accuracy Setup Phase:** We need a setup phase run once at startup. This checks sensor accuracy: static IMU drift, translation accuracy when moving 1 meter forward, and rotation accuracy.
