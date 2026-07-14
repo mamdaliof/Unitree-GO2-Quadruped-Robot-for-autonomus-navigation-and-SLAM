@@ -1,0 +1,1 @@
+another mode should be add named debug so some specific actions are done under it like process time of each block of code
