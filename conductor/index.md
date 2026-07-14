@@ -13,3 +13,16 @@
 | Track ID | Description | Status | Links |
 | :--- | :--- | :--- | :--- |
 | `system-engineering` | System engineering, requirements, state machines, and LLM-friendly documentation | In Progress | [Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/conductor/tracks/system-engineering/index.md) |
+| `repo-audit-autonomy-stack` | Autonomy Stack Go2 Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-autonomy-stack/index.md) |
+| `repo-audit-fast-lio-humanoid` | FAST_LIO_LOCALIZATION_HUMANOID Repository Audit | In Progress | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-fast-lio-humanoid/index.md) |
+
+---
+
+- [x] **Track: Autonomy Stack Go2 Repository Audit**
+*Link: [./tracks/repo-audit-autonomy-stack/](./tracks/repo-audit-autonomy-stack/)*
+
+---
+
+- [ ] **Track: FAST_LIO_LOCALIZATION_HUMANOID Repository Audit**
+*Link: [./tracks/repo-audit-fast-lio-humanoid/](./tracks/repo-audit-fast-lio-humanoid/)*
+
