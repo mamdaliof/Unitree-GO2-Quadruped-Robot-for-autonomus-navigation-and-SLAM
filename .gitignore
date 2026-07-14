@@ -72,3 +72,25 @@ Testing/
 # ROS 2 build directories
 install/
 log/
+.colcon/
+
+# Python caching & environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# Editor & IDE configurations
+.vscode/
+.idea/
+*.suo
+*.sln
+
+# OS metadata
+.DS_Store
