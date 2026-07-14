@@ -14,5 +14,5 @@ The audit must resolve:
 * **Documentation Corrections:** Audit existing system specifications for errors (e.g., LiDAR tilt angles, calibration steps).
 
 ## 3. Deliverables
-* **[[docs/literature_reviews/autonomy_stack_go2_audit|Audit Report]]:** Detailed analysis answering all audit questions.
-* **[[docs/literature_reviews/simulation_guide|Simulation Guide]]:** Standalone guide for running Unity/ROS 2 simulation.
+* **[[docs/literature_reviews/autonomy_stack_go2/autonomy_stack_go2_audit|Audit Report]]:** Detailed analysis answering all audit questions.
+* **[[docs/literature_reviews/autonomy_stack_go2/simulation_guide|Simulation Guide]]:** Standalone guide for running Unity/ROS 2 simulation.

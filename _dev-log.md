@@ -22,7 +22,7 @@
 ### 2026-07-14 — Literature Review & Change Proposals
 - **Actions**:
   - Reviewed the research paper [[literature/Robot Type/Mobile Structural Health Monitoring Based on Legged Robots|Mobile Structural Health Monitoring Based on Legged Robots]] detailing vibration sensing and overlapping normalization.
-  - Created [[docs/literature_reviews/cmu_autonomy_stack_overview|CMU Stack Architecture Overview]] and [[docs/literature_reviews/real_robot_tutorial|Real-Robot Tutorial Guide]].
+  - Created [[docs/literature_reviews/autonomy_stack_go2/cmu_autonomy_stack_overview|CMU Stack Architecture Overview]] and [[docs/literature_reviews/autonomy_stack_go2/real_robot_tutorial|Real-Robot Tutorial Guide]].
   - Prepared modification proposals at the top of the core configuration files for user review.
 
 ### 2026-07-14 — APPROVED SENSOR CHANGES & CALIBRATION SETUP DECOUPLING
