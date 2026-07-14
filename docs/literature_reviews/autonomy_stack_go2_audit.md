@@ -1,6 +1,6 @@
 # Repository Audit: CMU Autonomy Stack Go2
 
-This document compiles the system audit findings, code architecture analysis, advantages, limitations, and key insights extracted from the [[https://github.com/jizhang-cmu/autonomy_stack_go2|CMU Autonomy Stack for Go2]] repository.
+This document compiles the system audit findings, code architecture analysis, advantages, limitations, and key insights extracted from the [CMU Autonomy Stack for Go2](https://github.com/jizhang-cmu/autonomy_stack_go2) repository.
 
 ---
 
