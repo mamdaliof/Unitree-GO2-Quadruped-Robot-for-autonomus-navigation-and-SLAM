@@ -56,6 +56,11 @@ target_link_libraries(sensor_calibration_node
   sensor_msgs::sensor_msgs
   geometry_msgs::geometry_msgs
 )
+# Explicitly include the dependency directories
+target_include_directories(sensor_calibration_node PRIVATE
+  ${go2_sport_api_INCLUDE_DIRS}
+  ${unitree_api_INCLUDE_DIRS}
+)
 # Note: go2_sport_api requires unitree_api and unitree_go.
 # Linking via ament dependencies is standard:
 ament_target_dependencies(sensor_calibration_node
