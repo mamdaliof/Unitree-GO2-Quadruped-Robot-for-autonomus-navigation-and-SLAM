@@ -61,6 +61,9 @@ This document describes all configuration variables used in the Unitree Go2 Smar
 ---
 
 ## 4. Sensor & Calibration Parameters (`sensors`)
+- **`active_lidars`**
+  - **Description:** Specifies which LiDAR payloads are active (`L1`, `L2`, or `BOTH`).
+  - **Referencing Files:** Point-LIO launch files.
 - **`l1_lidar_tilt_angle_deg`**
   - **Description:** Mount pitch angle of the L1 Lidar relative to the robot chassis.
   - **Referencing Files:** Point cloud transform libraries, [sensor_calibration_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_calibration_node.cpp)

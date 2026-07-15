@@ -30,6 +30,7 @@
     }
   },
   "sensors": {
+    "active_lidars": "L1",
     "l1_lidar_tilt_angle_deg": 13.0,
     "l2_lidar_tilt_angle_deg": 15.0,
     "imu_calibration_required": true,

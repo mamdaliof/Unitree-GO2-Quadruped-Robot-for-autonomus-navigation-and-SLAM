@@ -39,18 +39,18 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Sensor Calibration' (Protocol in workflow.md)
 
 ## Phase 3: Point-LIO Integration & Map Management
-- [ ] Task: Clone `point_lio_unilidar` repository into `packages/src/`.
-    - [ ] Clone repository.
-- [ ] Task: Compare cloned Point-LIO with `autonomy_stack_go2` point-lio, document findings.
-    - [ ] Review structure and differences.
-- [ ] Task: Support LIDAR selection (L1, L2, or both) in `go2_config.json`.
-    - [ ] Modify launch files and point-lio node wrappers.
-- [ ] Task: Wrap Point-LIO to save and load maps for localization and map enhancement.
-    - [ ] Implement service/topic to request map save.
-    - [ ] Implement map loading logic on startup.
-- [ ] Task: Support rosbag recording for sensors and SLAM in debug mode.
-    - [ ] Detect debug mode in launch.
-    - [ ] Launch rosbag record process for relevant topics.
+- [x] Task: Clone `point_lio_unilidar` repository into `packages/src/`.
+    - [x] Clone repository.
+- [x] Task: Compare cloned Point-LIO with `autonomy_stack_go2` point-lio, document findings.
+    - [x] Review structure and differences.
+- [x] Task: Support LIDAR selection (L1, L2, or both) in `go2_config.json`.
+    - [x] Modify launch files and point-lio node wrappers.
+- [x] Task: Wrap Point-LIO to save and load maps for localization and map enhancement.
+    - [x] Implement service/topic to request map save.
+    - [x] Implement map loading logic on startup.
+- [x] Task: Support rosbag recording for sensors and SLAM in debug mode.
+    - [x] Detect debug mode in launch.
+    - [x] Launch rosbag record process for relevant topics.
 - [ ] Task: Verify Point-LIO on the physical robot.
     - [ ] Run SLAM with L1, L2, and Dual configuration on physical robot.
     - [ ] Move robot using manual remote control mode.
