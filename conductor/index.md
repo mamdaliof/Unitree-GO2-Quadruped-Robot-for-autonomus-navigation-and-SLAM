@@ -18,7 +18,7 @@
 | `repo-audit-go2-slam-nav` | unitree-go2-slam-nav2 Repository Audit | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/repo-audit-go2-slam-nav/index.md) |
 | `thesis-analysis-reconstruction` | Thesis Review: Autonomous Navigation and 3D Reconstruction | Completed | [Index](file:///home/jovyan/Unitree-GO2-Quadruped-Robot-for-autonomus-navigation-and-SLAM/conductor/tracks/thesis-analysis-reconstruction/index.md) |
 | `oop-system-design_20260714` | OOP Architecture & System Engineering Enhancements | Completed | [Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/conductor/tracks/oop-system-design_20260714/index.md) |
-| `slam_20260715` | Establish sensors, calibration, Point-LIO and A-LOAM SLAM track | New | [Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/conductor/tracks/slam_20260715/index.md) |
+| `slam_20260715` | Establish sensors, calibration, Point-LIO and A-LOAM SLAM track | In Progress | [Index](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/conductor/tracks/slam_20260715/index.md) |
 
 ---
 
@@ -47,8 +47,9 @@
 
 ---
 
-- [ ] **Track: Establish sensors, calibration, Point-LIO and A-LOAM SLAM track**
+- [~] **Track: Establish sensors, calibration, Point-LIO and A-LOAM SLAM track**
 *Link: [./tracks/slam_20260715/](./tracks/slam_20260715/)*
+
 
 
 
