@@ -40,6 +40,9 @@ This document describes all configuration variables used in the Unitree Go2 Smar
 ---
 
 ## 3. General System Settings (`system`)
+- **`slam_backend`**
+  - **Description:** The active SLAM backend algorithm (`Point-LIO` or `A-LOAM`).
+  - **Referencing Files:** [mapping_unilidar_launch.py](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_bringup/launch/mapping_unilidar_launch.py)
 - **`target_localization_accuracy_m`**
   - **Description:** The target accuracy threshold in meters. Used by SLAM and planners.
   - **Referencing Files:** [system_requirements.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/docs/requirements/system_requirements.md)

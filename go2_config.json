@@ -20,6 +20,7 @@
     "l2_imu_output": "/go2/l2_imu"
   },
   "system": {
+    "slam_backend": "Point-LIO",
     "target_localization_accuracy_m": 0.05,
     "allowable_slope_angle_deg": "PENDING_RESEARCH",
     "dynamic_speed_scaling": true,
