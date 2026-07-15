@@ -1,0 +1,10 @@
+# System Apt Dependencies for Go2 Autonomus Navigation & SLAM stack
+# Install using: xargs -a requirements.txt sudo apt-get install -y
+
+libceres-dev
+ros-jazzy-pcl-ros
+ros-jazzy-pcl-conversions
+ros-jazzy-tf2-eigen
+ros-jazzy-std-srvs
+ros-jazzy-tf2-geometry-msgs
+ros-jazzy-tf2-sensor-msgs
