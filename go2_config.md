@@ -24,11 +24,17 @@ This document describes all configuration variables used in the Unitree Go2 Smar
 - **`l2_lidar_output`**
   - **Description:** The standardized target ROS 2 topic name where raw L2 Lidar point clouds are published.
   - **Referencing Files:** [sensor_publisher_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_publisher_node.cpp)
-- **`imu_input`**
-  - **Description:** The raw input topic published by the robot's IMU driver.
-  - **Referencing Files:** [robot_imu.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/robot_imu.cpp)
-- **`imu_output`**
-  - **Description:** The standardized target ROS 2 topic name where raw IMU data is published.
+- **`l1_imu_input`**
+  - **Description:** The raw input topic published by the L1 Lidar's integrated IMU driver.
+  - **Referencing Files:** [sensor_calibration_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_calibration_node.cpp)
+- **`l1_imu_output`**
+  - **Description:** The standardized target ROS 2 topic name where raw L1 IMU data is published.
+  - **Referencing Files:** [sensor_publisher_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_publisher_node.cpp)
+- **`l2_imu_input`**
+  - **Description:** The raw input topic published by the L2 Lidar's integrated IMU driver.
+  - **Referencing Files:** [sensor_calibration_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_calibration_node.cpp)
+- **`l2_imu_output`**
+  - **Description:** The standardized target ROS 2 topic name where raw L2 IMU data is published.
   - **Referencing Files:** [sensor_publisher_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_publisher_node.cpp)
 
 ---
@@ -55,9 +61,12 @@ This document describes all configuration variables used in the Unitree Go2 Smar
 ---
 
 ## 4. Sensor & Calibration Parameters (`sensors`)
-- **`lidar_tilt_angle_deg`**
-  - **Description:** Mount pitch angle of the main Lidar relative to the robot chassis.
-  - **Referencing Files:** Point cloud transform libraries.
+- **`l1_lidar_tilt_angle_deg`**
+  - **Description:** Mount pitch angle of the L1 Lidar relative to the robot chassis.
+  - **Referencing Files:** Point cloud transform libraries, [sensor_calibration_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_calibration_node.cpp)
+- **`l2_lidar_tilt_angle_deg`**
+  - **Description:** Mount pitch angle of the L2 Lidar relative to the robot chassis.
+  - **Referencing Files:** Point cloud transform libraries, [sensor_calibration_node.cpp](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/src/sensor_calibration_node.cpp)
 - **`imu_calibration_required`**
   - **Description:** Toggle to enforce static IMU calibration checks.
   - **Referencing Files:** [system_requirements.md](file:///home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/docs/requirements/system_requirements.md)

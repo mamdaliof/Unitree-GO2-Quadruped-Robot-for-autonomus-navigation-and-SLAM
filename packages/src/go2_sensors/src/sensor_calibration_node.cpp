@@ -106,20 +106,37 @@ public:
       return;
     }
 
-    // Read LiDAR tilt angle to calculate theta
-    double tilt_deg = SimpleConfig::getDoubleValue(config_path_, "sensors", "lidar_tilt_angle_deg", 13.0);
-    theta_ = tilt_deg * M_PI / 180.0;
-    RCLCPP_INFO(this->get_logger(), "Starting sensor calibration. LiDAR tilt angle: %.2f deg (theta = %.4f rad)", tilt_deg, theta_);
+    // Read LiDAR tilt angles to calculate thetas
+    double tilt_deg_l1 = SimpleConfig::getDoubleValue(config_path_, "sensors", "l1_lidar_tilt_angle_deg", 13.0);
+    double tilt_deg_l2 = SimpleConfig::getDoubleValue(config_path_, "sensors", "l2_lidar_tilt_angle_deg", 15.0);
+    theta_l1_ = tilt_deg_l1 * M_PI / 180.0;
+    theta_l2_ = tilt_deg_l2 * M_PI / 180.0;
+
+    RCLCPP_INFO(this->get_logger(), "Starting sensor calibration.");
+    RCLCPP_INFO(this->get_logger(), "L1 LiDAR tilt angle: %.2f deg (theta_l1 = %.4f rad)", tilt_deg_l1, theta_l1_);
+    RCLCPP_INFO(this->get_logger(), "L2 LiDAR tilt angle: %.2f deg (theta_l2 = %.4f rad)", tilt_deg_l2, theta_l2_);
 
     // Read configured topics
-    std::string imu_topic = SimpleConfig::getValue(config_path_, "topics", "imu_input", "/utlidar/imu");
+    std::string imu1_topic = SimpleConfig::getValue(config_path_, "topics", "l1_imu_input", "/utlidar/imu");
+    std::string imu2_topic = SimpleConfig::getValue(config_path_, "topics", "l2_imu_input", "/utlidar/imu_l2");
 
     // Initialize publishers and subscribers
     pub_sport_request_ = this->create_publisher<unitree_api::msg::Request>("/api/sport/request", 10);
     pub_cmd_vel_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("/cmd_vel", 5);
-    sub_imu_ = this->create_subscription<sensor_msgs::msg::Imu>(
-      imu_topic, 300, std::bind(&SensorCalibrationNode::ImuCallback, this, std::placeholders::_1)
-    );
+
+    if (!imu1_topic.empty()) {
+      RCLCPP_INFO(this->get_logger(), "Subscribing to L1 IMU: %s", imu1_topic.c_str());
+      sub_imu_l1_ = this->create_subscription<sensor_msgs::msg::Imu>(
+        imu1_topic, 300, std::bind(&SensorCalibrationNode::Imu1Callback, this, std::placeholders::_1)
+      );
+    }
+
+    if (!imu2_topic.empty()) {
+      RCLCPP_INFO(this->get_logger(), "Subscribing to L2 IMU: %s", imu2_topic.c_str());
+      sub_imu_l2_ = this->create_subscription<sensor_msgs::msg::Imu>(
+        imu2_topic, 300, std::bind(&SensorCalibrationNode::Imu2Callback, this, std::placeholders::_1)
+      );
+    }
 
     beginning_time_ = std::chrono::system_clock::now();
 
@@ -130,24 +147,26 @@ public:
   }
 
 private:
-  void ImuCallback(const sensor_msgs::msg::Imu::ConstSharedPtr msg_in)
+  void ProcessImuData(const sensor_msgs::msg::Imu::ConstSharedPtr msg_in, double theta, 
+                      std::vector<sensor_msgs::msg::Imu>& static_vec, 
+                      std::vector<sensor_msgs::msg::Imu>& rot_vec)
   {
     // Coordinates conversion to Z-up base frame (pitch rotation by theta about Y-axis)
     double x = msg_in->angular_velocity.x;
     double y = -msg_in->angular_velocity.y;
     double z = -msg_in->angular_velocity.z;
 
-    double x2 = x * cos(theta_) - z * sin(theta_);
+    double x2 = x * cos(theta) - z * sin(theta);
     double y2 = y;
-    double z2 = x * sin(theta_) + z * cos(theta_);
+    double z2 = x * sin(theta) + z * cos(theta);
 
     double acc_x = msg_in->linear_acceleration.x;
     double acc_y = -msg_in->linear_acceleration.y;
     double acc_z = -msg_in->linear_acceleration.z;
 
-    double acc_x2 = acc_x * cos(theta_) - acc_z * sin(theta_);
+    double acc_x2 = acc_x * cos(theta) - acc_z * sin(theta);
     double acc_y2 = acc_y;
-    double acc_z2 = acc_x * sin(theta_) + acc_z * cos(theta_);
+    double acc_z2 = acc_x * sin(theta) + acc_z * cos(theta);
 
     sensor_msgs::msg::Imu msg_store = *msg_in;
     msg_store.angular_velocity.x = x2;
@@ -158,10 +177,20 @@ private:
     msg_store.linear_acceleration.z = acc_z2;
 
     if (state_ == 1) {
-      imu_static_.push_back(msg_store);
+      static_vec.push_back(msg_store);
     } else if (state_ == 2) {
-      imu_rotation_positive_z_.push_back(msg_store);
+      rot_vec.push_back(msg_store);
     }
+  }
+
+  void Imu1Callback(const sensor_msgs::msg::Imu::ConstSharedPtr msg_in)
+  {
+    ProcessImuData(msg_in, theta_l1_, imu1_static_, imu1_rotation_positive_z_);
+  }
+
+  void Imu2Callback(const sensor_msgs::msg::Imu::ConstSharedPtr msg_in)
+  {
+    ProcessImuData(msg_in, theta_l2_, imu2_static_, imu2_rotation_positive_z_);
   }
 
   void TimerCallback()
@@ -234,74 +263,104 @@ private:
 
     if (state_ == 3 && !file_written_) {
       RCLCPP_INFO(this->get_logger(), "Calibration sequence complete. Processing data...");
-      ComputeCalibration();
+      ComputeCalibrationAll();
       file_written_ = true;
       RCLCPP_INFO(this->get_logger(), "Calibration node complete. Shutting down.");
       rclcpp::shutdown();
     }
   }
 
-  void ComputeCalibration()
-  {
-    if (imu_static_.empty() || imu_rotation_positive_z_.empty()) {
-      RCLCPP_ERROR(this->get_logger(), "Insufficient IMU data collected! Static samples: %zu, Rotation samples: %zu",
-                   imu_static_.size(), imu_rotation_positive_z_.size());
-      return;
-    }
-
+  struct CalibrationResult {
+    bool valid = false;
     double acc_bias_x = 0;
     double acc_bias_y = 0;
     double acc_bias_z = 0;
     double ang_bias_x = 0;
     double ang_bias_y = 0;
     double ang_bias_z = 0;
+    double ang_z2x_proj = 0;
+    double ang_z2y_proj = 0;
+  };
 
-    for (const auto& imu : imu_static_) {
-      acc_bias_x += imu.linear_acceleration.x;
-      acc_bias_y += imu.linear_acceleration.y;
-      acc_bias_z += imu.linear_acceleration.z;
-      ang_bias_x += imu.angular_velocity.x;
-      ang_bias_y += imu.angular_velocity.y;
-      ang_bias_z += imu.angular_velocity.z;
+  CalibrationResult CalibrateSensor(const std::vector<sensor_msgs::msg::Imu>& static_data,
+                                    const std::vector<sensor_msgs::msg::Imu>& rot_data,
+                                    const std::string& name)
+  {
+    CalibrationResult res;
+    if (static_data.empty() || rot_data.empty()) {
+      RCLCPP_WARN(this->get_logger(), "IMU %s has insufficient data. Skipping. Static: %zu, Rot: %zu",
+                  name.c_str(), static_data.size(), rot_data.size());
+      return res;
     }
 
-    acc_bias_x /= imu_static_.size();
-    acc_bias_y /= imu_static_.size();
-    acc_bias_z /= imu_static_.size();
-    ang_bias_x /= imu_static_.size();
-    ang_bias_y /= imu_static_.size();
-    ang_bias_z /= imu_static_.size();
+    for (const auto& imu : static_data) {
+      res.acc_bias_x += imu.linear_acceleration.x;
+      res.acc_bias_y += imu.linear_acceleration.y;
+      res.acc_bias_z += imu.linear_acceleration.z;
+      res.ang_bias_x += imu.angular_velocity.x;
+      res.ang_bias_y += imu.angular_velocity.y;
+      res.ang_bias_z += imu.angular_velocity.z;
+    }
 
-    // Subtract gravity constant from z bias
-    acc_bias_z -= 9.81;
+    res.acc_bias_x /= static_data.size();
+    res.acc_bias_y /= static_data.size();
+    res.acc_bias_z /= static_data.size();
+    res.ang_bias_x /= static_data.size();
+    res.ang_bias_y /= static_data.size();
+    res.ang_bias_z /= static_data.size();
+
+    // Subtract gravity constant from Z bias
+    res.acc_bias_z -= 9.81;
 
     double ang_rot_x = 0;
     double ang_rot_y = 0;
     double ang_rot_z = 0;
 
-    for (const auto& imu : imu_rotation_positive_z_) {
+    for (const auto& imu : rot_data) {
       ang_rot_x += imu.angular_velocity.x;
       ang_rot_y += imu.angular_velocity.y;
       ang_rot_z += imu.angular_velocity.z;
     }
 
-    ang_rot_x = (ang_rot_x / imu_rotation_positive_z_.size()) - ang_bias_x;
-    ang_rot_y = (ang_rot_y / imu_rotation_positive_z_.size()) - ang_bias_y;
-    ang_rot_z = (ang_rot_z / imu_rotation_positive_z_.size()) - ang_bias_z;
+    ang_rot_x = (ang_rot_x / rot_data.size()) - res.ang_bias_x;
+    ang_rot_y = (ang_rot_y / rot_data.size()) - res.ang_bias_y;
+    ang_rot_z = (ang_rot_z / rot_data.size()) - res.ang_bias_z;
 
-    double ang_z2x_proj = -ang_rot_x / ang_rot_z;
-    double ang_z2y_proj = -ang_rot_y / ang_rot_z;
+    if (std::abs(ang_rot_z) > 1e-4) {
+      res.ang_z2x_proj = -ang_rot_x / ang_rot_z;
+      res.ang_z2y_proj = -ang_rot_y / ang_rot_z;
+      res.valid = true;
+    } else {
+      RCLCPP_ERROR(this->get_logger(), "IMU %s rotation velocity in Z-axis is too low (%.4f rad/s). Cannot calibrate alignment.", 
+                   name.c_str(), ang_rot_z);
+    }
 
-    // Log values
-    RCLCPP_INFO(this->get_logger(), "--- CALIBRATION RESULTS ---");
-    RCLCPP_INFO(this->get_logger(), "Acc Bias X: %.6f, Y: %.6f, Z: %.6f", acc_bias_x, acc_bias_y, acc_bias_z);
-    RCLCPP_INFO(this->get_logger(), "Ang Bias X: %.6f, Y: %.6f, Z: %.6f", ang_bias_x, ang_bias_y, ang_bias_z);
-    RCLCPP_INFO(this->get_logger(), "Z-axis Projection X: %.6f, Y: %.6f", ang_z2x_proj, ang_z2y_proj);
-
-    SerializeResults(acc_bias_x, acc_bias_y, acc_bias_z, ang_bias_x, ang_bias_y, ang_bias_z, ang_z2x_proj, ang_z2y_proj);
+    return res;
   }
 
-  void SerializeResults(double ax, double ay, double az, double gx, double gy, double gz, double px, double py)
+  void ComputeCalibrationAll()
+  {
+    CalibrationResult calib_l1 = CalibrateSensor(imu1_static_, imu1_rotation_positive_z_, "L1");
+    CalibrationResult calib_l2 = CalibrateSensor(imu2_static_, imu2_rotation_positive_z_, "L2");
+
+    // Print results
+    if (calib_l1.valid) {
+      RCLCPP_INFO(this->get_logger(), "--- L1 IMU CALIBRATION RESULTS ---");
+      RCLCPP_INFO(this->get_logger(), "Acc Bias X: %.6f, Y: %.6f, Z: %.6f", calib_l1.acc_bias_x, calib_l1.acc_bias_y, calib_l1.acc_bias_z);
+      RCLCPP_INFO(this->get_logger(), "Ang Bias X: %.6f, Y: %.6f, Z: %.6f", calib_l1.ang_bias_x, calib_l1.ang_bias_y, calib_l1.ang_bias_z);
+      RCLCPP_INFO(this->get_logger(), "Z-axis Projection X: %.6f, Y: %.6f", calib_l1.ang_z2x_proj, calib_l1.ang_z2y_proj);
+    }
+    if (calib_l2.valid) {
+      RCLCPP_INFO(this->get_logger(), "--- L2 IMU CALIBRATION RESULTS ---");
+      RCLCPP_INFO(this->get_logger(), "Acc Bias X: %.6f, Y: %.6f, Z: %.6f", calib_l2.acc_bias_x, calib_l2.acc_bias_y, calib_l2.acc_bias_z);
+      RCLCPP_INFO(this->get_logger(), "Ang Bias X: %.6f, Y: %.6f, Z: %.6f", calib_l2.ang_bias_x, calib_l2.ang_bias_y, calib_l2.ang_bias_z);
+      RCLCPP_INFO(this->get_logger(), "Z-axis Projection X: %.6f, Y: %.6f", calib_l2.ang_z2x_proj, calib_l2.ang_z2y_proj);
+    }
+
+    SerializeResultsAll(calib_l1, calib_l2);
+  }
+
+  void SerializeResultsAll(const CalibrationResult& cal1, const CalibrationResult& cal2)
   {
     try {
       std::filesystem::create_directories(log_dir_);
@@ -320,16 +379,32 @@ private:
 
       file << "# Unitree Go2 Sensor Daily Calibration Parameters" << std::endl;
       file << "timestamp: " << std::put_time(&tm, "%Y-%m-%dT%H:%M:%S") << std::endl;
-      file << "acc_bias_x: " << ax << std::endl;
-      file << "acc_bias_y: " << ay << std::endl;
-      file << "acc_bias_z: " << az << std::endl;
-      file << "ang_bias_x: " << gx << std::endl;
-      file << "ang_bias_y: " << gy << std::endl;
-      file << "ang_bias_z: " << gz << std::endl;
-      file << "ang_z2x_proj: " << px << std::endl;
-      file << "ang_z2y_proj: " << py << std::endl;
-      file.close();
 
+      if (cal1.valid) {
+        file << "l1_imu:" << std::endl;
+        file << "  acc_bias_x: " << cal1.acc_bias_x << std::endl;
+        file << "  acc_bias_y: " << cal1.acc_bias_y << std::endl;
+        file << "  acc_bias_z: " << cal1.acc_bias_z << std::endl;
+        file << "  ang_bias_x: " << cal1.ang_bias_x << std::endl;
+        file << "  ang_bias_y: " << cal1.ang_bias_y << std::endl;
+        file << "  ang_bias_z: " << cal1.ang_bias_z << std::endl;
+        file << "  ang_z2x_proj: " << cal1.ang_z2x_proj << std::endl;
+        file << "  ang_z2y_proj: " << cal1.ang_z2y_proj << std::endl;
+      }
+
+      if (cal2.valid) {
+        file << "l2_imu:" << std::endl;
+        file << "  acc_bias_x: " << cal2.acc_bias_x << std::endl;
+        file << "  acc_bias_y: " << cal2.acc_bias_y << std::endl;
+        file << "  acc_bias_z: " << cal2.acc_bias_z << std::endl;
+        file << "  ang_bias_x: " << cal2.ang_bias_x << std::endl;
+        file << "  ang_bias_y: " << cal2.ang_bias_y << std::endl;
+        file << "  ang_bias_z: " << cal2.ang_bias_z << std::endl;
+        file << "  ang_z2x_proj: " << cal2.ang_z2x_proj << std::endl;
+        file << "  ang_z2y_proj: " << cal2.ang_z2y_proj << std::endl;
+      }
+
+      file.close();
       RCLCPP_INFO(this->get_logger(), "Calibration results written to: %s", log_file.c_str());
     } catch (const std::exception& e) {
       RCLCPP_ERROR(this->get_logger(), "Failed to write calibration results: %s", e.what());
@@ -338,18 +413,22 @@ private:
 
   std::string config_path_;
   std::string log_dir_;
-  double theta_;
+  double theta_l1_;
+  double theta_l2_;
 
   int state_;
   bool file_written_;
   std::chrono::system_clock::time_point beginning_time_;
 
-  std::vector<sensor_msgs::msg::Imu> imu_static_;
-  std::vector<sensor_msgs::msg::Imu> imu_rotation_positive_z_;
+  std::vector<sensor_msgs::msg::Imu> imu1_static_;
+  std::vector<sensor_msgs::msg::Imu> imu1_rotation_positive_z_;
+  std::vector<sensor_msgs::msg::Imu> imu2_static_;
+  std::vector<sensor_msgs::msg::Imu> imu2_rotation_positive_z_;
 
   rclcpp::Publisher<unitree_api::msg::Request>::SharedPtr pub_sport_request_;
   rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr pub_cmd_vel_;
-  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu_;
+  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu_l1_;
+  rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr sub_imu_l2_;
   rclcpp::TimerBase::SharedPtr timer_;
 };
 

@@ -14,8 +14,10 @@
     "l1_lidar_output": "/go2/l1_lidar",
     "l2_lidar_input": "/utlidar/cloud_l2",
     "l2_lidar_output": "/go2/l2_lidar",
-    "imu_input": "/utlidar/imu",
-    "imu_output": "/go2/imu"
+    "l1_imu_input": "/utlidar/imu",
+    "l1_imu_output": "/go2/l1_imu",
+    "l2_imu_input": "/utlidar/imu_l2",
+    "l2_imu_output": "/go2/l2_imu"
   },
   "system": {
     "target_localization_accuracy_m": 0.05,
@@ -28,7 +30,8 @@
     }
   },
   "sensors": {
-    "lidar_tilt_angle_deg": 13.0,
+    "l1_lidar_tilt_angle_deg": 13.0,
+    "l2_lidar_tilt_angle_deg": 15.0,
     "imu_calibration_required": true,
     "self_filter_box": {
       "x_min": -0.7,
