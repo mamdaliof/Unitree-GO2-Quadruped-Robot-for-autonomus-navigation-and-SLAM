@@ -59,10 +59,10 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Point-LIO SLAM' (Protocol in workflow.md)
 
 ## Phase 4: A-LOAM Integration
-- [ ] Task: Clone `A-LOAM` repository into `packages/src/`.
-    - [ ] Clone repository.
-- [ ] Task: Build A-LOAM and resolve ROS 2 Jazzy compatibility.
-    - [ ] Adapt C++ code for Jazzy compile.
+- [x] Task: Clone `A-LOAM` repository into `packages/src/`.
+    - [x] Clone repository.
+- [x] Task: Build A-LOAM and resolve ROS 2 Jazzy compatibility.
+    - [x] Adapt C++ code for Jazzy compile.
 - [ ] Task: Verify A-LOAM on the physical robot.
     - [ ] Launch A-LOAM SLAM on physical robot and move manually.
     - [ ] Compare map consistency and CPU utilization with Point-LIO.

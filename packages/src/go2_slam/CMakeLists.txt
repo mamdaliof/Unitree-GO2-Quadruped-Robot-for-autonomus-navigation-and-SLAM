@@ -13,6 +13,8 @@ find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(go2_navigation REQUIRED)
+find_package(pcl_conversions REQUIRED)
+find_package(pcl_ros REQUIRED)
 
 # Declare header-only library
 add_library(go2_slam INTERFACE)
@@ -29,6 +31,8 @@ target_link_libraries(go2_slam INTERFACE
   nav_msgs::nav_msgs
   std_srvs::std_srvs
   go2_navigation::go2_navigation_interfaces
+  pcl_conversions::pcl_conversions
+  pcl_ros::pcl_ros
 )
 
 # Install headers
@@ -44,7 +48,7 @@ install(
 )
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-ament_export_dependencies(rclcpp sensor_msgs geometry_msgs nav_msgs std_srvs go2_navigation)
+ament_export_dependencies(rclcpp sensor_msgs geometry_msgs nav_msgs std_srvs go2_navigation pcl_conversions pcl_ros)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
