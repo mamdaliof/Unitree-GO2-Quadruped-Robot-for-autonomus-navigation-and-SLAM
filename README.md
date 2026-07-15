@@ -57,4 +57,4 @@ The map will be exported to the target path configured by `map_save_path` (or `m
 
 ---
 
-For detailed code architecture notes, refer to the [[docs/architecture/slam_oop_integration|SLAM & OOP Collaboration Architecture]]. For further mounting, environment, or SDK details, refer to the [[Go2_Documentation/index|Go2 Developer Documentation Index]].
+For detailed code architecture notes, refer to the [[docs/architecture/slam_oop_integration|SLAM & OOP Collaboration Architecture]]. For remote execution guides, refer to the [[docs/application_development/remote_execution_guide|Remote Execution & Jetson Setup Guide]]. For further mounting, environment, or SDK details, refer to the [[Go2_Documentation/index|Go2 Developer Documentation Index]].
