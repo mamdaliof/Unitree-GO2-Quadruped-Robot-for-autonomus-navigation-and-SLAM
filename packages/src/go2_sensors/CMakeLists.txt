@@ -9,6 +9,9 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(unitree_api REQUIRED)
+find_package(go2_sport_api REQUIRED)
 find_package(go2_navigation REQUIRED)
 
 # Declare headers and library
@@ -37,7 +40,7 @@ install(
   RUNTIME DESTINATION bin
 )
 
-# Declare executable
+# Declare executable: sensor_publisher_node
 add_executable(sensor_publisher_node src/sensor_publisher_node.cpp)
 target_link_libraries(sensor_publisher_node
   go2_sensors_lib
@@ -45,8 +48,23 @@ target_link_libraries(sensor_publisher_node
   sensor_msgs::sensor_msgs
 )
 
+# Declare executable: sensor_calibration_node
+add_executable(sensor_calibration_node src/sensor_calibration_node.cpp)
+target_link_libraries(sensor_calibration_node
+  go2_sensors_lib
+  rclcpp::rclcpp
+  sensor_msgs::sensor_msgs
+  geometry_msgs::geometry_msgs
+)
+# Note: go2_sport_api requires unitree_api and unitree_go.
+# Linking via ament dependencies is standard:
+ament_target_dependencies(sensor_calibration_node
+  unitree_api
+  go2_sport_api
+)
+
 install(
-  TARGETS sensor_publisher_node
+  TARGETS sensor_publisher_node sensor_calibration_node
   DESTINATION lib/${PROJECT_NAME}
 )
 

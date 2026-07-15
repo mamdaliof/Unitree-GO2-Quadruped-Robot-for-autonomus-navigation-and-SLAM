@@ -21,6 +21,13 @@ def generate_launch_description():
         description='Use simulation (bag/clock) time if true'
     )
 
+    # Declare the launch argument for calibration log directory
+    log_dir_arg = DeclareLaunchArgument(
+        'log_dir',
+        default_value='/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/log',
+        description='Directory to save daily calibration log files'
+    )
+
     # Configure the sensor publisher node action
     sensor_publisher_node = Node(
         package='go2_sensors',
@@ -33,8 +40,22 @@ def generate_launch_description():
         }]
     )
 
+    # Configure the sensor calibration node action
+    sensor_calibration_node = Node(
+        package='go2_sensors',
+        executable='sensor_calibration_node',
+        name='go2_sensor_calibration',
+        output='screen',
+        parameters=[{
+            'config_path': LaunchConfiguration('config_path'),
+            'log_dir': LaunchConfiguration('log_dir')
+        }]
+    )
+
     return LaunchDescription([
         config_path_arg,
         use_sim_time_arg,
-        sensor_publisher_node
+        log_dir_arg,
+        sensor_publisher_node,
+        sensor_calibration_node
     ])

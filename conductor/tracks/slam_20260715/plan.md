@@ -21,17 +21,17 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Sensor Driver' (Protocol in workflow.md)
 
 ## Phase 2: Sensor Calibration & Logging
-- [ ] Task: Analyze and explain calibration algorithm from `autonomy_stack_go2`.
-    - [ ] Audit calibration code.
-    - [ ] Document algorithm in research log.
-- [ ] Task: Implement automatic startup calibration logic on automated mode.
-    - [ ] Detect mode on startup.
-    - [ ] Run calibration sequence.
-- [ ] Task: Log daily calibration parameters to `packages/src/go2_sensors/log`.
-    - [ ] Create logging mechanism directory/files.
-    - [ ] Format logs with timestamp and parameters.
-- [ ] Task: Implement configuration check to toggle calibration on/off via `go2_config.json`.
-    - [ ] Read calibration toggle parameters.
+- [x] Task: Analyze and explain calibration algorithm from `autonomy_stack_go2`.
+    - [x] Audit calibration code.
+    - [x] Document algorithm in research log.
+- [x] Task: Implement automatic startup calibration logic on automated mode.
+    - [x] Detect mode on startup.
+    - [x] Run calibration sequence.
+- [x] Task: Log daily calibration parameters to `packages/src/go2_sensors/log`.
+    - [x] Create logging mechanism directory/files.
+    - [x] Format logs with timestamp and parameters.
+- [x] Task: Implement configuration check to toggle calibration on/off via `go2_config.json`.
+    - [x] Read calibration toggle parameters.
 - [ ] Task: Verify calibration on the physical robot.
     - [ ] Put robot in automated mode, verify calibration runs on startup.
     - [ ] Check calibration log files generated in the specified directory.
