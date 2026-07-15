@@ -1,5 +1,5 @@
-#ifndef GO2_NAVIGATION__POINT_LIO_WRAPPER_HPP_
-#define GO2_NAVIGATION__POINT_LIO_WRAPPER_HPP_
+#ifndef GO2_SLAM__POINT_LIO_WRAPPER_HPP_
+#define GO2_SLAM__POINT_LIO_WRAPPER_HPP_
 
 #include <chrono>
 #include <memory>
@@ -15,15 +15,15 @@
 #include <std_srvs/srv/trigger.hpp>
 #include <rcl_interfaces/srv/set_parameters.hpp>
 
-#include "slam_interface.hpp"
+#include <go2_navigation/slam_interface.hpp>
 
-namespace go2_navigation
+namespace go2_slam
 {
 
 /**
  * @brief SLAMInterface wrapper implementing Point-LIO node controls.
  */
-class PointLioWrapper : public SLAMInterface
+class PointLioWrapper : public go2_navigation::SLAMInterface
 {
 public:
   using SharedPtr = std::shared_ptr<PointLioWrapper>;
@@ -41,7 +41,7 @@ public:
 
   bool Init() override
   {
-    RCLCPP_INFO(node_->get_logger(), "Initializing PointLioWrapper...");
+    RCLCPP_INFO(node_->get_logger(), "Initializing PointLioWrapper inside go2_slam...");
 
     // Create service client for save map
     save_map_client_ = node_->create_client<std_srvs::srv::Trigger>("/save_map");
@@ -189,6 +189,6 @@ private:
   bool kidnap_detected_;
 };
 
-} // namespace go2_navigation
+} // namespace go2_slam
 
-#endif // GO2_NAVIGATION__POINT_LIO_WRAPPER_HPP_
+#endif // GO2_SLAM__POINT_LIO_WRAPPER_HPP_
