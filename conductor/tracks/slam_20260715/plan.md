@@ -15,6 +15,9 @@
     - [ ] Set up publishers for IMU and LIDAR topics.
 - [ ] Task: Support processing sensor samples with specific timestamps/simulation time.
     - [ ] Implement ROS 2 parameter support for `use_sim_time`.
+- [ ] Task: Verify on the physical robot (Unitree Go2).
+    - [ ] Deploy node and check `ros2 topic echo` output for L1 Lidar, L2 Lidar, and IMU.
+    - [ ] Verify message timestamp synchronization.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Sensor Driver' (Protocol in workflow.md)
 
 ## Phase 2: Sensor Calibration & Logging
@@ -29,6 +32,10 @@
     - [ ] Format logs with timestamp and parameters.
 - [ ] Task: Implement configuration check to toggle calibration on/off via `go2_config.json`.
     - [ ] Read calibration toggle parameters.
+- [ ] Task: Verify calibration on the physical robot.
+    - [ ] Put robot in automated mode, verify calibration runs on startup.
+    - [ ] Check calibration log files generated in the specified directory.
+    - [ ] Toggle calibration OFF in `go2_config.json` and verify it does not run.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Sensor Calibration' (Protocol in workflow.md)
 
 ## Phase 3: Point-LIO Integration & Map Management
@@ -44,6 +51,11 @@
 - [ ] Task: Support rosbag recording for sensors and SLAM in debug mode.
     - [ ] Detect debug mode in launch.
     - [ ] Launch rosbag record process for relevant topics.
+- [ ] Task: Verify Point-LIO on the physical robot.
+    - [ ] Run SLAM with L1, L2, and Dual configuration on physical robot.
+    - [ ] Move robot using manual remote control mode.
+    - [ ] Verify real-time map generation and save/load functionality.
+    - [ ] Enable debug mode and verify rosbag records sensor/odometry data correctly.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Point-LIO SLAM' (Protocol in workflow.md)
 
 ## Phase 4: A-LOAM Integration
@@ -51,6 +63,9 @@
     - [ ] Clone repository.
 - [ ] Task: Build A-LOAM and resolve ROS 2 Jazzy compatibility.
     - [ ] Adapt C++ code for Jazzy compile.
+- [ ] Task: Verify A-LOAM on the physical robot.
+    - [ ] Launch A-LOAM SLAM on physical robot and move manually.
+    - [ ] Compare map consistency and CPU utilization with Point-LIO.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: A-LOAM Integration' (Protocol in workflow.md)
 
 ## Phase 5: Physical Testing & Validation
@@ -59,3 +74,4 @@
 - [ ] Task: Compile technical report on SLAM backends performance.
     - [ ] Collect metrics and write report.
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Physical Validation' (Protocol in workflow.md)
+
