@@ -52,8 +52,8 @@ std::string findConfigPath(const std::string& exec_path)
     // Fallback to default
   }
 
-  // Fallback to absolute path on developer PC
-  return "/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/go2_config.json";
+  // Fallback if not found
+  return "";
 }
 
 /**
@@ -117,20 +117,25 @@ public:
     // Fallback if no parameter was passed via launch file or CLI
     if (config_path_.empty()) {
       config_path_ = findConfigPath("");
-      RCLCPP_WARN(this->get_logger(), "No config_path parameter specified. Found fallback path: %s", config_path_.c_str());
+    }
+    if (config_path_.empty()) {
+      RCLCPP_FATAL(this->get_logger(), "Parameter 'config_path' is empty and config file could not be found!");
+      throw std::runtime_error("Configuration file not found. Set 'config_path' parameter.");
     } else {
-      RCLCPP_INFO(this->get_logger(), "Using config path parameter: %s", config_path_.c_str());
+      RCLCPP_INFO(this->get_logger(), "Using config path: %s", config_path_.c_str());
     }
 
     // Retrieve topic mapping configurations
     std::string l1_output = SimpleConfig::getValue(config_path_, "topics", "l1_lidar_output", "/go2/l1_lidar");
     std::string l2_output = SimpleConfig::getValue(config_path_, "topics", "l2_lidar_output", "/go2/l2_lidar");
-    std::string imu_output = SimpleConfig::getValue(config_path_, "topics", "imu_output", "/go2/imu");
+    std::string l1_imu_output = SimpleConfig::getValue(config_path_, "topics", "l1_imu_output", "/go2/l1_imu");
+    std::string l2_imu_output = SimpleConfig::getValue(config_path_, "topics", "l2_imu_output", "/go2/l2_imu");
 
     // Initialize publishers
     l1_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(l1_output, 10);
     l2_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(l2_output, 10);
-    imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>(imu_output, 50);
+    l1_imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>(l1_imu_output, 50);
+    l2_imu_pub_ = this->create_publisher<sensor_msgs::msg::Imu>(l2_imu_output, 50);
   }
 
   /**
@@ -141,12 +146,12 @@ public:
     auto shared_node = shared_from_this();
     std::string l1_input = SimpleConfig::getValue(config_path_, "topics", "l1_lidar_input", "/utlidar/cloud");
     std::string l2_input = SimpleConfig::getValue(config_path_, "topics", "l2_lidar_input", "/utlidar/cloud_l2");
-    std::string imu_input = SimpleConfig::getValue(config_path_, "topics", "imu_input", "/utlidar/imu");
+    std::string l1_imu_input = SimpleConfig::getValue(config_path_, "topics", "l1_imu_input", "/utlidar/imu");
+    std::string l2_imu_input = SimpleConfig::getValue(config_path_, "topics", "l2_imu_input", "/utlidar/imu_l2");
 
     // Instantiate LiDARs using the unified Lidar class
     l1_lidar_ = std::make_unique<go2_sensors::Lidar>(shared_node, "L1Lidar", l1_input);
     l2_lidar_ = std::make_unique<go2_sensors::Lidar>(shared_node, "L2Lidar", l2_input);
-    robot_imu_ = std::make_unique<go2_sensors::RobotImu>(shared_node, imu_input);
 
     // Register forwarding callbacks to publish the data
     l1_lidar_->SetCallback([this](const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
@@ -157,18 +162,32 @@ public:
       l2_pub_->publish(*msg);
     });
 
-    robot_imu_->SetCallback([this](const sensor_msgs::msg::Imu::SharedPtr msg) {
-      imu_pub_->publish(*msg);
-    });
+    // Initialize and start L1 IMU if configured
+    if (!l1_imu_input.empty()) {
+      l1_imu_ = std::make_unique<go2_sensors::RobotImu>(shared_node, l1_imu_input);
+      l1_imu_->SetCallback([this](const sensor_msgs::msg::Imu::SharedPtr msg) {
+        l1_imu_pub_->publish(*msg);
+      });
+      l1_imu_->Init();
+      l1_imu_->Start();
+    }
 
-    // Initialize and start the driver streams
+    // Initialize and start L2 IMU if configured
+    if (!l2_imu_input.empty()) {
+      l2_imu_ = std::make_unique<go2_sensors::RobotImu>(shared_node, l2_imu_input);
+      l2_imu_->SetCallback([this](const sensor_msgs::msg::Imu::SharedPtr msg) {
+        l2_imu_pub_->publish(*msg);
+      });
+      l2_imu_->Init();
+      l2_imu_->Start();
+    }
+
+    // Initialize and start the driver streams for LiDARs
     l1_lidar_->Init();
     l2_lidar_->Init();
-    robot_imu_->Init();
 
     l1_lidar_->Start();
     l2_lidar_->Start();
-    robot_imu_->Start();
   }
 
   ~SensorPublisherNode()
@@ -176,18 +195,21 @@ public:
     // Stop all streaming interfaces on shutdown
     if (l1_lidar_) l1_lidar_->Stop();
     if (l2_lidar_) l2_lidar_->Stop();
-    if (robot_imu_) robot_imu_->Stop();
+    if (l1_imu_) l1_imu_->Stop();
+    if (l2_imu_) l2_imu_->Stop();
   }
 
 private:
   std::string config_path_;
   std::unique_ptr<go2_sensors::Lidar> l1_lidar_;
   std::unique_ptr<go2_sensors::Lidar> l2_lidar_;
-  std::unique_ptr<go2_sensors::RobotImu> robot_imu_;
+  std::unique_ptr<go2_sensors::RobotImu> l1_imu_;
+  std::unique_ptr<go2_sensors::RobotImu> l2_imu_;
 
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr l1_pub_;
   rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr l2_pub_;
-  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr l1_imu_pub_;
+  rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr l2_imu_pub_;
 };
 
 int main(int argc, char** argv)

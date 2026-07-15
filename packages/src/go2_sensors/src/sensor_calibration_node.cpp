@@ -92,11 +92,16 @@ public:
   SensorCalibrationNode() : Node("sensor_calibration_node"), state_(-1), file_written_(false)
   {
     // Declare parameters
-    this->declare_parameter<std::string>("config_path", "/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/go2_config.json");
-    this->declare_parameter<std::string>("log_dir", "/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/packages/src/go2_sensors/log");
+    this->declare_parameter<std::string>("config_path", "");
+    this->declare_parameter<std::string>("log_dir", "");
 
     config_path_ = this->get_parameter("config_path").as_string();
     log_dir_ = this->get_parameter("log_dir").as_string();
+
+    if (config_path_.empty() || log_dir_.empty()) {
+      RCLCPP_FATAL(this->get_logger(), "Parameter 'config_path' or 'log_dir' is empty! Both must be passed via launch.");
+      throw std::runtime_error("Calibration parameters config_path or log_dir not set.");
+    }
 
     // Check if calibration is enabled in configuration
     bool calib_enabled = SimpleConfig::getBoolValue(config_path_, "sensors", "calibration_phase", true);
