@@ -1,0 +1,61 @@
+# Implementation Plan: SLAM Track
+
+## Phase 1: Sensor Driver & Publisher Node Establishment
+- [ ] Task: Implement `L1Lidar` class inheriting from `SensorInterface`.
+    - [ ] Create L1Lidar class files.
+    - [ ] Implement abstract interface methods.
+- [ ] Task: Implement `L2Lidar` class inheriting from `SensorInterface`.
+    - [ ] Create L2Lidar class files.
+    - [ ] Implement abstract interface methods.
+- [ ] Task: Implement `RobotImu` class inheriting from `SensorInterface`.
+    - [ ] Create RobotImu class files.
+    - [ ] Implement abstract interface methods.
+- [ ] Task: Create ROS 2 Jazzy publisher node using these classes, reading names from `go2_config.json`.
+    - [ ] Parse configuration values.
+    - [ ] Set up publishers for IMU and LIDAR topics.
+- [ ] Task: Support processing sensor samples with specific timestamps/simulation time.
+    - [ ] Implement ROS 2 parameter support for `use_sim_time`.
+- [ ] Task: Conductor - User Manual Verification 'Phase 1: Sensor Driver' (Protocol in workflow.md)
+
+## Phase 2: Sensor Calibration & Logging
+- [ ] Task: Analyze and explain calibration algorithm from `autonomy_stack_go2`.
+    - [ ] Audit calibration code.
+    - [ ] Document algorithm in research log.
+- [ ] Task: Implement automatic startup calibration logic on automated mode.
+    - [ ] Detect mode on startup.
+    - [ ] Run calibration sequence.
+- [ ] Task: Log daily calibration parameters to `packages/src/go2_sensors/log`.
+    - [ ] Create logging mechanism directory/files.
+    - [ ] Format logs with timestamp and parameters.
+- [ ] Task: Implement configuration check to toggle calibration on/off via `go2_config.json`.
+    - [ ] Read calibration toggle parameters.
+- [ ] Task: Conductor - User Manual Verification 'Phase 2: Sensor Calibration' (Protocol in workflow.md)
+
+## Phase 3: Point-LIO Integration & Map Management
+- [ ] Task: Clone `point_lio_unilidar` repository into `packages/src/`.
+    - [ ] Clone repository.
+- [ ] Task: Compare cloned Point-LIO with `autonomy_stack_go2` point-lio, document findings.
+    - [ ] Review structure and differences.
+- [ ] Task: Support LIDAR selection (L1, L2, or both) in `go2_config.json`.
+    - [ ] Modify launch files and point-lio node wrappers.
+- [ ] Task: Wrap Point-LIO to save and load maps for localization and map enhancement.
+    - [ ] Implement service/topic to request map save.
+    - [ ] Implement map loading logic on startup.
+- [ ] Task: Support rosbag recording for sensors and SLAM in debug mode.
+    - [ ] Detect debug mode in launch.
+    - [ ] Launch rosbag record process for relevant topics.
+- [ ] Task: Conductor - User Manual Verification 'Phase 3: Point-LIO SLAM' (Protocol in workflow.md)
+
+## Phase 4: A-LOAM Integration
+- [ ] Task: Clone `A-LOAM` repository into `packages/src/`.
+    - [ ] Clone repository.
+- [ ] Task: Build A-LOAM and resolve ROS 2 Jazzy compatibility.
+    - [ ] Adapt C++ code for Jazzy compile.
+- [ ] Task: Conductor - User Manual Verification 'Phase 4: A-LOAM Integration' (Protocol in workflow.md)
+
+## Phase 5: Physical Testing & Validation
+- [ ] Task: Validate SLAM map generation in manual control mode.
+    - [ ] Run manual validation steps.
+- [ ] Task: Compile technical report on SLAM backends performance.
+    - [ ] Collect metrics and write report.
+- [ ] Task: Conductor - User Manual Verification 'Phase 5: Physical Validation' (Protocol in workflow.md)
