@@ -1,20 +1,20 @@
 # Implementation Plan: SLAM Track
 
 ## Phase 1: Sensor Driver & Publisher Node Establishment
-- [ ] Task: Implement `L1Lidar` class inheriting from `SensorInterface`.
-    - [ ] Create L1Lidar class files.
-    - [ ] Implement abstract interface methods.
-- [ ] Task: Implement `L2Lidar` class inheriting from `SensorInterface`.
-    - [ ] Create L2Lidar class files.
-    - [ ] Implement abstract interface methods.
-- [ ] Task: Implement `RobotImu` class inheriting from `SensorInterface`.
-    - [ ] Create RobotImu class files.
-    - [ ] Implement abstract interface methods.
-- [ ] Task: Create ROS 2 Jazzy publisher node using these classes, reading names from `go2_config.json`.
-    - [ ] Parse configuration values.
-    - [ ] Set up publishers for IMU and LIDAR topics.
-- [ ] Task: Support processing sensor samples with specific timestamps/simulation time.
-    - [ ] Implement ROS 2 parameter support for `use_sim_time`.
+- [x] Task: Implement `L1Lidar` class inheriting from `SensorInterface`.
+    - [x] Create L1Lidar class files.
+    - [x] Implement abstract interface methods.
+- [x] Task: Implement `L2Lidar` class inheriting from `SensorInterface`.
+    - [x] Create L2Lidar class files.
+    - [x] Implement abstract interface methods.
+- [x] Task: Implement `RobotImu` class inheriting from `SensorInterface`.
+    - [x] Create RobotImu class files.
+    - [x] Implement abstract interface methods.
+- [x] Task: Create ROS 2 Jazzy publisher node using these classes, reading names from `go2_config.json`.
+    - [x] Parse configuration values.
+    - [x] Set up publishers for IMU and LIDAR topics.
+- [x] Task: Support processing sensor samples with specific timestamps/simulation time.
+    - [x] Implement ROS 2 parameter support for `use_sim_time`.
 - [ ] Task: Verify on the physical robot (Unitree Go2).
     - [ ] Deploy node and check `ros2 topic echo` output for L1 Lidar, L2 Lidar, and IMU.
     - [ ] Verify message timestamp synchronization.

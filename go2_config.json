@@ -6,6 +6,17 @@
     "self_filter": "Me filter out point cloud hits on chassis and legs.",
     "debug_mode": "Me support debug mode to measure processing times of code blocks."
   },
+  "nodes": {
+    "sensor_publisher_node_name": "go2_sensor_publisher"
+  },
+  "topics": {
+    "l1_lidar_input": "/utlidar/cloud",
+    "l1_lidar_output": "/go2/l1_lidar",
+    "l2_lidar_input": "/utlidar/cloud_l2",
+    "l2_lidar_output": "/go2/l2_lidar",
+    "imu_input": "/utlidar/imu",
+    "imu_output": "/go2/imu"
+  },
   "system": {
     "target_localization_accuracy_m": 0.05,
     "allowable_slope_angle_deg": "PENDING_RESEARCH",
