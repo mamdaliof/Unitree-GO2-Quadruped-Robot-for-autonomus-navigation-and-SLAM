@@ -4,6 +4,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess
 from launch.substitutions import LaunchConfiguration
+from launch.conditions import IfCondition
 from launch_ros.actions import Node
 
 def generate_launch_description():
@@ -17,6 +18,12 @@ def generate_launch_description():
         'use_sim_time',
         default_value='false',
         description='Use simulation clock time if true'
+    )
+
+    rviz_arg = DeclareLaunchArgument(
+        'rviz',
+        default_value='true',
+        description='Open RViz2 if true'
     )
 
     map_load_path_arg = DeclareLaunchArgument(
@@ -72,6 +79,7 @@ def generate_launch_description():
     actions = [
         config_path_arg,
         use_sim_time_arg,
+        rviz_arg,
         map_load_path_arg,
         map_save_path_arg,
         sensor_publisher_node
@@ -135,7 +143,8 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             arguments=['-d', rviz_config_path],
-            output='screen'
+            output='screen',
+            condition=IfCondition(LaunchConfiguration('rviz'))
         )
 
         actions.extend([
@@ -180,7 +189,8 @@ def generate_launch_description():
             executable='rviz2',
             name='rviz2',
             arguments=['-d', rviz_config_path],
-            output='screen'
+            output='screen',
+            condition=IfCondition(LaunchConfiguration('rviz'))
         )
 
         actions.extend([
