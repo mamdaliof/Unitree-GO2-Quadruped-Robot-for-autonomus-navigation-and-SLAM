@@ -58,8 +58,16 @@ void RobotImu::SetCallback(std::function<void(const sensor_msgs::msg::Imu::Share
   callback_ = callback;
 }
 
+/**
+ * @brief This callback function is triggered whenever an IMU message
+ * is received on the configured IMU input topic. It forwards the
+ * received telemetry data to the registered subscriber callback.
+ * 
+ * @param msg The shared pointer to the received IMU message.
+ */
 void RobotImu::ImuCallback(const sensor_msgs::msg::Imu::SharedPtr msg)
 {
+  // Forward the message to the registered callback if it has been set
   if (callback_) {
     callback_(msg);
   }

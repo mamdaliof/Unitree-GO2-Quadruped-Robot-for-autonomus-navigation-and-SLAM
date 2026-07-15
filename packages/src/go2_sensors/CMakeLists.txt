@@ -14,8 +14,7 @@ find_package(go2_navigation REQUIRED)
 # Declare headers and library
 add_library(go2_sensors_lib SHARED
   src/robot_imu.cpp
-  src/l1_lidar.cpp
-  src/l2_lidar.cpp
+  src/lidar.cpp
 )
 
 target_include_directories(go2_sensors_lib PUBLIC
@@ -57,4 +56,6 @@ install(
 )
 
 ament_package()
+
+
 

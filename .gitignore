@@ -40,16 +40,16 @@
 *.app
 
 # Build directories
-build/
+**/build/
 Build/
 build-*/
 
 # CMake generated files
-CMakeFiles/
-CMakeCache.txt
-cmake_install.cmake
-Makefile
-install_manifest.txt
+**/CMakeFiles/
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/Makefile
+**/install_manifest.txt
 compile_commands.json
 
 # Temporary files
@@ -61,13 +61,15 @@ compile_commands.json
 # vcpkg
 vcpkg_installed/
 
-# debug information files
-*.dwo
+# Local installations & SDK builds
+packages/unitree_sdk2/
+packages/unitree_sdk2
+packages/unitree_sdk2/**
 
 # test output & cache
 Testing/
 .cache/
-3rdparty/
+
 
 # ROS 2 build directories
 install/
@@ -94,3 +96,8 @@ ENV/
 
 # OS metadata
 .DS_Store
+
+# Local installations & SDK builds
+packages/unitree_sdk2/
+packages/unitree_sdk2
+packages/unitree_sdk2/**
