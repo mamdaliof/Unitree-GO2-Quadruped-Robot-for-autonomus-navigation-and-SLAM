@@ -7,8 +7,54 @@
 #include <fstream>
 #include <string>
 #include <memory>
+#include <filesystem>
 
 using json = nlohmann::json;
+
+/**
+ * @brief Search upward from current working directory and executable path
+ * to find the go2_config.json file.
+ * @param exec_path The path to the executable (argv[0]).
+ * @return The absolute path to the configuration file, or fallback default path.
+ */
+std::string findConfigPath(const std::string& exec_path)
+{
+  namespace fs = std::filesystem;
+  try {
+    // 1. Try search upward from current working directory
+    fs::path cwd = fs::current_path();
+    for (int i = 0; i < 6; ++i) {
+      fs::path check_path = cwd / "go2_config.json";
+      if (fs::exists(check_path)) {
+        return fs::absolute(check_path).string();
+      }
+      if (!cwd.has_parent_path() || cwd == cwd.parent_path()) {
+        break;
+      }
+      cwd = cwd.parent_path();
+    }
+
+    // 2. Try search upward from executable directory
+    if (!exec_path.empty()) {
+      fs::path exec_dir = fs::absolute(exec_path).parent_path();
+      for (int i = 0; i < 6; ++i) {
+        fs::path check_path = exec_dir / "go2_config.json";
+        if (fs::exists(check_path)) {
+          return fs::absolute(check_path).string();
+        }
+        if (!exec_dir.has_parent_path() || exec_dir == exec_dir.parent_path()) {
+          break;
+        }
+        exec_dir = exec_dir.parent_path();
+      }
+    }
+  } catch (const std::exception&) {
+    // Fallback to default
+  }
+
+  // Fallback to absolute path on developer PC
+  return "/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/go2_config.json";
+}
 
 /**
  * @brief Helper utility to parse configuration settings from the go2_config.json file
@@ -58,12 +104,23 @@ public:
   /**
    * @brief Construct the node, load configurations, and initialize publishers.
    * @param node_name The name of the node.
-   * @param config_path The path to go2_config.json.
    */
-  SensorPublisherNode(const std::string& node_name, const std::string& config_path)
-    : Node(node_name), config_path_(config_path)
+  SensorPublisherNode(const std::string& node_name)
+    : Node(node_name)
   {
-    RCLCPP_INFO(this->get_logger(), "Starting SensorPublisherNode with name: %s", node_name.c_str());
+    RCLCPP_INFO(this->get_logger(), "Starting SensorPublisherNode: %s", node_name.c_str());
+
+    // Declare and retrieve the parameter for the configuration file path
+    this->declare_parameter<std::string>("config_path", "");
+    config_path_ = this->get_parameter("config_path").as_string();
+
+    // Fallback if no parameter was passed via launch file or CLI
+    if (config_path_.empty()) {
+      config_path_ = findConfigPath("");
+      RCLCPP_WARN(this->get_logger(), "No config_path parameter specified. Found fallback path: %s", config_path_.c_str());
+    } else {
+      RCLCPP_INFO(this->get_logger(), "Using config path parameter: %s", config_path_.c_str());
+    }
 
     // Retrieve topic mapping configurations
     std::string l1_output = SimpleConfig::getValue(config_path_, "topics", "l1_lidar_output", "/go2/l1_lidar");
@@ -137,10 +194,8 @@ int main(int argc, char** argv)
 {
   rclcpp::init(argc, argv);
 
-  std::string config_path = "/home/mamdaliof/Documents/GitHub/mamdaliof-obsidian/02-Projects/learning-factory-project/go2_config.json";
-  std::string node_name = SimpleConfig::getValue(config_path, "nodes", "sensor_publisher_node_name", "go2_sensor_publisher");
-
-  auto node = std::make_shared<SensorPublisherNode>(node_name, config_path);
+  // Default node name; can be overridden in launch description or via __node mapping
+  auto node = std::make_shared<SensorPublisherNode>("go2_sensor_publisher");
   node->InitializeSensors();
 
   rclcpp::spin(node);
