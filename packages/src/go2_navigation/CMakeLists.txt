@@ -12,6 +12,27 @@ find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 
+# For sensor_msgs
+if(TARGET sensor_msgs::sensor_msgs)
+  set(sensor_msgs_target sensor_msgs::sensor_msgs)
+else()
+  set(sensor_msgs_target sensor_msgs::sensor_msgs__rosidl_generator_cpp)
+endif()
+
+# For geometry_msgs
+if(TARGET geometry_msgs::geometry_msgs)
+  set(geometry_msgs_target geometry_msgs::geometry_msgs)
+else()
+  set(geometry_msgs_target geometry_msgs::geometry_msgs__rosidl_generator_cpp)
+endif()
+
+# For nav_msgs
+if(TARGET nav_msgs::nav_msgs)
+  set(nav_msgs_target nav_msgs::nav_msgs)
+else()
+  set(nav_msgs_target nav_msgs::nav_msgs__rosidl_generator_cpp)
+endif()
+
 # Declare header-only library
 add_library(go2_navigation_interfaces INTERFACE)
 
@@ -22,9 +43,9 @@ target_include_directories(go2_navigation_interfaces INTERFACE
 
 target_link_libraries(go2_navigation_interfaces INTERFACE
   rclcpp::rclcpp
-  sensor_msgs::sensor_msgs
-  geometry_msgs::geometry_msgs
-  nav_msgs::nav_msgs
+  ${sensor_msgs_target}
+  ${geometry_msgs_target}
+  ${nav_msgs_target}
 )
 
 # Install headers

@@ -26,9 +26,11 @@ target_include_directories(go2_sensors_lib PUBLIC
 )
 
 target_link_libraries(go2_sensors_lib PUBLIC
-  rclcpp::rclcpp
-  sensor_msgs::sensor_msgs
   go2_navigation::go2_navigation_interfaces
+)
+ament_target_dependencies(go2_sensors_lib
+  rclcpp
+  sensor_msgs
 )
 
 # Install targets
@@ -44,17 +46,16 @@ install(
 add_executable(sensor_publisher_node src/sensor_publisher_node.cpp)
 target_link_libraries(sensor_publisher_node
   go2_sensors_lib
-  rclcpp::rclcpp
-  sensor_msgs::sensor_msgs
+)
+ament_target_dependencies(sensor_publisher_node
+  rclcpp
+  sensor_msgs
 )
 
 # Declare executable: sensor_calibration_node
 add_executable(sensor_calibration_node src/sensor_calibration_node.cpp)
 target_link_libraries(sensor_calibration_node
   go2_sensors_lib
-  rclcpp::rclcpp
-  sensor_msgs::sensor_msgs
-  geometry_msgs::geometry_msgs
 )
 # Explicitly include the dependency directories
 target_include_directories(sensor_calibration_node PRIVATE
@@ -64,6 +65,9 @@ target_include_directories(sensor_calibration_node PRIVATE
 # Note: go2_sport_api requires unitree_api and unitree_go.
 # Linking via ament dependencies is standard:
 ament_target_dependencies(sensor_calibration_node
+  rclcpp
+  sensor_msgs
+  geometry_msgs
   unitree_api
   go2_sport_api
 )

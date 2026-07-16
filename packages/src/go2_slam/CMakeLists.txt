@@ -16,6 +16,41 @@ find_package(go2_navigation REQUIRED)
 find_package(pcl_conversions REQUIRED)
 find_package(pcl_ros REQUIRED)
 
+# For sensor_msgs
+if(TARGET sensor_msgs::sensor_msgs)
+  set(sensor_msgs_target sensor_msgs::sensor_msgs)
+else()
+  set(sensor_msgs_target sensor_msgs::sensor_msgs__rosidl_generator_cpp)
+endif()
+
+# For geometry_msgs
+if(TARGET geometry_msgs::geometry_msgs)
+  set(geometry_msgs_target geometry_msgs::geometry_msgs)
+else()
+  set(geometry_msgs_target geometry_msgs::geometry_msgs__rosidl_generator_cpp)
+endif()
+
+# For nav_msgs
+if(TARGET nav_msgs::nav_msgs)
+  set(nav_msgs_target nav_msgs::nav_msgs)
+else()
+  set(nav_msgs_target nav_msgs::nav_msgs__rosidl_generator_cpp)
+endif()
+
+# For std_srvs
+if(TARGET std_srvs::std_srvs)
+  set(std_srvs_target std_srvs::std_srvs)
+else()
+  set(std_srvs_target std_srvs::std_srvs__rosidl_generator_cpp)
+endif()
+
+# For pcl_ros
+if(TARGET pcl_ros::pcl_ros)
+  set(pcl_ros_target pcl_ros::pcl_ros)
+else()
+  set(pcl_ros_target "")
+endif()
+
 # Declare header-only library
 add_library(go2_slam INTERFACE)
 
@@ -26,13 +61,13 @@ target_include_directories(go2_slam INTERFACE
 
 target_link_libraries(go2_slam INTERFACE
   rclcpp::rclcpp
-  sensor_msgs::sensor_msgs
-  geometry_msgs::geometry_msgs
-  nav_msgs::nav_msgs
-  std_srvs::std_srvs
+  ${sensor_msgs_target}
+  ${geometry_msgs_target}
+  ${nav_msgs_target}
+  ${std_srvs_target}
   go2_navigation::go2_navigation_interfaces
   pcl_conversions::pcl_conversions
-  pcl_ros::pcl_ros
+  ${pcl_ros_target}
 )
 
 # Install headers
