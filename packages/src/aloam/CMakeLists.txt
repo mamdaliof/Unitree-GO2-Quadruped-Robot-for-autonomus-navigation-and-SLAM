@@ -11,7 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # ROS2 依赖
 find_package(ament_cmake REQUIRED)
-find_package(glog REQUIRED)
+
+# Clean up stale glog_DIR cache variable if it exists
+unset(glog_DIR CACHE)
 
 find_package(rclcpp REQUIRED)
 find_package(sensor_msgs REQUIRED)
@@ -30,6 +32,27 @@ find_package(Eigen3 REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(PCL REQUIRED)
+
+# Ensure glog::glog target is defined
+if(NOT TARGET glog::glog)
+  find_package(glog QUIET)
+  if(glog_FOUND AND TARGET glog::glog)
+    # Standard target found
+  else()
+    if(GLOG_FOUND)
+      add_library(glog::glog INTERFACE IMPORTED)
+      target_include_directories(glog::glog INTERFACE ${GLOG_INCLUDE_DIRS})
+      target_link_libraries(glog::glog INTERFACE ${GLOG_LIBRARIES})
+    else()
+      find_package(PkgConfig REQUIRED)
+      pkg_check_modules(GLOG REQUIRED libglog)
+      add_library(glog::glog INTERFACE IMPORTED)
+      target_include_directories(glog::glog INTERFACE ${GLOG_INCLUDE_DIRS})
+      target_link_libraries(glog::glog INTERFACE ${GLOG_LIBRARIES})
+    endif()
+  endif()
+endif()
+
 
 # 包含目录
 include_directories(

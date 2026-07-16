@@ -512,11 +512,20 @@ void process()
 				for (int iter=0; iter<2; iter++)
 				{
 					ceres::LossFunction *loss = new ceres::HuberLoss(0.1);
+#if (CERES_VERSION_MAJOR > 2) || (CERES_VERSION_MAJOR == 2 && CERES_VERSION_MINOR >= 1)
 					ceres::Manifold *q_manifold = new ceres::EigenQuaternionManifold();
+#else
+					ceres::LocalParameterization *q_manifold = new ceres::EigenQuaternionParameterization();
+#endif
 					ceres::Problem problem;
 					problem.AddParameterBlock(parameters, 4);
+#if (CERES_VERSION_MAJOR > 2) || (CERES_VERSION_MAJOR == 2 && CERES_VERSION_MINOR >= 1)
 					problem.SetManifold(parameters, q_manifold);
+#else
+					problem.SetParameterization(parameters, q_manifold);
+#endif
 					problem.AddParameterBlock(parameters+4, 3);
+
 
 					TicToc t_data;
 

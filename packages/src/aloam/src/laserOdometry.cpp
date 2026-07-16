@@ -250,13 +250,22 @@ private:
                         para_q：4维，旋转四元数 (qx, qy, qz, qw)
                         para_t：3维，平移向量 (x, y, z)*/
                     ceres::LossFunction *loss_function = new ceres::HuberLoss(0.1);
+#if (CERES_VERSION_MAJOR > 2) || (CERES_VERSION_MAJOR == 2 && CERES_VERSION_MINOR >= 1)
                     ceres::Manifold *q_manifold = new ceres::EigenQuaternionManifold();
+#else
+                    ceres::LocalParameterization *q_manifold = new ceres::EigenQuaternionParameterization();
+#endif
                     ceres::Problem::Options problem_options;
 
                     ceres::Problem problem(problem_options);
                     problem.AddParameterBlock(para_q, 4);
+#if (CERES_VERSION_MAJOR > 2) || (CERES_VERSION_MAJOR == 2 && CERES_VERSION_MINOR >= 1)
                     problem.SetManifold(para_q, q_manifold);
+#else
+                    problem.SetParameterization(para_q, q_manifold);
+#endif
                     problem.AddParameterBlock(para_t, 3);
+
 
                     pcl::PointXYZI pointSel;
                     std::vector<int> pointSearchInd;

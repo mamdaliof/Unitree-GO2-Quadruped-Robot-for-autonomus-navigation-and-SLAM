@@ -5,6 +5,10 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
@@ -25,7 +29,7 @@ target_include_directories(go2_sensors_lib PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(go2_sensors_lib PUBLIC
+target_link_libraries(go2_sensors_lib
   go2_navigation::go2_navigation_interfaces
 )
 ament_target_dependencies(go2_sensors_lib
@@ -61,6 +65,7 @@ target_link_libraries(sensor_calibration_node
 target_include_directories(sensor_calibration_node PRIVATE
   ${go2_sport_api_INCLUDE_DIRS}
   ${unitree_api_INCLUDE_DIRS}
+  ${CMAKE_CURRENT_SOURCE_DIR}/../go2_sport_api/include
 )
 # Note: go2_sport_api requires unitree_api and unitree_go.
 # Linking via ament dependencies is standard:
